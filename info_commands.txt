@@ -1,0 +1,18 @@
+environment
+-----------
+- folder: C:\Users\delta\Documents\DevProjects\Training\GitJavaProject
+
+
+Git commands
+============
+git init
+git config --global user.email "imprezadev@gmail.com"
+git config --global user.name "Impreza Dev"
+
+
+Java Commands (JDK 6)
+=====================
+javac HelloWorld.java
+java HellowWorld
+
+
