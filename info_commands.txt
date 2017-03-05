@@ -24,3 +24,8 @@ Java Commands (JDK 6)
 =====================
 javac HelloWorld.java
 java HellowWorld
+
+mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+mvn compile
+mvn package
+java -cp target/moneytrack-1.0-SNAPSHOT.jar Main
