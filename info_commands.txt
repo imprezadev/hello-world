@@ -9,10 +9,16 @@ git init
 git config --global user.email "imprezadev@gmail.com"
 git config --global user.name "Impreza Dev"
 
+git status
+git log
+git log --oneline --decorate
+git show master
+git commit --amend -m "adding this file to keep record of executed commands"
+git reset info_commands.txt
+
+
 
 Java Commands (JDK 6)
 =====================
 javac HelloWorld.java
 java HellowWorld
-
-
