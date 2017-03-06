@@ -35,3 +35,4 @@ mvn package
 java -cp target/moneytrack-1.0-SNAPSHOT.jar com.smartware.app.Main
 mvn package
 java -cp target/moneytrack-1.0-SNAPSHOT.jar com.smartware.app.App
+javap target\classes\com\smartware\domain\Transaction
