@@ -8,17 +8,17 @@ import com.smartware.domain.Transaction;
 
 public class App {
 
-  public static void main(String[] args) {
-    Calendar cal = new GregorianCalendar(2017, Calendar.MARCH, 4);
-    Date now = cal.getTime();
+	public static void main(String[] args) {
+		Calendar cal = new GregorianCalendar(2017, Calendar.MARCH, 4);
+		Date now = cal.getTime();
 
-    Transaction trans = new Transaction();
-    trans.setId(1L);
-    trans.setDate(now);
-    trans.setAmount(22f);
-    trans.setConcept("Lavada del Impreza");
+		Transaction trans = new Transaction();
+		trans.setId(1L);
+		trans.setDate(now);
+		trans.setAmount(22f);
+		trans.setConcept("Lavada del Impreza");
 
-    System.out.println("Transaction: " + trans);
-  }
+		System.out.println("Transaction: " + trans);
+	}
 
 }
