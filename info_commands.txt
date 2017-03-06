@@ -33,3 +33,5 @@ java -cp target/moneytrack-1.0-SNAPSHOT.jar Main
 mvn clean
 mvn package
 java -cp target/moneytrack-1.0-SNAPSHOT.jar com.smartware.app.Main
+mvn package
+java -cp target/moneytrack-1.0-SNAPSHOT.jar com.smartware.app.App
