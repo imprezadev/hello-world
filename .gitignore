@@ -1,3 +1,11 @@
-*.class
+#maven arquetype quickstart generated project
 my-app/*
+
+#compiled folder
 MoneyTrack/target/*
+
+#Eclipse generated files
+MoneyTrack/.settings/*
+MoneyTrack/.gitignore
+MoneyTrack/.classpath
+MoneyTrack/.project
