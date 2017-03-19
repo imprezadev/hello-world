@@ -9,8 +9,8 @@ public class TransactionService {
 
 	TransactionDAO trnsactionDAO = new TransactionDAO();
 
-	public Transaction getTransaction() {
-		return trnsactionDAO.getTransaction();
+	public Transaction getTransaction(long id) {
+		return trnsactionDAO.getTransaction(id);
 	}
 
 	public List<Transaction> getTransactions() {

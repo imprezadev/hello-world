@@ -35,7 +35,7 @@ public class TransactionDAO {
 		return conn;
 	}
 
-	public Transaction getTransaction() {
+	public Transaction getTransaction(long id) {
 		Transaction transaction = null;
 		
 		Connection conn = getMoneyTrackDBConnection();
@@ -43,7 +43,8 @@ public class TransactionDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT * FROM transaction LIMIT 1");
+				st = conn.prepareStatement("SELECT * FROM transaction WHERE id = ?");
+				st.setLong(1, id);
 				rs = st.executeQuery();
 
 				if (rs.next()) {
