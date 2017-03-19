@@ -15,7 +15,7 @@ public class App {
 
 		// just to show the date in a desired format
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date date = transactionService.getTransaction(3L).getDate();
+		Date date = transactionService.getTransaction(5L).getDate();
 		System.out.println("Transaction date: " + dateFormat.format(date));
 		
 		for (Transaction trans: transactionService.getTransactions()) {

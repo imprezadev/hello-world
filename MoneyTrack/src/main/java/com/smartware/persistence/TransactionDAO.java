@@ -50,7 +50,7 @@ public class TransactionDAO {
 				if (rs.next()) {
 					transaction = new Transaction();
 					transaction.setId(rs.getLong("id"));
-					transaction.setDate(rs.getDate("date"));
+					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
 					transaction.setConcept(rs.getString("concept"));
 				}
@@ -77,7 +77,7 @@ public class TransactionDAO {
 				while (rs.next()) {
 					transaction = new Transaction();
 					transaction.setId(rs.getLong("id"));
-					transaction.setDate(rs.getDate("date"));
+					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
 					transaction.setConcept(rs.getString("concept"));
 					
