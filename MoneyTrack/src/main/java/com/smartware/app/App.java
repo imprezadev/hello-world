@@ -8,9 +8,10 @@ public class App {
 	public static void main(String[] args) {
 		TransactionService transactionService = new TransactionService();
 
-		Transaction trans = transactionService.getTransaction();
+		for (Transaction trans: transactionService.getTransactions()) {
+			System.out.println("Transaction: " + trans);
+		}
 
-		System.out.println("Transaction: " + trans);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.smartware.service;
 
+import java.util.List;
+
 import com.smartware.domain.Transaction;
 import com.smartware.persistence.TransactionDAO;
 
@@ -11,4 +13,7 @@ public class TransactionService {
 		return trnsactionDAO.getTransaction();
 	}
 
+	public List<Transaction> getTransactions() {
+		return trnsactionDAO.getTransactions();
+	}
 }

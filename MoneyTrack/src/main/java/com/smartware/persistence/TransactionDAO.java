@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.smartware.domain.Transaction;
 
@@ -59,4 +61,32 @@ public class TransactionDAO {
 		return transaction;
 	}
 
+	public List<Transaction> getTransactions() {
+		List<Transaction> transactions = new ArrayList<Transaction>();
+
+		Connection conn = getMoneyTrackDBConnection();
+		if (conn != null) {
+			PreparedStatement st = null;
+			ResultSet rs = null;
+			try {
+				st = conn.prepareStatement("SELECT * FROM transaction");
+				rs = st.executeQuery();
+
+				Transaction transaction = null;
+				while (rs.next()) {
+					transaction = new Transaction();
+					transaction.setId(rs.getLong("id"));
+					transaction.setDate(rs.getDate("date"));
+					transaction.setAmount(rs.getFloat("amount"));
+					transaction.setConcept(rs.getString("concept"));
+					
+					transactions.add(transaction);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return transactions;
+	}
 }
