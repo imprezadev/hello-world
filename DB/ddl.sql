@@ -7,3 +7,6 @@ CREATE TABLE `moneytrack`.`transaction` (
   `concept` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+ALTER TABLE `moneytrack`.`transaction` 
+  CHANGE COLUMN `amount` `amount` DECIMAL(10,2) NOT NULL;
