@@ -10,3 +10,7 @@ CREATE TABLE `moneytrack`.`transaction` (
 
 ALTER TABLE `moneytrack`.`transaction` 
   CHANGE COLUMN `amount` `amount` DECIMAL(10,2) NOT NULL;
+
+ALTER TABLE `moneytrack`.`transaction` 
+  CHANGE COLUMN `date` `date` DATETIME NOT NULL ,
+  CHANGE COLUMN `concept` `concept` VARCHAR(100) NOT NULL ;
