@@ -40,3 +40,18 @@ mvn package
 java -cp target/moneytrack-1.0-SNAPSHOT.jar com.smartware.app.App
 javap target\classes\com\smartware\domain\Transaction
 java -jar C:\Users\delta\Documents\DevLibrary\m2repo\org\projectlombok\lombok\1.16.14\lombok-1.16.14.jar
+
+JAVA Exceptions
+===============
+
+- After calling Class.forName("com.mysql.jdbc.Driver"); and that class is not in the classpath
+java.lang.ClassNotFoundException: com.mysql.jdbc.Driver
+
+- After calling DriverManager.getConnection("jdbc:mysql://localhost:3306/moneytrack", "root", "root"); and MySQL driver is not in the classpath
+java.sql.SQLException: No suitable driver found for jdbc:mysql://localhost:3306/moneytrack
+
+- my sql db wrong spelled
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown database 'moneytra'
+
+- invalid pasword for user root
+java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
