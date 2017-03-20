@@ -1,7 +1,5 @@
 package com.smartware.persistence;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,51 +7,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import com.smartware.config.DBConfigParams;
 import com.smartware.domain.Transaction;
+import com.smartware.utils.AppHelper;
 
 public class TransactionDAO {
-	
-	private DBConfigParams getDBConfigParams() {
-		DBConfigParams dbConfigParams = null;
-		
-		Properties dbConfigProperties = getFileProperties("config.properties");
-		if (dbConfigProperties != null) {
-			dbConfigParams = new DBConfigParams();
-			dbConfigParams.setDriver(dbConfigProperties.getProperty("driver"));
-			dbConfigParams.setUri(dbConfigProperties.getProperty("uri"));
-			dbConfigParams.setUsername(dbConfigProperties.getProperty("username"));
-			dbConfigParams.setPassword(dbConfigProperties.getProperty("password"));
-		}
-		
-		return dbConfigParams; 
-	}
-	
-	private Properties getFileProperties(String propertiesFileName) {
-		Properties prop = null;
-
-		try {
-			InputStream configPropStream = getClass().getClassLoader().getResourceAsStream(propertiesFileName);
-			
-			if (configPropStream != null) {
-				prop = new Properties();
-				prop.load(configPropStream);
-			} else {
-				throw new FileNotFoundException("property file '" + propertiesFileName + "' not found in the classpath");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return prop;
-	}
 	
 	private Connection getMoneyTrackDBConnection() {
 		Connection conn = null;
 		
-		DBConfigParams dbConfigParams = getDBConfigParams();
+		AppHelper appHelper = new AppHelper();
+
+		DBConfigParams dbConfigParams = appHelper.getDBConfigParams();
 		if (dbConfigParams != null) {
 			try {
 				Class.forName(dbConfigParams.getDriver()); // Validating if MySQL JDBC Driver is registered in the classpath
