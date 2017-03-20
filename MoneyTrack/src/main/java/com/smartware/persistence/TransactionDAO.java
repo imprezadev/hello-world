@@ -1,5 +1,7 @@
 package com.smartware.persistence;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,30 +9,53 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import com.smartware.domain.Transaction;
 
 public class TransactionDAO {
 	
-	private Connection getMoneyTrackDBConnection() {
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver"); // Validating if MySQL JDBC Driver is registered in the classpath
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		}
-		System.out.println("MySQL is registered");
+	private Properties getDBConfigProperties() {
+		Properties prop = null;
 
-		Connection conn = null;
+		String configPropFilename = "config.properties";
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/moneytrack", "root", "root");
+			InputStream configPropStream = getClass().getClassLoader().getResourceAsStream(configPropFilename);
+			
+			if (configPropStream != null) {
+				prop = new Properties();
+				prop.load(configPropStream);
+			} else {
+				throw new FileNotFoundException("property file '" + configPropFilename + "' not found in the classpath");
+			}
 		} catch (Exception e) {
-			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
-			return null;
 		}
-		System.out.println("Connection to DB is succesfully!");
+		
+		return prop;
+	}
+	
+	private Connection getMoneyTrackDBConnection() {
+		Connection conn = null;
+		
+		Properties dbConfigProperties = getDBConfigProperties();
+		if (dbConfigProperties != null) {
+			try {
+				Class.forName(dbConfigProperties.getProperty("driver")); // Validating if MySQL JDBC Driver is registered in the classpath
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			System.out.println("MySQL is registered");
+	
+			try {
+				conn = DriverManager.getConnection(dbConfigProperties.getProperty("uri"), dbConfigProperties.getProperty("username"), dbConfigProperties.getProperty("password"));
+			} catch (Exception e) {
+				System.out.println("Connection Failed! Check output console");
+				e.printStackTrace();
+				return null;
+			}
+			System.out.println("Connection to DB is succesfully!");
+		}
 
 		return conn;
 	}
