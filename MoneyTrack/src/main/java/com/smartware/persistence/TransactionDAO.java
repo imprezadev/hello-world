@@ -11,22 +11,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.smartware.config.DBConfigParams;
 import com.smartware.domain.Transaction;
 
 public class TransactionDAO {
 	
-	private Properties getDBConfigProperties() {
+	private DBConfigParams getDBConfigParams() {
+		DBConfigParams dbConfigParams = null;
+		
+		Properties dbConfigProperties = getFileProperties("config.properties");
+		if (dbConfigProperties != null) {
+			dbConfigParams = new DBConfigParams();
+			dbConfigParams.setDriver(dbConfigProperties.getProperty("driver"));
+			dbConfigParams.setUri(dbConfigProperties.getProperty("uri"));
+			dbConfigParams.setUsername(dbConfigProperties.getProperty("username"));
+			dbConfigParams.setPassword(dbConfigProperties.getProperty("password"));
+		}
+		
+		return dbConfigParams; 
+	}
+	
+	private Properties getFileProperties(String propertiesFileName) {
 		Properties prop = null;
 
-		String configPropFilename = "config.properties";
 		try {
-			InputStream configPropStream = getClass().getClassLoader().getResourceAsStream(configPropFilename);
+			InputStream configPropStream = getClass().getClassLoader().getResourceAsStream(propertiesFileName);
 			
 			if (configPropStream != null) {
 				prop = new Properties();
 				prop.load(configPropStream);
 			} else {
-				throw new FileNotFoundException("property file '" + configPropFilename + "' not found in the classpath");
+				throw new FileNotFoundException("property file '" + propertiesFileName + "' not found in the classpath");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,17 +53,17 @@ public class TransactionDAO {
 	private Connection getMoneyTrackDBConnection() {
 		Connection conn = null;
 		
-		Properties dbConfigProperties = getDBConfigProperties();
-		if (dbConfigProperties != null) {
+		DBConfigParams dbConfigParams = getDBConfigParams();
+		if (dbConfigParams != null) {
 			try {
-				Class.forName(dbConfigProperties.getProperty("driver")); // Validating if MySQL JDBC Driver is registered in the classpath
+				Class.forName(dbConfigParams.getDriver()); // Validating if MySQL JDBC Driver is registered in the classpath
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 			System.out.println("MySQL is registered");
 	
 			try {
-				conn = DriverManager.getConnection(dbConfigProperties.getProperty("uri"), dbConfigProperties.getProperty("username"), dbConfigProperties.getProperty("password"));
+				conn = DriverManager.getConnection(dbConfigParams.getUri(), dbConfigParams.getUsername(), dbConfigParams.getPassword());
 			} catch (Exception e) {
 				System.out.println("Connection Failed! Check output console");
 				e.printStackTrace();
