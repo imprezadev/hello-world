@@ -7,12 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.smartware.config.DBConfigParams;
 import com.smartware.domain.Transaction;
 import com.smartware.utils.AppHelper;
 
 public class TransactionDAO {
+	
+	private static Logger logger = Logger.getLogger(TransactionDAO.class.getName());
 	
 	private Connection getMoneyTrackDBConnection() {
 		Connection conn = null;
@@ -24,18 +28,18 @@ public class TransactionDAO {
 			try {
 				Class.forName(dbConfigParams.getDriver()); // Validating if MySQL JDBC Driver is registered in the classpath
 			} catch (ClassNotFoundException e) {
+				logger.log(Level.SEVERE, "Class not found");
 				e.printStackTrace();
 			}
-			System.out.println("MySQL is registered");
+			logger.config("MySQL is registered");
 	
 			try {
 				conn = DriverManager.getConnection(dbConfigParams.getUri(), dbConfigParams.getUsername(), dbConfigParams.getPassword());
 			} catch (Exception e) {
-				System.out.println("Connection Failed! Check output console");
+				logger.log(Level.SEVERE, "Connection Failed! Check output console");
 				e.printStackTrace();
-				return null;
 			}
-			System.out.println("Connection to DB is succesfully!");
+			logger.config("Connection to DB is succesfully!");
 		}
 
 		return conn;
