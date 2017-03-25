@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import com.smartware.config.DBConfigParams;
 import com.smartware.domain.Expense;
+import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
 import com.smartware.utils.AppHelper;
@@ -55,14 +56,23 @@ public class ExpenseDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT * FROM expense");
+				String sql = 
+						"SELECT t.id, t.date, t.amount, t.currency, e.payment_type, t.concept, e.category" +
+						"  FROM expense e" +
+						" INNER JOIN transaction t ON t.id = e.id_transaction";
+
+				st = conn.prepareStatement(sql);
 				rs = st.executeQuery();
 
 				Expense expense = null;
 				while (rs.next()) {
 					expense = new Expense();
-					expense.setId(rs.getLong("id_transaction"));
+					expense.setId(rs.getLong("id"));
+					expense.setDate(rs.getTimestamp("date"));
+					expense.setAmount(rs.getFloat("amount"));
+					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
 					expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
+					expense.setConcept(rs.getString("concept"));
 					expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
 
 					expenses.add(expense);

@@ -47,7 +47,7 @@ public class App {
 
 		String expenseList = "";
 		for (Expense expense: expenseService.getExpenses()) {
-			expenseList += "\n\t" + expense;
+			expenseList += "\n\t" + expense + ", date=" + expense.getDate() + ", amount=" + expense.getAmount() + ", currency=" + expense.getCurrency() + ", concept=" + expense.getConcept();
 		}
 		logger.info("Expenses:" + expenseList);
 	}
