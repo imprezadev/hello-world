@@ -108,7 +108,6 @@ public class TransactionDAO {
 		Connection conn = getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
-			ResultSet rs = null;
 			try {
 				st = conn.prepareStatement("INSERT INTO transaction (date, amount, currency, concept) VALUES (?, ?, ?, ?)");
 				st.setTimestamp(1, new java.sql.Timestamp(transaction.getDate().getTime()));
