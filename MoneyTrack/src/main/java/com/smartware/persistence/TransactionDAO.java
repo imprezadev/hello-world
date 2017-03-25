@@ -63,8 +63,8 @@ public class TransactionDAO {
 					transaction.setId(rs.getLong("id"));
 					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
+					transaction.setCurrency(Currency.valueOf(rs.getString("currency")));
 					transaction.setConcept(rs.getString("concept"));
-					transaction.setCurrency(Currency.PES);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -91,8 +91,8 @@ public class TransactionDAO {
 					transaction.setId(rs.getLong("id"));
 					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
+					transaction.setCurrency(Currency.valueOf(rs.getString("currency")));
 					transaction.setConcept(rs.getString("concept"));
-					transaction.setCurrency(Currency.PES);
 					
 					transactions.add(transaction);
 				}

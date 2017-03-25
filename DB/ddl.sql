@@ -13,4 +13,7 @@ ALTER TABLE `moneytrack`.`transaction`
 
 ALTER TABLE `moneytrack`.`transaction` 
   CHANGE COLUMN `date` `date` DATETIME NOT NULL ,
-  CHANGE COLUMN `concept` `concept` VARCHAR(100) NOT NULL ;
+  CHANGE COLUMN `concept` `concept` VARCHAR(100) NOT NULL;
+
+ALTER TABLE `moneytrack`.`transaction` 
+  ADD COLUMN `currency` CHAR(3) NOT NULL DEFAULT 'PEN' AFTER `amount`;

@@ -29,8 +29,9 @@ public class App {
 		logger.info("Transaction:" + transactionList);
 		
 		for (Currency cur: Currency.values()) {
-			logger.info(cur.toString());
+			logger.info(cur.name());
 		}
+
 	}
 
 }
