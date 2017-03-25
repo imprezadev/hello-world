@@ -103,4 +103,25 @@ public class TransactionDAO {
 
 		return transactions;
 	}
+
+	public void insertTransaction(Transaction transaction) {
+		Connection conn = getMoneyTrackDBConnection();
+		if (conn != null) {
+			PreparedStatement st = null;
+			ResultSet rs = null;
+			try {
+				st = conn.prepareStatement("INSERT INTO transaction (date, amount, currency, concept) VALUES (?, ?, ?, ?)");
+				st.setDate(1, new java.sql.Date(transaction.getDate().getTime()));
+				st.setFloat(2, transaction.getAmount());
+				st.setString(3, transaction.getCurrency().name());
+				st.setString(4, transaction.getConcept());
+
+				st.execute();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

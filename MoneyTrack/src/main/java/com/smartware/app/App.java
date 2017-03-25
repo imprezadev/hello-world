@@ -32,6 +32,15 @@ public class App {
 			logger.info(cur.name());
 		}
 
+		Transaction transaction = new Transaction();
+		transaction.setDate(new Date());
+		transaction.setAmount(23.70f);
+		transaction.setCurrency(Currency.PEN);
+		transaction.setConcept("Almuerzo Liverpool");
+
+		logger.info(transaction.toString());
+
+		transactionService.insertTransaction(transaction);
 	}
 
 }

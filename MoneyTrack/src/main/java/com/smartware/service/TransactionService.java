@@ -16,4 +16,9 @@ public class TransactionService {
 	public List<Transaction> getTransactions() {
 		return transactionDAO.getTransactions();
 	}
+
+	public void insertTransaction(Transaction transaction) {
+		transactionDAO.insertTransaction(transaction);
+	}
+
 }
