@@ -1,4 +1,4 @@
-package com.smartware.config;
+package com.smartware.common;
 
 import lombok.Data;
 

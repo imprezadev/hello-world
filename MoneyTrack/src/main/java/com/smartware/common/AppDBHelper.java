@@ -1,12 +1,10 @@
-package com.smartware.utils;
+package com.smartware.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.smartware.config.DBConfigParams;
 
 public class AppDBHelper {
 	
@@ -15,7 +13,7 @@ public class AppDBHelper {
 	private DBConfigParams getDBConfigParams() {
 		DBConfigParams dbConfigParams = null;
 
-		AppHelper appHelper = new AppHelper();
+		Utils appHelper = new Utils();
 
 		Properties dbConfigProperties = appHelper.getFileProperties("config.properties");
 		if (dbConfigProperties != null) {

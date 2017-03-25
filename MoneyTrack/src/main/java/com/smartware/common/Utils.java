@@ -1,13 +1,13 @@
-package com.smartware.utils;
+package com.smartware.common;
 
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AppHelper {
+public class Utils {
 	
-	private static final Logger logger = Logger.getLogger(AppHelper.class.getName());
+	private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
 	public Properties getFileProperties(String propertiesFileName) {
 		Properties prop = null;

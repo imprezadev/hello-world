@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.smartware.common.AppDBHelper;
 import com.smartware.domain.Transaction;
 import com.smartware.domain.catalog.Currency;
-import com.smartware.utils.AppDBHelper;
 
 public class TransactionDAO {
 	

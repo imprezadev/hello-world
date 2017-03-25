@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.smartware.common.AppDBHelper;
 import com.smartware.domain.Expense;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
-import com.smartware.utils.AppDBHelper;
 
 public class ExpenseDAO {
 
