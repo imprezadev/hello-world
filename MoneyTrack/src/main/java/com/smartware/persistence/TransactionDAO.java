@@ -54,7 +54,7 @@ public class TransactionDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT * FROM transaction WHERE id = ?");
+				st = conn.prepareStatement("SELECT id, date, amount, currency, concept FROM transaction WHERE id = ?");
 				st.setLong(1, id);
 				rs = st.executeQuery();
 
