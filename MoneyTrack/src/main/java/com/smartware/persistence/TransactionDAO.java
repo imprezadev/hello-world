@@ -111,7 +111,7 @@ public class TransactionDAO {
 			ResultSet rs = null;
 			try {
 				st = conn.prepareStatement("INSERT INTO transaction (date, amount, currency, concept) VALUES (?, ?, ?, ?)");
-				st.setDate(1, new java.sql.Date(transaction.getDate().getTime()));
+				st.setTimestamp(1, new java.sql.Timestamp(transaction.getDate().getTime()));
 				st.setFloat(2, transaction.getAmount());
 				st.setString(3, transaction.getCurrency().name());
 				st.setString(4, transaction.getConcept());
