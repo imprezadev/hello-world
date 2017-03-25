@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.smartware.config.DBConfigParams;
-import com.smartware.domain.Currency;
 import com.smartware.domain.Transaction;
+import com.smartware.domain.catalog.Currency;
 import com.smartware.utils.AppHelper;
 
 public class TransactionDAO {

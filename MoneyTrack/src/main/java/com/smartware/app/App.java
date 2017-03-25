@@ -4,9 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import com.smartware.domain.Currency;
 import com.smartware.domain.Expense;
 import com.smartware.domain.Transaction;
+import com.smartware.domain.catalog.Currency;
 import com.smartware.service.ExpenseService;
 import com.smartware.service.TransactionService;
 

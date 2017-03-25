@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 
 import com.smartware.config.DBConfigParams;
 import com.smartware.domain.Expense;
-import com.smartware.domain.ExpenseCategory;
-import com.smartware.domain.PaymentType;
+import com.smartware.domain.catalog.ExpenseCategory;
+import com.smartware.domain.catalog.PaymentType;
 import com.smartware.utils.AppHelper;
 
 public class ExpenseDAO {
