@@ -17,8 +17,8 @@ public class TransactionService {
 		return transactionDAO.getTransactions();
 	}
 
-	public void insertTransaction(Transaction transaction) {
-		transactionDAO.insertTransaction(transaction);
+	public long insertTransaction(Transaction transaction) {
+		return transactionDAO.insertTransaction(transaction);
 	}
 
 }

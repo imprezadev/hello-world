@@ -12,7 +12,7 @@ import com.smartware.domain.Transaction;
 import com.smartware.domain.catalog.Currency;
 
 public class TransactionDAO {
-	
+
 	public Transaction getTransaction(long id) {
 		Transaction transaction = null;
 		
@@ -74,13 +74,16 @@ public class TransactionDAO {
 		return transactions;
 	}
 
-	public void insertTransaction(Transaction transaction) {
+	public long insertTransaction(Transaction transaction) {
+		long id = -1;
+
 		AppDBHelper appDBHelper = new AppDBHelper();
 		Connection conn = appDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
-				st = conn.prepareStatement("INSERT INTO transaction (date, amount, currency, concept) VALUES (?, ?, ?, ?)");
+				String sql = "INSERT INTO transaction (date, amount, currency, concept) VALUES (?, ?, ?, ?)";
+				st = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 				st.setTimestamp(1, new java.sql.Timestamp(transaction.getDate().getTime()));
 				st.setFloat(2, transaction.getAmount());
 				st.setString(3, transaction.getCurrency().name());
@@ -88,10 +91,17 @@ public class TransactionDAO {
 
 				st.execute();
 
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					id = rs.getLong(1);
+				}
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+
+		return id;
 	}
 
 }
