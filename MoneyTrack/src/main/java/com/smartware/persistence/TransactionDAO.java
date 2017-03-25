@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.smartware.config.DBConfigParams;
+import com.smartware.domain.Currency;
 import com.smartware.domain.Transaction;
 import com.smartware.utils.AppHelper;
 
@@ -63,6 +64,7 @@ public class TransactionDAO {
 					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
 					transaction.setConcept(rs.getString("concept"));
+					transaction.setCurrency(Currency.PES);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -90,6 +92,7 @@ public class TransactionDAO {
 					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
 					transaction.setConcept(rs.getString("concept"));
+					transaction.setCurrency(Currency.PES);
 					
 					transactions.add(transaction);
 				}

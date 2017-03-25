@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import com.smartware.domain.Currency;
 import com.smartware.domain.Transaction;
 import com.smartware.service.TransactionService;
 
@@ -26,6 +27,10 @@ public class App {
 			transactionList += "\n\t" + trans;
 		}
 		logger.info("Transaction:" + transactionList);
+		
+		for (Currency cur: Currency.values()) {
+			logger.info(cur.toString());
+		}
 	}
 
 }
