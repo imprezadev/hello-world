@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import com.smartware.domain.Currency;
+import com.smartware.domain.Expense;
 import com.smartware.domain.Transaction;
+import com.smartware.service.ExpenseService;
 import com.smartware.service.TransactionService;
 
 public class App {
@@ -14,6 +16,7 @@ public class App {
 
 	public static void main(String[] args) {
 		TransactionService transactionService = new TransactionService();
+		ExpenseService expenseService = new ExpenseService();
 
 		logger.info("Transaction: " + transactionService.getTransaction(3L));
 
@@ -21,7 +24,7 @@ public class App {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = transactionService.getTransaction(5L).getDate();
 		logger.info("Transaction date: " + dateFormat.format(date));
-		
+
 		String transactionList = "";
 		for (Transaction trans: transactionService.getTransactions()) {
 			transactionList += "\n\t" + trans;
@@ -41,6 +44,12 @@ public class App {
 		logger.info(transaction.toString());
 
 		transactionService.insertTransaction(transaction);
+
+		String expenseList = "";
+		for (Expense expense: expenseService.getExpenses()) {
+			expenseList += "\n\t" + expense;
+		}
+		logger.info("Expenses:" + expenseList);
 	}
 
 }
