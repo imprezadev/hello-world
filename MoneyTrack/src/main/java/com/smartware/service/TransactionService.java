@@ -7,13 +7,13 @@ import com.smartware.persistence.TransactionDAO;
 
 public class TransactionService {
 
-	TransactionDAO trnsactionDAO = new TransactionDAO();
+	TransactionDAO transactionDAO = new TransactionDAO();
 
 	public Transaction getTransaction(long id) {
-		return trnsactionDAO.getTransaction(id);
+		return transactionDAO.getTransaction(id);
 	}
 
 	public List<Transaction> getTransactions() {
-		return trnsactionDAO.getTransactions();
+		return transactionDAO.getTransactions();
 	}
 }
