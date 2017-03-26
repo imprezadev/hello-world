@@ -1,3 +1,5 @@
+DROP SCHEMA IF EXISTS moneytrack;
+
 CREATE SCHEMA moneytrack;
 
 CREATE TABLE moneytrack.transaction (
