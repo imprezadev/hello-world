@@ -25,7 +25,7 @@ public class ExpenseDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.date, t.amount, t.currency, e.payment_type, t.concept, e.category" +
+						"SELECT t.id, t.date, t.amount, t.currency, e.payment_type, e.detail, e.category" +
 						"  FROM expense e" +
 						" INNER JOIN transaction t ON t.id = e.id_transaction" +
 						" WHERE e.id_transaction = ?";
@@ -41,7 +41,6 @@ public class ExpenseDAO {
 					expense.setAmount(rs.getFloat("amount"));
 					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
 					expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
-					expense.setConcept(rs.getString("concept"));
 					expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
 				}
 			} catch (SQLException e) {
@@ -63,7 +62,7 @@ public class ExpenseDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.date, t.amount, t.currency, e.payment_type, t.concept, e.category" +
+						"SELECT t.id, t.date, t.amount, t.currency, e.payment_type, e.detail, e.category" +
 						"  FROM expense e" +
 						" INNER JOIN transaction t ON t.id = e.id_transaction";
 
@@ -78,7 +77,6 @@ public class ExpenseDAO {
 					expense.setAmount(rs.getFloat("amount"));
 					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
 					expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
-					expense.setConcept(rs.getString("concept"));
 					expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
 
 					expenses.add(expense);
@@ -97,11 +95,12 @@ public class ExpenseDAO {
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
-				String sql = "INSERT INTO expense (id_transaction, payment_type, category) VALUES (?, ?, ?)";
+				String sql = "INSERT INTO expense (id_transaction, payment_type, category, detail) VALUES (?, ?, ?, ?)";
 				st = conn.prepareStatement(sql);
 				st.setLong(1, expense.getId());
 				st.setString(2, expense.getPaymenType().name());
 				st.setString(3, expense.getCategory().name());
+				st.setString(4, expense.getDetail());
 
 				st.execute();
 

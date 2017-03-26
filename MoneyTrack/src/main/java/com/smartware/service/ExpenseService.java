@@ -27,7 +27,6 @@ public class ExpenseService {
 		transaction.setAmount(expense.getAmount());
 		transaction.setDate(expense.getDate());
 		transaction.setCurrency(expense.getCurrency());
-		transaction.setConcept(expense.getConcept());
 
 		id = transactionDAO.insertTransaction(transaction);
 		

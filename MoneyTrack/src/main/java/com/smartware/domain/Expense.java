@@ -11,4 +11,5 @@ import lombok.ToString;
 public class Expense extends Transaction {
 	private PaymentType paymenType;
 	private ExpenseCategory category;
+	private String detail;
 }

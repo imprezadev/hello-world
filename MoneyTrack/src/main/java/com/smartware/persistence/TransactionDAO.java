@@ -23,7 +23,7 @@ public class TransactionDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT id, date, amount, currency, concept FROM transaction WHERE id = ?");
+				st = conn.prepareStatement("SELECT id, date, amount, currency FROM transaction WHERE id = ?");
 				st.setLong(1, id);
 				rs = st.executeQuery();
 
@@ -33,7 +33,6 @@ public class TransactionDAO {
 					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
 					transaction.setCurrency(Currency.valueOf(rs.getString("currency")));
-					transaction.setConcept(rs.getString("concept"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -52,7 +51,7 @@ public class TransactionDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT * FROM transaction");
+				st = conn.prepareStatement("SELECT id, date, amount, currency FROM transaction");
 				rs = st.executeQuery();
 
 				Transaction transaction = null;
@@ -62,7 +61,6 @@ public class TransactionDAO {
 					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
 					transaction.setCurrency(Currency.valueOf(rs.getString("currency")));
-					transaction.setConcept(rs.getString("concept"));
 					
 					transactions.add(transaction);
 				}
@@ -82,12 +80,11 @@ public class TransactionDAO {
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
-				String sql = "INSERT INTO transaction (date, amount, currency, concept) VALUES (?, ?, ?, ?)";
+				String sql = "INSERT INTO transaction (date, amount, currency) VALUES (?, ?, ?)";
 				st = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 				st.setTimestamp(1, new java.sql.Timestamp(transaction.getDate().getTime()));
 				st.setFloat(2, transaction.getAmount());
 				st.setString(3, transaction.getCurrency().name());
-				st.setString(4, transaction.getConcept());
 
 				st.execute();
 
