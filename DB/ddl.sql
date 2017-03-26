@@ -4,6 +4,7 @@ CREATE SCHEMA moneytrack;
 
 CREATE TABLE moneytrack.transaction (
   id        INT NOT NULL AUTO_INCREMENT,
+  type      VARCHAR(20) NOT NULL,
   date      DATETIME NOT NULL,
   amount    DECIMAL(10,2) NOT NULL,
   currency  CHAR(3) NOT NULL,

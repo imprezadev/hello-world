@@ -5,6 +5,7 @@ import java.util.List;
 import com.smartware.domain.BankMovement;
 import com.smartware.domain.Expense;
 import com.smartware.domain.Transaction;
+import com.smartware.domain.catalog.TransactionType;
 import com.smartware.persistence.BankMovementDAO;
 import com.smartware.persistence.TransactionDAO;
 
@@ -23,8 +24,9 @@ public class BankMovementService {
 
 	public long insertBankMovement(BankMovement bankMovement) {
 		long id = -1;
-		
+
 		Transaction transaction = new Transaction();
+		transaction.setType(TransactionType.BANK_MOVEMENT);
 		transaction.setDate(bankMovement.getDate());
 		transaction.setAmount(bankMovement.getAmount());
 		transaction.setCurrency(bankMovement.getCurrency());

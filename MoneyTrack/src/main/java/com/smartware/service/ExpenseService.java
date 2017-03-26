@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.smartware.domain.Expense;
 import com.smartware.domain.Transaction;
+import com.smartware.domain.catalog.TransactionType;
 import com.smartware.persistence.ExpenseDAO;
 import com.smartware.persistence.TransactionDAO;
 
@@ -24,8 +25,9 @@ public class ExpenseService {
 		long id = -1;
 		
 		Transaction transaction = new Transaction();
-		transaction.setAmount(expense.getAmount());
+		transaction.setType(TransactionType.EXPENSE);
 		transaction.setDate(expense.getDate());
+		transaction.setAmount(expense.getAmount());
 		transaction.setCurrency(expense.getCurrency());
 
 		id = transactionDAO.insertTransaction(transaction);

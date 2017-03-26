@@ -10,6 +10,7 @@ import java.util.List;
 import com.smartware.common.AppDBHelper;
 import com.smartware.domain.Transaction;
 import com.smartware.domain.catalog.Currency;
+import com.smartware.domain.catalog.TransactionType;
 
 public class TransactionDAO {
 
@@ -23,13 +24,14 @@ public class TransactionDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT id, date, amount, currency FROM transaction WHERE id = ?");
+				st = conn.prepareStatement("SELECT id, type, date, amount, currency FROM transaction WHERE id = ?");
 				st.setLong(1, id);
 				rs = st.executeQuery();
 
 				if (rs.next()) {
 					transaction = new Transaction();
 					transaction.setId(rs.getLong("id"));
+					transaction.setType(TransactionType.valueOf(rs.getString("type")));
 					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
 					transaction.setCurrency(Currency.valueOf(rs.getString("currency")));
@@ -58,6 +60,7 @@ public class TransactionDAO {
 				while (rs.next()) {
 					transaction = new Transaction();
 					transaction.setId(rs.getLong("id"));
+					transaction.setType(TransactionType.valueOf(rs.getString("type")));
 					transaction.setDate(rs.getTimestamp("date"));
 					transaction.setAmount(rs.getFloat("amount"));
 					transaction.setCurrency(Currency.valueOf(rs.getString("currency")));
@@ -80,11 +83,12 @@ public class TransactionDAO {
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
-				String sql = "INSERT INTO transaction (date, amount, currency) VALUES (?, ?, ?)";
+				String sql = "INSERT INTO transaction (type, date, amount, currency) VALUES (?, ?, ?, ?)";
 				st = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-				st.setTimestamp(1, new java.sql.Timestamp(transaction.getDate().getTime()));
-				st.setFloat(2, transaction.getAmount());
-				st.setString(3, transaction.getCurrency().name());
+				st.setString(1, transaction.getType().name());
+				st.setTimestamp(2, new java.sql.Timestamp(transaction.getDate().getTime()));
+				st.setFloat(3, transaction.getAmount());
+				st.setString(4, transaction.getCurrency().name());
 
 				st.execute();
 

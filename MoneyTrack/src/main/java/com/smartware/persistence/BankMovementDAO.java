@@ -11,6 +11,7 @@ import com.smartware.common.AppDBHelper;
 import com.smartware.domain.BankMovement;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.Currency;
+import com.smartware.domain.catalog.TransactionType;
 
 public class BankMovementDAO {
 
@@ -25,7 +26,7 @@ public class BankMovementDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.date, t.amount, t.currency, bm.operation, bm.remarks" +
+						"SELECT t.id, t.type, t.date, t.amount, t.currency, bm.operation, bm.remarks" +
 						"  FROM bank_movement bm" +
 						" INNER JOIN transaction t ON t.id = bm.id_transaction" +
 						" WHERE bm.id_transaction = ?";
@@ -37,6 +38,7 @@ public class BankMovementDAO {
 				if (rs.next()) {
 					bankMovement = new BankMovement();
 					bankMovement.setId(rs.getLong("id"));
+					bankMovement.setType(TransactionType.valueOf(rs.getString("type")));
 					bankMovement.setDate(rs.getTimestamp("date"));
 					bankMovement.setAmount(rs.getFloat("amount"));
 					bankMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
@@ -62,7 +64,7 @@ public class BankMovementDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.date, t.amount, t.currency, bm.operation, bm.remarks" +
+						"SELECT t.id, t.type, t.date, t.amount, t.currency, bm.operation, bm.remarks" +
 						"  FROM bank_movement bm" +
 						" INNER JOIN transaction t ON t.id = bm.id_transaction";
 
@@ -73,6 +75,7 @@ public class BankMovementDAO {
 				while (rs.next()) {
 					bankMovement = new BankMovement();
 					bankMovement.setId(rs.getLong("id"));
+					bankMovement.setType(TransactionType.valueOf(rs.getString("type")));
 					bankMovement.setDate(rs.getTimestamp("date"));
 					bankMovement.setAmount(rs.getFloat("amount"));
 					bankMovement.setCurrency(Currency.valueOf(rs.getString("currency")));

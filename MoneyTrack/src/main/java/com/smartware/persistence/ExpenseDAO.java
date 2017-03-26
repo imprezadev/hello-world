@@ -12,6 +12,7 @@ import com.smartware.domain.Expense;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
+import com.smartware.domain.catalog.TransactionType;
 
 public class ExpenseDAO {
 
@@ -25,7 +26,7 @@ public class ExpenseDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.date, t.amount, t.currency, e.payment_type, e.detail, e.category" +
+						"SELECT t.id, t.type, t.date, t.amount, t.currency, e.payment_type, e.detail, e.category" +
 						"  FROM expense e" +
 						" INNER JOIN transaction t ON t.id = e.id_transaction" +
 						" WHERE e.id_transaction = ?";
@@ -37,6 +38,7 @@ public class ExpenseDAO {
 				if (rs.next()) {
 					expense = new Expense();
 					expense.setId(rs.getLong("id"));
+					expense.setType(TransactionType.valueOf(rs.getString("type")));
 					expense.setDate(rs.getTimestamp("date"));
 					expense.setAmount(rs.getFloat("amount"));
 					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
@@ -63,7 +65,7 @@ public class ExpenseDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.date, t.amount, t.currency, e.payment_type, e.detail, e.category" +
+						"SELECT t.id, t.type, t.date, t.amount, t.currency, e.payment_type, e.detail, e.category" +
 						"  FROM expense e" +
 						" INNER JOIN transaction t ON t.id = e.id_transaction";
 
@@ -74,6 +76,7 @@ public class ExpenseDAO {
 				while (rs.next()) {
 					expense = new Expense();
 					expense.setId(rs.getLong("id"));
+					expense.setType(TransactionType.valueOf(rs.getString("type")));
 					expense.setDate(rs.getTimestamp("date"));
 					expense.setAmount(rs.getFloat("amount"));
 					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
