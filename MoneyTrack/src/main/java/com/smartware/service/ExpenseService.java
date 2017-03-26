@@ -11,6 +11,10 @@ public class ExpenseService {
 	
 	private ExpenseDAO expenseDAO = new ExpenseDAO();
 	private TransactionDAO transactionDAO = new TransactionDAO();
+	
+	public Expense getExpense(long id) {
+		return expenseDAO.getExpense(id);
+	}
 
 	public List<Expense> getExpenses() {
 		return expenseDAO.getExpenses();

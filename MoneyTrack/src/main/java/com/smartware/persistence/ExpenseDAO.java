@@ -15,6 +15,43 @@ import com.smartware.domain.catalog.PaymentType;
 
 public class ExpenseDAO {
 
+	public Expense getExpense(long id) {
+		Expense expense = null;
+
+		AppDBHelper appDBHelper = new AppDBHelper();
+		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		if (conn != null) {
+			PreparedStatement st = null;
+			ResultSet rs = null;
+			try {
+				String sql = 
+						"SELECT t.id, t.date, t.amount, t.currency, e.payment_type, t.concept, e.category" +
+						"  FROM expense e" +
+						" INNER JOIN transaction t ON t.id = e.id_transaction" +
+						" WHERE e.id_transaction = ?";
+
+				st = conn.prepareStatement(sql);
+				st.setLong(1, id);
+				rs = st.executeQuery();
+
+				if (rs.next()) {
+					expense = new Expense();
+					expense.setId(rs.getLong("id"));
+					expense.setDate(rs.getTimestamp("date"));
+					expense.setAmount(rs.getFloat("amount"));
+					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
+					expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
+					expense.setConcept(rs.getString("concept"));
+					expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return expense;
+	}
+
 	public List<Expense> getExpenses() {
 		List<Expense> expenses = new ArrayList<Expense>();
 
