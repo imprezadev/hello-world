@@ -54,4 +54,23 @@ public class ExpenseDAO {
 		return expenses;
 	}
 
+	public void insertExpense(Expense expense) {
+		AppDBHelper appDBHelper = new AppDBHelper();
+		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		if (conn != null) {
+			PreparedStatement st = null;
+			try {
+				String sql = "INSERT INTO expense (id_transaction, payment_type, category) VALUES (?, ?, ?)";
+				st = conn.prepareStatement(sql);
+				st.setLong(1, expense.getId());
+				st.setString(2, expense.getPaymenType().name());
+				st.setString(3, expense.getCategory().name());
+
+				st.execute();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
