@@ -41,6 +41,7 @@ public class ExpenseDAO {
 					expense.setAmount(rs.getFloat("amount"));
 					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
 					expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
+					expense.setDetail(rs.getString("detail"));
 					expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
 				}
 			} catch (SQLException e) {
@@ -77,6 +78,7 @@ public class ExpenseDAO {
 					expense.setAmount(rs.getFloat("amount"));
 					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
 					expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
+					expense.setDetail(rs.getString("detail"));
 					expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
 
 					expenses.add(expense);
