@@ -20,17 +20,21 @@ public class ExpenseService {
 		return expenseDAO.getExpenses();
 	}
 	
-	public void insertExpense(Expense expense) {
+	public long insertExpense(Expense expense) {
+		long id = -1;
+		
 		Transaction transaction = new Transaction();
 		transaction.setAmount(expense.getAmount());
 		transaction.setDate(expense.getDate());
 		transaction.setCurrency(expense.getCurrency());
 		transaction.setConcept(expense.getConcept());
 
-		long id = transactionDAO.insertTransaction(transaction);
+		id = transactionDAO.insertTransaction(transaction);
 		
 		expense.setId(id);
 		expenseDAO.insertExpense(expense);
+		
+		return id;
 	}
 
 }
