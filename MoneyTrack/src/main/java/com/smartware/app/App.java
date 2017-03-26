@@ -5,11 +5,14 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.smartware.domain.BankMovement;
 import com.smartware.domain.Expense;
 import com.smartware.domain.Transaction;
+import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
+import com.smartware.service.BankMovementService;
 import com.smartware.service.ExpenseService;
 import com.smartware.service.TransactionService;
 
@@ -17,38 +20,22 @@ public class App {
 	final static Logger logger = Logger.getLogger(App.class.getName());
 
 	public static void main(String[] args) {
-		long id = -1;
-		// transactions
-		for (Transaction transaction: getTransactionsFromDB()) {
-			logger.info("TRANSACTIONS:");
-			logger.info(transaction.toString());
+		long id;
+
+		for (BankMovement bankMovement: getBankMovementsFromDB()) {
+			logger.info("BANK MOVEMENTS:");
+			logger.info(bankMovement.toString());
 		}
 
-		Transaction transaction = buildTransaction();
-		logger.info("BUILDED TRANSACTION:");
-		logger.info(transaction.toString());
+		BankMovement bankMovement = buildBankMovement();
+		logger.info("BUILDED BANK MOVEMENT:");
+		logger.info(bankMovement.toString());
 
-		id = insertTransaction(transaction);
+		id = insertBankMovement(bankMovement);
 
- 		Transaction transactionFromDB = getTransactionFromDB(id);
-		logger.info("BUILDED TRANSACTION FROM DB:");
-		logger.info(transactionFromDB.toString());
-
-		//expenses
-		for (Expense expense: getExpensesFromDB()) {
-			logger.info("EXPENSES:");
-			logger.info(expense.toString());
-		}
-
- 		Expense expense = buildExpense();
-		logger.info("BUILDED EXPENSE:");
-		logger.info(expense.toString());
-
-		id = insertExpense(expense);
-
- 		Expense expenseFromDB = getExpenseFromDB(id);
-		logger.info("BUILDED EXPENSE FROM DB:");
-		logger.info(expenseFromDB.toString());
+		BankMovement bankMovementFromDB = getBankMovementFromDB(id);
+		logger.info("BUILDED BANK MOVEMENT FROM DB:");
+		logger.info(bankMovementFromDB.toString());
 	}
 
 	private static List<Transaction> getTransactionsFromDB() {
@@ -101,6 +88,32 @@ public class App {
 	private static Expense getExpenseFromDB(long id) {
 		ExpenseService expenseService = new ExpenseService();
 		return expenseService.getExpense(id);
+	}
+
+	private static List<BankMovement> getBankMovementsFromDB() {
+		BankMovementService bankMovementService = new BankMovementService();
+		return bankMovementService.getBankMovements();
+	}
+
+	private static BankMovement buildBankMovement() {
+		BankMovement bankMovement = new BankMovement();
+		bankMovement.setDate(new GregorianCalendar(2017, Calendar.MARCH, 22, 11, 58).getTime());
+		bankMovement.setAmount(10f);
+		bankMovement.setCurrency(Currency.PEN);
+		bankMovement.setOperation(BankOperation.DEBIT);
+ 		
+ 		return bankMovement;
+	}
+
+	private static long insertBankMovement(BankMovement bankMovement) {
+		BankMovementService bankMovementService = new BankMovementService();
+		return bankMovementService.insertBankMovement(bankMovement);
+
+	}
+
+	private static BankMovement getBankMovementFromDB(long id) {
+		BankMovementService bankMovementService = new BankMovementService();
+		return bankMovementService.getBankMovement(id);
 	}
 
 }

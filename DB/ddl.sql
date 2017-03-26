@@ -21,3 +21,12 @@ CREATE TABLE moneytrack.expense (
   UNIQUE INDEX id_transaction_UNIQUE (id_transaction ASC)
 );
 
+CREATE TABLE moneytrack.bank_movement (
+  id_transaction  INT NOT NULL,
+  operation       VARCHAR(20) NOT NULL,
+  remarks         VARCHAR(40) NULL,
+  INDEX transaction__bank_movement__FK_idx (id_transaction ASC),
+  UNIQUE INDEX id_transaction_UQ_idx (id_transaction ASC),
+  CONSTRAINT transaction__bank_movement__FK
+    FOREIGN KEY (id_transaction) REFERENCES moneytrack.transaction (id)
+);

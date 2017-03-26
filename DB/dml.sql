@@ -13,3 +13,9 @@ INSERT INTO transaction (id, date, amount, currency) VALUES ('6', '2017-2-01 00:
 INSERT INTO expense (id_transaction, payment_type, category, detail) VALUES ('6', 'DEBIT', 'HOME_SERVICE', 'NETFLIX');
 INSERT INTO transaction (id, date, amount, currency) VALUES ('7', '2017-03-23 10:37', '176.59', 'PEN');
 INSERT INTO expense (id_transaction, payment_type, category, detail) VALUES ('7', 'CREDIT', 'IMPREZA_FUEL', 'G-Prix, 12.6Gl, grifo JPrado');
+INSERT INTO transaction (id, date, amount, currency) VALUES (8, '2017-1-12 15:40', 80, 'PEN');
+INSERT INTO bank_movement (id_transaction, operation) VALUES (8, 'WITHDRAWAL');
+INSERT INTO transaction (id, date, amount, currency) VALUES (9, '2017-2-27 12:15', 7560.76, 'PEN');
+INSERT INTO bank_movement (id_transaction, operation, remarks) VALUES (9, 'DEPOSIT', 'SALARY FEB2017');
+INSERT INTO transaction (id, date, amount, currency) VALUES (10, '2017-1-20 8:40', 50, 'PEN');
+INSERT INTO bank_movement (id_transaction, operation, remarks) VALUES (10, 'TRANSFER_OUT', 'DIEGO - ULIMA Gastos semana 20-24ENE2017');
