@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.smartware.domain.BankMovement;
+import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Expense;
 import com.smartware.domain.Transaction;
 import com.smartware.domain.catalog.BankOperation;
+import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
 import com.smartware.service.BankMovementService;
+import com.smartware.service.CreditCardMovementService;
 import com.smartware.service.ExpenseService;
 import com.smartware.service.TransactionService;
 
@@ -22,20 +25,20 @@ public class App {
 	public static void main(String[] args) {
 		long id;
 
-		for (BankMovement bankMovement: getBankMovementsFromDB()) {
-			logger.info("BANK MOVEMENTS:");
-			logger.info(bankMovement.toString());
+		for (CreditCardMovement creditCardMovement: getCreditCardMovementsFromDB()) {
+			logger.info("CREDIT CARD MOVEMENTS:");
+			logger.info(creditCardMovement.toString());
 		}
 
-		BankMovement bankMovement = buildBankMovement();
-		logger.info("BUILDED BANK MOVEMENT:");
-		logger.info(bankMovement.toString());
+		CreditCardMovement creditCardMovement = buildCreditCardMovement();
+		logger.info("BUILDED CREDIT CARD  MOVEMENT:");
+		logger.info(creditCardMovement.toString());
 
-		id = insertBankMovement(bankMovement);
+		id = insertCreditCardMovement(creditCardMovement);
 
-		BankMovement bankMovementFromDB = getBankMovementFromDB(id);
-		logger.info("BUILDED BANK MOVEMENT FROM DB:");
-		logger.info(bankMovementFromDB.toString());
+		CreditCardMovement creditCardMovementFromDB = getCreditCardMovementFromDB(id);
+		logger.info("BUILDED CREDIT CARD  MOVEMENT FROM DB:");
+		logger.info(creditCardMovementFromDB.toString());
 	}
 
 	private static List<Transaction> getTransactionsFromDB() {
@@ -114,6 +117,31 @@ public class App {
 	private static BankMovement getBankMovementFromDB(long id) {
 		BankMovementService bankMovementService = new BankMovementService();
 		return bankMovementService.getBankMovement(id);
+	}
+
+	private static List<CreditCardMovement> getCreditCardMovementsFromDB() {
+		CreditCardMovementService creditCardMovementService = new CreditCardMovementService();
+		return creditCardMovementService.getCreditCardMovements();
+	}
+
+	private static CreditCardMovement buildCreditCardMovement() {
+		CreditCardMovement creditCardMovement = new CreditCardMovement();
+		creditCardMovement.setDate(new GregorianCalendar(2017, Calendar.MARCH, 22, 11, 58).getTime());
+		creditCardMovement.setAmount(2000f);
+		creditCardMovement.setCurrency(Currency.PEN);
+		creditCardMovement.setOperation(CreditCardOperation.PAYMENT);
+
+ 		return creditCardMovement;
+	}
+
+	private static long insertCreditCardMovement(CreditCardMovement bankMovement) {
+		CreditCardMovementService creditCardMovementService = new CreditCardMovementService();
+		return creditCardMovementService.insertCreditCardMovement(bankMovement);
+	}
+
+	private static CreditCardMovement getCreditCardMovementFromDB(long id) {
+		CreditCardMovementService creditCardMovementService = new CreditCardMovementService();
+		return creditCardMovementService.getCreditCardMovement(id);
 	}
 
 }
