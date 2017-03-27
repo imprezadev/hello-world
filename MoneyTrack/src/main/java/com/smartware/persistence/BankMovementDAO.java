@@ -9,11 +9,32 @@ import java.util.List;
 
 import com.smartware.common.AppDBHelper;
 import com.smartware.domain.BankMovement;
+import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.catalog.BankOperation;
+import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.TransactionType;
 
 public class BankMovementDAO {
+
+	private BankMovement populateBankMovement(ResultSet rs) {
+		BankMovement bankMovement = new BankMovement();
+		try {
+			bankMovement.setId(rs.getLong("id"));
+			bankMovement.setType(TransactionType.valueOf(rs.getString("type")));
+			bankMovement.setDate(rs.getTimestamp("date"));
+			bankMovement.setAmount(rs.getFloat("amount"));
+			bankMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
+			bankMovement.setOperation(BankOperation.valueOf(rs.getString("operation")));
+			bankMovement.setRemarks(rs.getString("remarks"));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			bankMovement = null;
+		}
+
+		return bankMovement;
+	}
 
 	public BankMovement getBankMovement(long id) {
 		BankMovement bankMovement = null;
@@ -36,14 +57,7 @@ public class BankMovementDAO {
 				rs = st.executeQuery();
 
 				if (rs.next()) {
-					bankMovement = new BankMovement();
-					bankMovement.setId(rs.getLong("id"));
-					bankMovement.setType(TransactionType.valueOf(rs.getString("type")));
-					bankMovement.setDate(rs.getTimestamp("date"));
-					bankMovement.setAmount(rs.getFloat("amount"));
-					bankMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
-					bankMovement.setOperation(BankOperation.valueOf(rs.getString("operation")));
-					bankMovement.setRemarks(rs.getString("remarks"));
+					bankMovement = populateBankMovement(rs);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -73,15 +87,7 @@ public class BankMovementDAO {
 
 				BankMovement bankMovement = null;
 				while (rs.next()) {
-					bankMovement = new BankMovement();
-					bankMovement.setId(rs.getLong("id"));
-					bankMovement.setType(TransactionType.valueOf(rs.getString("type")));
-					bankMovement.setDate(rs.getTimestamp("date"));
-					bankMovement.setAmount(rs.getFloat("amount"));
-					bankMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
-					bankMovement.setOperation(BankOperation.valueOf(rs.getString("operation")));
-					bankMovement.setRemarks(rs.getString("remarks"));
-
+					bankMovement = populateBankMovement(rs);
 					bankMovements.add(bankMovement);
 				}
 			} catch (SQLException e) {

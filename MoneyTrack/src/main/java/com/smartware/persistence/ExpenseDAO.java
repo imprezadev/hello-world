@@ -8,13 +8,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.smartware.common.AppDBHelper;
+import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Expense;
+import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
 import com.smartware.domain.catalog.TransactionType;
 
 public class ExpenseDAO {
+	
+	private Expense populateExpense(ResultSet rs) {
+		Expense expense = new Expense();
+		try {
+			expense.setId(rs.getLong("id"));
+			expense.setType(TransactionType.valueOf(rs.getString("type")));
+			expense.setDate(rs.getTimestamp("date"));
+			expense.setAmount(rs.getFloat("amount"));
+			expense.setCurrency(Currency.valueOf(rs.getString("currency")));
+			expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
+			expense.setDetail(rs.getString("detail"));
+			expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			expense = null;
+		}
+
+		return expense;
+	}
 
 	public Expense getExpense(long id) {
 		Expense expense = null;
@@ -36,15 +58,7 @@ public class ExpenseDAO {
 				rs = st.executeQuery();
 
 				if (rs.next()) {
-					expense = new Expense();
-					expense.setId(rs.getLong("id"));
-					expense.setType(TransactionType.valueOf(rs.getString("type")));
-					expense.setDate(rs.getTimestamp("date"));
-					expense.setAmount(rs.getFloat("amount"));
-					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
-					expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
-					expense.setDetail(rs.getString("detail"));
-					expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
+					expense = populateExpense(rs);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -74,16 +88,7 @@ public class ExpenseDAO {
 
 				Expense expense = null;
 				while (rs.next()) {
-					expense = new Expense();
-					expense.setId(rs.getLong("id"));
-					expense.setType(TransactionType.valueOf(rs.getString("type")));
-					expense.setDate(rs.getTimestamp("date"));
-					expense.setAmount(rs.getFloat("amount"));
-					expense.setCurrency(Currency.valueOf(rs.getString("currency")));
-					expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
-					expense.setDetail(rs.getString("detail"));
-					expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
-
+					expense = populateExpense(rs);
 					expenses.add(expense);
 				}
 			} catch (SQLException e) {
