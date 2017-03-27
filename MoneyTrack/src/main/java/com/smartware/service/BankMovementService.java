@@ -3,7 +3,6 @@ package com.smartware.service;
 import java.util.List;
 
 import com.smartware.domain.BankMovement;
-import com.smartware.domain.Expense;
 import com.smartware.domain.Transaction;
 import com.smartware.domain.catalog.TransactionType;
 import com.smartware.persistence.BankMovementDAO;

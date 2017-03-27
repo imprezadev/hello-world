@@ -2,11 +2,9 @@ package com.smartware.service;
 
 import java.util.List;
 
-import com.smartware.domain.BankMovement;
 import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Transaction;
 import com.smartware.domain.catalog.TransactionType;
-import com.smartware.persistence.BankMovementDAO;
 import com.smartware.persistence.CreditCardMovementDAO;
 import com.smartware.persistence.TransactionDAO;
 
