@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.smartware.common.AppDBHelper;
-import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Expense;
-import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;

@@ -9,9 +9,7 @@ import java.util.List;
 
 import com.smartware.common.AppDBHelper;
 import com.smartware.domain.BankMovement;
-import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.catalog.BankOperation;
-import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.TransactionType;
 
