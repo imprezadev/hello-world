@@ -23,22 +23,11 @@ public class App {
 	final static Logger logger = Logger.getLogger(App.class.getName());
 
 	public static void main(String[] args) {
-		long id;
+		Expense expense = buildExpense();
+		logger.info("BUILDED EXPENSE:");
+		logger.info(expense.toString());
 
-		for (CreditCardMovement creditCardMovement: getCreditCardMovementsFromDB()) {
-			logger.info("CREDIT CARD MOVEMENTS:");
-			logger.info(creditCardMovement.toString());
-		}
-
-		CreditCardMovement creditCardMovement = buildCreditCardMovement();
-		logger.info("BUILDED CREDIT CARD  MOVEMENT:");
-		logger.info(creditCardMovement.toString());
-
-		id = insertCreditCardMovement(creditCardMovement);
-
-		CreditCardMovement creditCardMovementFromDB = getCreditCardMovementFromDB(id);
-		logger.info("BUILDED CREDIT CARD  MOVEMENT FROM DB:");
-		logger.info(creditCardMovementFromDB.toString());
+		insertExpense(expense);
 	}
 
 	private static List<Transaction> getTransactionsFromDB() {
@@ -75,10 +64,10 @@ public class App {
 		expense.setDate(new GregorianCalendar(2017, Calendar.MARCH, 22, 11, 58).getTime());
 		expense.setAmount(10f);
  		expense.setCurrency(Currency.PEN);
- 		expense.setPaymenType(PaymentType.CASH);
+ 		expense.setPaymenType(PaymentType.CREDIT);
  		expense.setDetail("Altoque Menu Delivery");
  		expense.setCategory(ExpenseCategory.LUNCH);
- 		
+
  		return expense;
 	}
 
