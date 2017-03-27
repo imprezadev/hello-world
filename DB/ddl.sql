@@ -31,3 +31,13 @@ CREATE TABLE moneytrack.bank_movement (
   CONSTRAINT transaction__bank_movement__FK
     FOREIGN KEY (id_transaction) REFERENCES moneytrack.transaction (id)
 );
+
+CREATE TABLE moneytrack.credit_card_movement (
+  id_transaction  INT NOT NULL,
+  operation       VARCHAR(20) NOT NULL,
+  remarks         VARCHAR(40) NULL,
+  INDEX transaction__credit_card_movement__FK_idx (id_transaction ASC),
+  UNIQUE INDEX id_transaction_UQ_idx (id_transaction ASC),
+  CONSTRAINT transaction__credit_card_movement__FK
+    FOREIGN KEY (id_transaction) REFERENCES moneytrack.transaction (id)
+);

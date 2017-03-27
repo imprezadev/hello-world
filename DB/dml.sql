@@ -10,6 +10,8 @@ INSERT INTO transaction (id, type, date, amount, currency) VALUES (7, 'EXPENSE',
 INSERT INTO transaction (id, type, date, amount, currency) VALUES (8, 'BANK_MOVEMENT', '2017-1-12 15:40', 80, 'PEN');
 INSERT INTO transaction (id, type, date, amount, currency) VALUES (9, 'BANK_MOVEMENT', '2017-2-27 12:15', 7560.76, 'PEN');
 INSERT INTO transaction (id, type, date, amount, currency) VALUES (10, 'BANK_MOVEMENT', '2017-1-20 8:40', 50, 'PEN');
+INSERT INTO transaction (id, type, date, amount, currency) VALUES (11, 'CREDIT_CARD_MOVEMENT', '2017-1-31 13:40', 4560.98, 'PEN');
+INSERT INTO transaction (id, type, date, amount, currency) VALUES (12, 'CREDIT_CARD_MOVEMENT', '2017-1-31 23:30', 60.00, 'PEN');
 
 INSERT INTO expense (id_transaction, payment_type, category, detail) VALUES (1, 'DEBIT', 'IMPREZA_CLEAN', 'lavada y encerada del impreza');
 INSERT INTO expense (id_transaction, payment_type, category, detail) VALUES (2, 'CREDIT', 'FUN_TASTE', 'almuerzo en Caplina Sta Cruz');
@@ -23,6 +25,10 @@ INSERT INTO bank_movement (id_transaction, operation) VALUES (8, 'WITHDRAWAL');
 INSERT INTO bank_movement (id_transaction, operation, remarks) VALUES (9, 'DEPOSIT', 'SALARY FEB2017');
 INSERT INTO bank_movement (id_transaction, operation, remarks) VALUES (10, 'TRANSFER_OUT', 'DIEGO - ULIMA Gastos semana 20-24ENE2017');
 
+INSERT INTO credit_card_movement (id_transaction, operation) VALUES (11, 'PAYMENT');
+INSERT INTO credit_card_movement (id_transaction, operation) VALUES (12, 'CREDIT');
+
 SELECT * FROM transaction;
 SELECT * FROM expense;
 SELECT * FROM bank_movement;
+SELECT * FROM credit_card_movement;
