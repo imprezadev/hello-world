@@ -53,7 +53,7 @@ public class TransactionDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT id, date, amount, currency FROM transaction");
+				st = conn.prepareStatement("SELECT id, type, date, amount, currency FROM transaction");
 				rs = st.executeQuery();
 
 				Transaction transaction = null;
