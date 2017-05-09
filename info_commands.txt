@@ -26,6 +26,7 @@ git remote
 
 git commit --ammend --no-edit
 
+
 Java Commands (JDK 6)
 =====================
 javac HelloWorld.java
@@ -43,6 +44,8 @@ mvn package
 java -cp target/moneytrack-1.0-SNAPSHOT.jar com.smartware.app.App
 javap target\classes\com\smartware\domain\Transaction
 java -jar C:\Users\delta\Documents\DevLibrary\m2repo\org\projectlombok\lombok\1.16.14\lombok-1.16.14.jar
+
+mvn test
 
 JAVA Exceptions
 ===============
