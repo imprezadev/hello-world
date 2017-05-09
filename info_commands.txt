@@ -17,11 +17,14 @@ git commit --amend -m "adding this file to keep record of executed commands"
 git reset info_commands.txt
 git checkout -- info_commands.txt
 git blame ../../../../../../../info_commands.txt
+git diff info_commands.txt
 
 git remote add origin https://github.com/imprezadev/hello-world.git
 git push -u origin master
 (username: imprezadev, password: l2r)
 git remote
+
+git commit --ammend --no-edit
 
 Java Commands (JDK 6)
 =====================
