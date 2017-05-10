@@ -117,4 +117,13 @@ public class BankMovementDAO {
 		}
 	}
 
+	public void insertBankMovement(long id, BankOperation bankOperation, String remarks) {
+		BankMovement bankMovement = new BankMovement();
+		bankMovement.setId(id);
+		bankMovement.setOperation(bankOperation);
+		bankMovement.setRemarks(remarks);
+
+		insertBankMovement(bankMovement);
+	}
+
 }

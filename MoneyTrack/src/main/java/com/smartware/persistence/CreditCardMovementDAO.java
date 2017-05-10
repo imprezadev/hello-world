@@ -117,4 +117,13 @@ public class CreditCardMovementDAO {
 		}
 	}
 
+	public void insertCreditCardMovement(long id, CreditCardOperation creditCardOperation, String remarks) {
+		CreditCardMovement creditCardMovement = new CreditCardMovement();
+		creditCardMovement.setId(id);
+		creditCardMovement.setOperation(creditCardOperation);
+		creditCardMovement.setRemarks(remarks);
+
+		insertCreditCardMovement(creditCardMovement);
+	}
+
 }

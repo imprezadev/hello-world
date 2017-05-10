@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.smartware.common.AppDBHelper;
@@ -108,6 +109,16 @@ public class MoneyMovementDAO {
 		}
 
 		return id;
+	}
+
+	public long insertMoneyMovement(TransactionType transactionType, Date date, Float amount, Currency currency) {
+		MoneyMovement moneyMovement = new MoneyMovement();
+		moneyMovement.setType(transactionType);
+		moneyMovement.setDate(date);
+		moneyMovement.setAmount(amount);
+		moneyMovement.setCurrency(currency);
+
+		return insertMoneyMovement(moneyMovement);
 	}
 
 }
