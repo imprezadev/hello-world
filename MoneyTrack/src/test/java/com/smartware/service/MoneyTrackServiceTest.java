@@ -3,25 +3,20 @@ package com.smartware.service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.logging.Logger;
-
-import junit.framework.TestCase;
 
 import com.smartware.domain.Expense;
-import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
-import com.smartware.domain.catalog.TransactionType;
 
-public class ExpenseServiceTest extends TestCase {
+import junit.framework.TestCase;
 
-	private final Logger logger = Logger.getLogger(ExpenseServiceTest.class.getName());
-
+public class MoneyTrackServiceTest extends TestCase {
+	
 	private final Date            testDate            = new GregorianCalendar(2017, Calendar.MARCH, 22, 11, 58).getTime();
 	private final Float           testAmount          = 10f;
 	private final Currency        testCurrency        = Currency.PEN;
-	private final PaymentType     testPaymentType     = PaymentType.CREDIT;
+	private final PaymentType     testPaymentType     = PaymentType.CASH;
 	private final String          testDetail          = "Altoque Menu Delivery";
 	private final ExpenseCategory testExpenseCategory = ExpenseCategory.LUNCH;
 
@@ -37,34 +32,23 @@ public class ExpenseServiceTest extends TestCase {
  		return expense;
 	}
 
-	private boolean compareToTestExpense(Expense expense) {
+	private boolean equalsToTestExpense(Expense expense) {
 		return      (expense.getDate().compareTo(testDate) == 0) 
 				&&	(expense.getAmount().compareTo(testAmount) == 0) 
 				&&	(expense.getCurrency().compareTo(testCurrency) == 0)
 				&&	(expense.getCategory().compareTo(testExpenseCategory) == 0);
 	}
 
-	public void testGetExpenses() {
-		ExpenseService expenseService = new ExpenseService();
-		boolean notEmpty = !expenseService.getExpenses().isEmpty();
-		assertTrue(notEmpty);
-	}
-
-	public void testInsertExpense() {
-		ExpenseService expenseService = new ExpenseService();
-		MoneyMovementService moneyMovementService = new MoneyMovementService();
-
-		Expense newExpense= getTestExpense();
-		long id = expenseService.insertExpense(newExpense);
-
-		MoneyMovement insertedMoneyMovement = moneyMovementService.getMoneyMovement(id);
-		logger.info(insertedMoneyMovement.toString());
-
-		Expense insertedExpense = expenseService.getExpense(id);
-		logger.info(insertedExpense.toString());
-
-		boolean testResult = compareToTestExpense(insertedExpense) && insertedMoneyMovement.getType().equals(TransactionType.EXPENSE);
-		assertTrue(testResult);
+	public void testPerformExpense() {
+		MoneyTrackService moneyTrackService = new MoneyTrackService();
+		Expense testExpense = getTestExpense();
+		long id = moneyTrackService.performExpense(testExpense);
+		
+		assertTrue(id > 0);
+		
+		Expense savedExpense = moneyTrackService.getExpense(id);
+		assertTrue(equalsToTestExpense(savedExpense));
+		
 	}
 
 }

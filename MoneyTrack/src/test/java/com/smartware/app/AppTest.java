@@ -1,8 +1,6 @@
 package com.smartware.app;
 
-import com.smartware.service.BankMovementServiceTest;
-import com.smartware.service.ExpenseServiceTest;
-import com.smartware.service.MoneyMovementServiceTest;
+import com.smartware.service.MoneyTrackServiceTest;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -16,9 +14,7 @@ public class AppTest extends TestCase {
 
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
-		suite.addTestSuite(MoneyMovementServiceTest.class);
-		suite.addTestSuite(ExpenseServiceTest.class);
-		suite.addTestSuite(BankMovementServiceTest.class);
+		suite.addTestSuite(MoneyTrackServiceTest.class);
 
 		return suite;
 	}
