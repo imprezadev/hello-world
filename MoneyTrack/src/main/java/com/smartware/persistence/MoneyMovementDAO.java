@@ -14,6 +14,22 @@ import com.smartware.domain.catalog.TransactionType;
 
 public class MoneyMovementDAO {
 
+	private MoneyMovement populateMoneyMovement(ResultSet rs) {
+		MoneyMovement moneyMovement = new MoneyMovement();
+		try {
+			moneyMovement.setId(rs.getLong("id"));
+			moneyMovement.setType(TransactionType.valueOf(rs.getString("type")));
+			moneyMovement.setDate(rs.getTimestamp("date"));
+			moneyMovement.setAmount(rs.getFloat("amount"));
+			moneyMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			moneyMovement = null;
+		}
+		return moneyMovement;
+	}
+
 	public MoneyMovement getMoneyMovement(long id) {
 		MoneyMovement moneyMovement = null;
 		
@@ -29,12 +45,7 @@ public class MoneyMovementDAO {
 				rs = st.executeQuery();
 
 				if (rs.next()) {
-					moneyMovement = new MoneyMovement();
-					moneyMovement.setId(rs.getLong("id"));
-					moneyMovement.setType(TransactionType.valueOf(rs.getString("type")));
-					moneyMovement.setDate(rs.getTimestamp("date"));
-					moneyMovement.setAmount(rs.getFloat("amount"));
-					moneyMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
+					moneyMovement = populateMoneyMovement(rs);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -58,13 +69,7 @@ public class MoneyMovementDAO {
 
 				MoneyMovement moneyMovement = null;
 				while (rs.next()) {
-					moneyMovement = new MoneyMovement();
-					moneyMovement.setId(rs.getLong("id"));
-					moneyMovement.setType(TransactionType.valueOf(rs.getString("type")));
-					moneyMovement.setDate(rs.getTimestamp("date"));
-					moneyMovement.setAmount(rs.getFloat("amount"));
-					moneyMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
-					
+					moneyMovement = populateMoneyMovement(rs);
 					moneyMovements.add(moneyMovement);
 				}
 			} catch (SQLException e) {
