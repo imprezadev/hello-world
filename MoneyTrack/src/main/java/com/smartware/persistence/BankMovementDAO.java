@@ -45,10 +45,10 @@ public class BankMovementDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.type, t.date, t.amount, t.currency, bm.operation, bm.remarks" +
+						"SELECT mm.id, mm.type, mm.date, mm.amount, mm.currency, bm.operation, bm.remarks" +
 						"  FROM bank_movement bm" +
-						" INNER JOIN transaction t ON t.id = bm.id_transaction" +
-						" WHERE bm.id_transaction = ?";
+						" INNER JOIN money_movement mm ON mm.id = bm.id_money_movement" +
+						" WHERE bm.id_money_movement = ?";
 
 				st = conn.prepareStatement(sql);
 				st.setLong(1, id);
@@ -76,9 +76,9 @@ public class BankMovementDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.type, t.date, t.amount, t.currency, bm.operation, bm.remarks" +
+						"SELECT mm.id, mm.type, mm.date, mm.amount, mm.currency, bm.operation, bm.remarks" +
 						"  FROM bank_movement bm" +
-						" INNER JOIN transaction t ON t.id = bm.id_transaction";
+						" INNER JOIN money_movement mm ON mm.id = bm.id_money_movement";
 
 				st = conn.prepareStatement(sql);
 				rs = st.executeQuery();
@@ -103,7 +103,7 @@ public class BankMovementDAO {
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
-				String sql = "INSERT INTO bank_movement (id_transaction, operation, remarks) VALUES (?, ?, ?)";
+				String sql = "INSERT INTO bank_movement (id_money_movement, operation, remarks) VALUES (?, ?, ?)";
 				st = conn.prepareStatement(sql);
 				st.setLong(1, bankMovement.getId());
 				st.setString(2, bankMovement.getOperation().name());

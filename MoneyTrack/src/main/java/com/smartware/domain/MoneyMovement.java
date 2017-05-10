@@ -7,7 +7,7 @@ import com.smartware.domain.catalog.TransactionType;
 
 import lombok.Data;
 
-public @Data class Transaction {
+public @Data class MoneyMovement {
 	private Long id;
 	private TransactionType type;
 	private Date date;

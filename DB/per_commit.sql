@@ -1,17 +1,31 @@
 USE moneytrack;
 
-CREATE TABLE moneytrack.credit_card_movement (
-  id_transaction  INT NOT NULL,
-  operation       VARCHAR(20) NOT NULL,
-  remarks         VARCHAR(40) NULL,
-  INDEX transaction__credit_card_movement__FK_idx (id_transaction ASC),
-  UNIQUE INDEX id_transaction_UQ_idx (id_transaction ASC),
-  CONSTRAINT transaction__credit_card_movement__FK
-    FOREIGN KEY (id_transaction) REFERENCES moneytrack.transaction (id)
-);
+ALTER TABLE transaction
+  RENAME TO money_movement;
 
-INSERT INTO transaction (id, type, date, amount, currency) VALUES (4000, 'CREDIT_CARD_MOVEMENT', '2017-1-31 13:40', 4560.98, 'PEN');
-INSERT INTO credit_card_movement (id_transaction, operation) VALUES (4000, 'PAYMENT');
+ALTER TABLE expense
+  DROP FOREIGN KEY FK_transaction_expense;
 
-INSERT INTO transaction (id, type, date, amount, currency) VALUES (4001, 'CREDIT_CARD_MOVEMENT', '2017-1-31 23:30', 60.00, 'PEN');
-INSERT INTO credit_card_movement (id_transaction, operation) VALUES (4001, 'CREDIT');
+ALTER TABLE expense
+  CHANGE COLUMN id_transaction id_money_movement INT(11) NOT NULL;
+
+ALTER TABLE expense
+  ADD CONSTRAINT FK__expense__money_movement FOREIGN KEY(id_money_movement) REFERENCES money_movement(id);
+
+ALTER TABLE bank_movement
+  CHANGE COLUMN id_transaction id_money_movement INT(11) NOT NULL;
+
+ALTER TABLE bank_movement
+  DROP FOREIGN KEY transaction__bank_movement__FK;
+
+ALTER TABLE bank_movement
+  ADD CONSTRAINT FK__bank_movement__money_movement FOREIGN KEY(id_money_movement) REFERENCES money_movement(id);
+
+ALTER TABLE credit_card_movement
+  CHANGE COLUMN id_transaction id_money_movement INT(11) NOT NULL;
+
+ALTER TABLE credit_card_movement
+  DROP FOREIGN KEY transaction__credit_card_movement__FK;
+
+ALTER TABLE credit_card_movement
+  ADD CONSTRAINT FK__credit_card_movement__money_movement FOREIGN KEY(id_money_movement) REFERENCES money_movement(id);

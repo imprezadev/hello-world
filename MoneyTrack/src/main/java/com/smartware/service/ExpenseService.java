@@ -5,7 +5,7 @@ import java.util.List;
 import com.smartware.domain.BankMovement;
 import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Expense;
-import com.smartware.domain.Transaction;
+import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.PaymentType;
@@ -13,12 +13,12 @@ import com.smartware.domain.catalog.TransactionType;
 import com.smartware.persistence.BankMovementDAO;
 import com.smartware.persistence.CreditCardMovementDAO;
 import com.smartware.persistence.ExpenseDAO;
-import com.smartware.persistence.TransactionDAO;
+import com.smartware.persistence.MoneyMovementDAO;
 
 public class ExpenseService {
 
 	private ExpenseDAO expenseDAO = new ExpenseDAO();
-	private TransactionDAO transactionDAO = new TransactionDAO();
+	private MoneyMovementDAO moneyMovementDAO = new MoneyMovementDAO();
 	private BankMovementDAO bankMovementDAO = new BankMovementDAO();
 	private CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
 
@@ -33,13 +33,13 @@ public class ExpenseService {
 	public long insertExpense(Expense expense) {
 		long id = -1;
 
-		Transaction transaction = new Transaction();
-		transaction.setType(TransactionType.EXPENSE);
-		transaction.setDate(expense.getDate());
-		transaction.setAmount(expense.getAmount());
-		transaction.setCurrency(expense.getCurrency());
+		MoneyMovement moneyMovement = new MoneyMovement();
+		moneyMovement.setType(TransactionType.EXPENSE);
+		moneyMovement.setDate(expense.getDate());
+		moneyMovement.setAmount(expense.getAmount());
+		moneyMovement.setCurrency(expense.getCurrency());
 
-		id = transactionDAO.insertTransaction(transaction);
+		id = moneyMovementDAO.insertMoneyMovement(moneyMovement);
 
 		if (expense.getPaymenType().equals(PaymentType.DEBIT)) {
 			BankMovement bankMovement = new BankMovement();

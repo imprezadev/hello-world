@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper=true)
-public class CreditCardMovement extends Transaction {
+public class CreditCardMovement extends MoneyMovement {
 	private CreditCardOperation operation;
 	private String remarks;
 }

@@ -7,7 +7,7 @@ import com.smartware.domain.catalog.BankOperation;
 
 @Data
 @ToString(callSuper=true)
-public class BankMovement extends Transaction {
+public class BankMovement extends MoneyMovement {
 	private BankOperation operation;
 	private String remarks;
 }

@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import junit.framework.TestCase;
 
 import com.smartware.domain.Expense;
-import com.smartware.domain.Transaction;
+import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
@@ -52,18 +52,18 @@ public class ExpenseServiceTest extends TestCase {
 
 	public void testInsertExpense() {
 		ExpenseService expenseService = new ExpenseService();
-		TransactionService transactionService = new TransactionService();
+		MoneyMovementService moneyMovementService = new MoneyMovementService();
 
 		Expense newExpense= getTestExpense();
 		long id = expenseService.insertExpense(newExpense);
 
-		Transaction insertedTransaction = transactionService.getTransaction(id);
-		logger.info(insertedTransaction.toString());
+		MoneyMovement insertedMoneyMovement = moneyMovementService.getMoneyMovement(id);
+		logger.info(insertedMoneyMovement.toString());
 
 		Expense insertedExpense = expenseService.getExpense(id);
 		logger.info(insertedExpense.toString());
 
-		boolean testResult = compareToTestExpense(insertedExpense) && insertedTransaction.getType().equals(TransactionType.EXPENSE);
+		boolean testResult = compareToTestExpense(insertedExpense) && insertedMoneyMovement.getType().equals(TransactionType.EXPENSE);
 		assertTrue(testResult);
 	}
 

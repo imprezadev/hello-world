@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
 import com.smartware.domain.BankMovement;
-import com.smartware.domain.Transaction;
+import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.TransactionType;
@@ -47,18 +47,18 @@ public class BankMovementServiceTest extends TestCase {
 
 	public void testInsertBankMovement() {
 		BankMovementService bankMovementService = new BankMovementService();
-		TransactionService transactionService = new TransactionService();
+		MoneyMovementService moneyMovementService = new MoneyMovementService();
 	
 		BankMovement newBankMovement = getTestBankMovement();
 		long id = bankMovementService.insertBankMovement(newBankMovement);
 	
-		Transaction transaction = transactionService.getTransaction(id);
-		logger.info(transaction.toString());
+		MoneyMovement insertedMoneyMovement = moneyMovementService.getMoneyMovement(id);
+		logger.info(insertedMoneyMovement.toString());
 	
 		BankMovement insertedBankMovement = bankMovementService.getBankMovement(id);
 		logger.info(insertedBankMovement.toString());
 	
-		boolean testResult = compareToTestBankMovement(newBankMovement) && transaction.getType().equals(TransactionType.BANK_MOVEMENT);
+		boolean testResult = compareToTestBankMovement(newBankMovement) && insertedMoneyMovement.getType().equals(TransactionType.BANK_MOVEMENT);
 		assertTrue(testResult);
 	}
 

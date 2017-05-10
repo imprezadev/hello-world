@@ -3,16 +3,16 @@ package com.smartware.service;
 import java.util.List;
 
 import com.smartware.domain.CreditCardMovement;
-import com.smartware.domain.Transaction;
+import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.TransactionType;
 import com.smartware.persistence.CreditCardMovementDAO;
-import com.smartware.persistence.TransactionDAO;
+import com.smartware.persistence.MoneyMovementDAO;
 
 public class CreditCardMovementService {
 
 	
 	CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
-	TransactionDAO transactionDAO = new TransactionDAO();
+	MoneyMovementDAO moneyMovementDAO = new MoneyMovementDAO();
 
 	public CreditCardMovement getCreditCardMovement(long id) {
 	  return creditCardMovementDAO.getCreditCardMovement(id);
@@ -25,13 +25,13 @@ public class CreditCardMovementService {
 	public long insertCreditCardMovement(CreditCardMovement creditCardMovement) {
 		long id = -1;
 
-		Transaction transaction = new Transaction();
-		transaction.setType(TransactionType.CREDIT_CARD_MOVEMENT);
-		transaction.setDate(creditCardMovement.getDate());
-		transaction.setAmount(creditCardMovement.getAmount());
-		transaction.setCurrency(creditCardMovement.getCurrency());
+		MoneyMovement moneyMovement = new MoneyMovement();
+		moneyMovement.setType(TransactionType.CREDIT_CARD_MOVEMENT);
+		moneyMovement.setDate(creditCardMovement.getDate());
+		moneyMovement.setAmount(creditCardMovement.getAmount());
+		moneyMovement.setCurrency(creditCardMovement.getCurrency());
 
-		id = transactionDAO.insertTransaction(transaction);
+		id = moneyMovementDAO.insertMoneyMovement(moneyMovement);
 
 		creditCardMovement.setId(id);
 		creditCardMovementDAO.insertCreditCardMovement(creditCardMovement);

@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper=true)
-public class Expense extends Transaction {
+public class Expense extends MoneyMovement {
 	private PaymentType paymenType;
 	private ExpenseCategory category;
 	private String detail;

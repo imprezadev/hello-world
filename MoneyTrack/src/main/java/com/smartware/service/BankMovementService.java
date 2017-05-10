@@ -3,15 +3,15 @@ package com.smartware.service;
 import java.util.List;
 
 import com.smartware.domain.BankMovement;
-import com.smartware.domain.Transaction;
+import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.TransactionType;
 import com.smartware.persistence.BankMovementDAO;
-import com.smartware.persistence.TransactionDAO;
+import com.smartware.persistence.MoneyMovementDAO;
 
 public class BankMovementService {
 	
 	BankMovementDAO bankMovementDAO = new BankMovementDAO();
-	TransactionDAO transactionDAO = new TransactionDAO();
+	MoneyMovementDAO moneyMovementDAO = new MoneyMovementDAO();
 
 	public BankMovement getBankMovement(long id) {
 	  return bankMovementDAO.getBankMovement(id);
@@ -24,13 +24,13 @@ public class BankMovementService {
 	public long insertBankMovement(BankMovement bankMovement) {
 		long id = -1;
 
-		Transaction transaction = new Transaction();
-		transaction.setType(TransactionType.BANK_MOVEMENT);
-		transaction.setDate(bankMovement.getDate());
-		transaction.setAmount(bankMovement.getAmount());
-		transaction.setCurrency(bankMovement.getCurrency());
+		MoneyMovement moneyMovement = new MoneyMovement();
+		moneyMovement.setType(TransactionType.BANK_MOVEMENT);
+		moneyMovement.setDate(bankMovement.getDate());
+		moneyMovement.setAmount(bankMovement.getAmount());
+		moneyMovement.setCurrency(bankMovement.getCurrency());
 
-		id = transactionDAO.insertTransaction(transaction);
+		id = moneyMovementDAO.insertMoneyMovement(moneyMovement);
 
 		bankMovement.setId(id);
 		bankMovementDAO.insertBankMovement(bankMovement);

@@ -45,10 +45,10 @@ public class CreditCardMovementDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.type, t.date, t.amount, t.currency, ccm.operation, ccm.remarks" +
+						"SELECT mm.id, mm.type, mm.date, mm.amount, mm.currency, ccm.operation, ccm.remarks" +
 						"  FROM credit_card_movement ccm" +
-						" INNER JOIN transaction t ON t.id = ccm.id_transaction" +
-						" WHERE ccm.id_transaction = ?";
+						" INNER JOIN money_movement mm ON mm.id = ccm.id_money_movement" +
+						" WHERE ccm.id_money_movement = ?";
 
 				st = conn.prepareStatement(sql);
 				st.setLong(1, id);
@@ -76,9 +76,9 @@ public class CreditCardMovementDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT t.id, t.type, t.date, t.amount, t.currency, ccm.operation, ccm.remarks" +
+						"SELECT mm.id, mm.type, mm.date, mm.amount, mm.currency, ccm.operation, ccm.remarks" +
 						"  FROM credit_card_movement ccm" +
-						" INNER JOIN transaction t ON t.id = ccm.id_transaction";
+						" INNER JOIN money_movement mm ON mm.id = ccm.id_money_movement";
 
 				st = conn.prepareStatement(sql);
 				rs = st.executeQuery();
@@ -103,7 +103,7 @@ public class CreditCardMovementDAO {
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
-				String sql = "INSERT INTO credit_card_movement (id_transaction, operation, remarks) VALUES (?, ?, ?)";
+				String sql = "INSERT INTO credit_card_movement (id_money_movement, operation, remarks) VALUES (?, ?, ?)";
 				st = conn.prepareStatement(sql);
 				st.setLong(1, creditCardMovement.getId());
 				st.setString(2, creditCardMovement.getOperation().name());
