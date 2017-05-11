@@ -14,10 +14,10 @@ import com.smartware.persistence.MoneyMovementDAO;
 
 public class MoneyTrackService {
 
-	private ExpenseDAO expenseDAO = new ExpenseDAO();
 	private MoneyMovementDAO moneyMovementDAO = new MoneyMovementDAO();
 	private BankMovementDAO bankMovementDAO = new BankMovementDAO();
 	private CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
+	private ExpenseDAO expenseDAO = new ExpenseDAO();
 
 	public long recordExpense(Expense expense) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.EXPENSE, expense.getDate(), expense.getAmount(), expense.getCurrency());
