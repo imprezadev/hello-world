@@ -36,10 +36,6 @@ public class MoneyTrackService {
 		return id;
 	}
 
-	public Expense getExpense(long id) {
-		return expenseDAO.getExpense(id);
-	}
-
 	public long recordCreditCardPayment(CreditCardMovement creditCardMovement, PaymentType paymentType) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.CREDIT_CARD_MOVEMENT, creditCardMovement.getDate(), creditCardMovement.getAmount(), creditCardMovement.getCurrency());
 
@@ -52,10 +48,6 @@ public class MoneyTrackService {
 		return id;
 	}
 
-	public CreditCardMovement getCreditCardPayment(long id) {
-		return creditCardMovementDAO.getCreditCardMovement(id);
-	}
-
 	public long recordWithdrawal(BankMovement bankMovement) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.BANK_MOVEMENT, bankMovement.getDate(), bankMovement.getAmount(), bankMovement.getCurrency());
 
@@ -64,10 +56,6 @@ public class MoneyTrackService {
 		bankMovementDAO.insertBankMovement(bankMovement);
 
 		return id;
-	}
-
-	public BankMovement getWithdrawal(long id) {
-		return bankMovementDAO.getBankMovement(id);
 	}
 
 }

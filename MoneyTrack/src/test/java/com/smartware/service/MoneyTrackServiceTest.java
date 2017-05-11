@@ -15,6 +15,7 @@ import com.smartware.domain.catalog.PaymentType;
 import com.smartware.domain.catalog.TransactionType;
 import com.smartware.persistence.BankMovementDAO;
 import com.smartware.persistence.CreditCardMovementDAO;
+import com.smartware.persistence.ExpenseDAO;
 import com.smartware.persistence.MoneyMovementDAO;
 
 import junit.framework.TestCase;
@@ -25,6 +26,7 @@ public class MoneyTrackServiceTest extends TestCase {
 	private MoneyMovementDAO moneyMovementDAO = new MoneyMovementDAO(); 
 	private BankMovementDAO bankMovementDAO = new BankMovementDAO();
 	private CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
+	private ExpenseDAO expenseDAO = new ExpenseDAO();
 
 	private Expense getTestExpenseCashPayment() {
 		Expense expense = new Expense();
@@ -116,7 +118,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertNotNull(moneyMovement);
 		assertTrue(moneyMovement.getType().equals(TransactionType.EXPENSE));
 
-		Expense savedExpense = moneyTrackService.getExpense(id);
+		Expense savedExpense = expenseDAO.getExpense(id);
 		assertTrue(sameExpensesData(testExpense, savedExpense));
 	}
 
@@ -134,7 +136,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertNotNull(bankMovement);
 		assertTrue(bankMovement.getOperation().equals(BankOperation.DEBIT));
 
-		Expense savedExpense = moneyTrackService.getExpense(id);
+		Expense savedExpense = expenseDAO.getExpense(id);
 		assertTrue(sameExpensesData(testExpense, savedExpense));
 	}
 
@@ -152,7 +154,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertNotNull(creditCardMovement);
 		assertTrue(creditCardMovement.getOperation().equals(CreditCardOperation.CREDIT));
 
-		Expense savedExpense = moneyTrackService.getExpense(id);
+		Expense savedExpense = expenseDAO.getExpense(id);
 		assertTrue(sameExpensesData(testExpense, savedExpense));
 	}
 
@@ -166,7 +168,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertNotNull(moneyMovement);
 		assertTrue(moneyMovement.getType().equals(TransactionType.CREDIT_CARD_MOVEMENT));
 
-		CreditCardMovement savedCreditCardMovement = moneyTrackService.getCreditCardPayment(id);
+		CreditCardMovement savedCreditCardMovement = creditCardMovementDAO.getCreditCardMovement(id);
 		assertNotNull(savedCreditCardMovement);
 		assertTrue(sameCreditCardMovementData(testCreditCardMovement, savedCreditCardMovement));
 	}
@@ -185,7 +187,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertNotNull(bankMovement);
 		assertTrue(bankMovement.getOperation().equals(BankOperation.DEBIT));
 
-		CreditCardMovement savedCreditCardMovement = moneyTrackService.getCreditCardPayment(id);
+		CreditCardMovement savedCreditCardMovement = creditCardMovementDAO.getCreditCardMovement(id);
 		assertNotNull(savedCreditCardMovement);
 		assertTrue(sameCreditCardMovementData(testCreditCardMovement, savedCreditCardMovement));
 	}
@@ -200,7 +202,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertNotNull(moneyMovement);
 		assertTrue(moneyMovement.getType().equals(TransactionType.BANK_MOVEMENT));
 
-		BankMovement savedBankMovement = moneyTrackService.getWithdrawal(id);
+		BankMovement savedBankMovement = bankMovementDAO.getBankMovement(id);
 		assertNotNull(savedBankMovement);
 		assertTrue(sameBankMovementData(testBankMovement, savedBankMovement));
 	}
