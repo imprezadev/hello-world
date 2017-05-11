@@ -1,8 +1,7 @@
 package com.smartware.service;
 
-import com.smartware.domain.BankMovement;
+import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Expense;
-import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.PaymentType;
@@ -38,6 +37,22 @@ public class MoneyTrackService {
 
 	public Expense getExpense(long id) {
 		return expenseDAO.getExpense(id);
+	}
+
+	public long payCreditCard(CreditCardMovement creditCardMovement, PaymentType paymentType) {
+		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.CREDIT_CARD_MOVEMENT, creditCardMovement.getDate(), creditCardMovement.getAmount(), creditCardMovement.getCurrency());
+
+		if (paymentType.equals(PaymentType.DEBIT)) {
+			bankMovementDAO.insertBankMovement(id, BankOperation.DEBIT, TransactionType.CREDIT_CARD_MOVEMENT.name());
+		}
+
+		creditCardMovementDAO.insertCreditCardMovement(id, CreditCardOperation.PAYMENT, creditCardMovement.getRemarks());
+
+		return id;
+	}
+
+	public CreditCardMovement getCreditCardPayment(long id) {
+		return creditCardMovementDAO.getCreditCardMovement(id);
 	}
 
 }

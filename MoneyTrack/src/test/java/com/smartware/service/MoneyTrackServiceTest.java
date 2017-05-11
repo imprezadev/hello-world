@@ -1,7 +1,6 @@
 package com.smartware.service;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.smartware.domain.BankMovement;
@@ -26,7 +25,7 @@ public class MoneyTrackServiceTest extends TestCase {
 	private MoneyMovementDAO moneyMovementDAO = new MoneyMovementDAO(); 
 	private BankMovementDAO bankMovementDAO = new BankMovementDAO();
 	private CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
-	
+
 	private Expense getTestExpenseCashPayment() {
 		Expense expense = new Expense();
 		expense.setDate(new GregorianCalendar(2017, Calendar.MARCH, 22, 11, 58).getTime());
@@ -63,19 +62,38 @@ public class MoneyTrackServiceTest extends TestCase {
  		return expense;
 	}
 
+	private CreditCardMovement getTestCreditCardMovementPayment() {
+		CreditCardMovement creditCardMovement = new CreditCardMovement();
+		creditCardMovement.setDate(new GregorianCalendar(2017, Calendar.MARCH, 01, 14, 34).getTime());
+		creditCardMovement.setAmount(4790.45f);
+		creditCardMovement.setCurrency(Currency.PEN);
+		creditCardMovement.setOperation(CreditCardOperation.PAYMENT);
+		creditCardMovement.setRemarks("TOTAL FACTURADO 23908");
+
+ 		return creditCardMovement;
+	}
+
 	private boolean sameExpensesData(Expense testExpense, Expense savedExpense) {
-		return      (testExpense.getDate().compareTo(savedExpense.getDate()) == 0) 
-				&&	(testExpense.getAmount().compareTo(savedExpense.getAmount()) == 0) 
+		return      (testExpense.getDate().compareTo(savedExpense.getDate()) == 0)
+				&&	(testExpense.getAmount().compareTo(savedExpense.getAmount()) == 0)
 				&&	(testExpense.getCurrency().compareTo(savedExpense.getCurrency()) == 0)
 				&&	(testExpense.getCategory().compareTo(savedExpense.getCategory()) == 0);
+	}
+
+	private boolean sameCreditCardMovementData(CreditCardMovement testCreditCardMovement, CreditCardMovement savedCreditCardMovement) {
+		return      (testCreditCardMovement.getDate().compareTo(savedCreditCardMovement.getDate()) == 0)
+				&&	(testCreditCardMovement.getAmount().compareTo(savedCreditCardMovement.getAmount()) == 0)
+				&&	(testCreditCardMovement.getCurrency().compareTo(savedCreditCardMovement.getCurrency()) == 0)
+				&&	(testCreditCardMovement.getOperation().compareTo(savedCreditCardMovement.getOperation()) == 0)
+		        &&	(testCreditCardMovement.getRemarks().compareTo(savedCreditCardMovement.getRemarks()) == 0);
 	}
 
 	public void testPerformExpense() {
 		Expense testExpense = getTestExpenseCashPayment();
 		long id = moneyTrackService.performExpense(testExpense);
-		
+
 		assertTrue(id > 0);
-		
+
 		MoneyMovement moneyMovement = moneyMovementDAO.getMoneyMovement(id);
 		assertNotNull(moneyMovement);
 		assertTrue(moneyMovement.getType().equals(TransactionType.EXPENSE));
@@ -118,6 +136,40 @@ public class MoneyTrackServiceTest extends TestCase {
 
 		Expense savedExpense = moneyTrackService.getExpense(id);
 		assertTrue(sameExpensesData(testExpense, savedExpense));
+	}
+
+	public void testPayCreditCardCashPayment() {
+		CreditCardMovement testCreditCardMovement = getTestCreditCardMovementPayment();
+		long id = moneyTrackService.payCreditCard(testCreditCardMovement, PaymentType.CASH);
+
+		assertTrue(id > 0);
+
+		MoneyMovement moneyMovement = moneyMovementDAO.getMoneyMovement(id);
+		assertNotNull(moneyMovement);
+		assertTrue(moneyMovement.getType().equals(TransactionType.CREDIT_CARD_MOVEMENT));
+
+		CreditCardMovement savedCreditCardMovement = moneyTrackService.getCreditCardPayment(id);
+		assertNotNull(savedCreditCardMovement);
+		assertTrue(sameCreditCardMovementData(testCreditCardMovement, savedCreditCardMovement));
+	}
+
+	public void testPayCreditCardDebitPayment() {
+		CreditCardMovement testCreditCardMovement = getTestCreditCardMovementPayment();
+		long id = moneyTrackService.payCreditCard(testCreditCardMovement, PaymentType.DEBIT);
+
+		assertTrue(id > 0);
+
+		MoneyMovement moneyMovement = moneyMovementDAO.getMoneyMovement(id);
+		assertNotNull(moneyMovement);
+		assertTrue(moneyMovement.getType().equals(TransactionType.CREDIT_CARD_MOVEMENT));
+
+		BankMovement bankMovement = bankMovementDAO.getBankMovement(id);
+		assertNotNull(bankMovement);
+		assertTrue(bankMovement.getOperation().equals(BankOperation.DEBIT));
+		
+		CreditCardMovement savedCreditCardMovement = moneyTrackService.getCreditCardPayment(id);
+		assertNotNull(savedCreditCardMovement);
+		assertTrue(sameCreditCardMovementData(testCreditCardMovement, savedCreditCardMovement));
 	}
 
 }
