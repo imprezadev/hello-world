@@ -106,9 +106,9 @@ public class MoneyTrackServiceTest extends TestCase {
 		        &&	(testBankMovement.getRemarks().compareTo(savedBankMovement.getRemarks()) == 0);
 	}
 
-	public void testPerformExpense() {
+	public void testRecordExpense() {
 		Expense testExpense = getTestExpenseCashPayment();
-		long id = moneyTrackService.performExpense(testExpense);
+		long id = moneyTrackService.recordExpense(testExpense);
 
 		assertTrue(id > 0);
 
@@ -120,9 +120,9 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameExpensesData(testExpense, savedExpense));
 	}
 
-	public void testPerformExpenseDebitPayment() {
+	public void testRecordExpenseDebitPayment() {
 		Expense testExpense = getTestExpenseDebitPayment();
-		long id = moneyTrackService.performExpense(testExpense);
+		long id = moneyTrackService.recordExpense(testExpense);
 
 		assertTrue(id > 0);
 
@@ -138,9 +138,9 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameExpensesData(testExpense, savedExpense));
 	}
 
-	public void testPerformExpenseCreditPayment() {
+	public void testRecordExpenseCreditPayment() {
 		Expense testExpense = getTestExpenseCreditPayment();
-		long id = moneyTrackService.performExpense(testExpense);
+		long id = moneyTrackService.recordExpense(testExpense);
 
 		assertTrue(id > 0);
 
@@ -156,9 +156,9 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameExpensesData(testExpense, savedExpense));
 	}
 
-	public void testPayCreditCardCashPayment() {
+	public void testRecordCreditCardPaymentCash() {
 		CreditCardMovement testCreditCardMovement = getTestCreditCardMovementPayment();
-		long id = moneyTrackService.payCreditCard(testCreditCardMovement, PaymentType.CASH);
+		long id = moneyTrackService.recordCreditCardPayment(testCreditCardMovement, PaymentType.CASH);
 
 		assertTrue(id > 0);
 
@@ -171,9 +171,9 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameCreditCardMovementData(testCreditCardMovement, savedCreditCardMovement));
 	}
 
-	public void testPayCreditCardDebitPayment() {
+	public void testRecordCreditCardPaymentDebit() {
 		CreditCardMovement testCreditCardMovement = getTestCreditCardMovementPayment();
-		long id = moneyTrackService.payCreditCard(testCreditCardMovement, PaymentType.DEBIT);
+		long id = moneyTrackService.recordCreditCardPayment(testCreditCardMovement, PaymentType.DEBIT);
 
 		assertTrue(id > 0);
 
@@ -190,9 +190,9 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameCreditCardMovementData(testCreditCardMovement, savedCreditCardMovement));
 	}
 
-	public void testWithdraw() {
+	public void testRecordWithdrawal() {
 		BankMovement testBankMovement = getTestBankMovementWithdraw();
-		long id = moneyTrackService.withdraw(testBankMovement);
+		long id = moneyTrackService.recordWithdrawal(testBankMovement);
 
 		assertTrue(id > 0);
 

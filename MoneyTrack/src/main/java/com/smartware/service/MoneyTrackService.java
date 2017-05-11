@@ -19,7 +19,7 @@ public class MoneyTrackService {
 	private BankMovementDAO bankMovementDAO = new BankMovementDAO();
 	private CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
 
-	public long performExpense(Expense expense) {
+	public long recordExpense(Expense expense) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.EXPENSE, expense.getDate(), expense.getAmount(), expense.getCurrency());
 
 		if (expense.getPaymenType().equals(PaymentType.DEBIT)) {
@@ -40,7 +40,7 @@ public class MoneyTrackService {
 		return expenseDAO.getExpense(id);
 	}
 
-	public long payCreditCard(CreditCardMovement creditCardMovement, PaymentType paymentType) {
+	public long recordCreditCardPayment(CreditCardMovement creditCardMovement, PaymentType paymentType) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.CREDIT_CARD_MOVEMENT, creditCardMovement.getDate(), creditCardMovement.getAmount(), creditCardMovement.getCurrency());
 
 		if (paymentType.equals(PaymentType.DEBIT)) {
@@ -56,7 +56,7 @@ public class MoneyTrackService {
 		return creditCardMovementDAO.getCreditCardMovement(id);
 	}
 
-	public long withdraw(BankMovement bankMovement) {
+	public long recordWithdrawal(BankMovement bankMovement) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.BANK_MOVEMENT, bankMovement.getDate(), bankMovement.getAmount(), bankMovement.getCurrency());
 
 		bankMovement.setId(id);
