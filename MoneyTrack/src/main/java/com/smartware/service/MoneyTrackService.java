@@ -1,5 +1,6 @@
 package com.smartware.service;
 
+import com.smartware.domain.BankMovement;
 import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Expense;
 import com.smartware.domain.catalog.BankOperation;
@@ -53,6 +54,20 @@ public class MoneyTrackService {
 
 	public CreditCardMovement getCreditCardPayment(long id) {
 		return creditCardMovementDAO.getCreditCardMovement(id);
+	}
+
+	public long withdraw(BankMovement bankMovement) {
+		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.BANK_MOVEMENT, bankMovement.getDate(), bankMovement.getAmount(), bankMovement.getCurrency());
+
+		bankMovement.setId(id);
+		bankMovement.setOperation(BankOperation.DEBIT);
+		bankMovementDAO.insertBankMovement(bankMovement);
+
+		return id;
+	}
+
+	public BankMovement getWithdrawal(long id) {
+		return bankMovementDAO.getBankMovement(id);
 	}
 
 }
