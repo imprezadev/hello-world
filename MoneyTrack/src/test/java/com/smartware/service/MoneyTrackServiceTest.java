@@ -85,6 +85,16 @@ public class MoneyTrackServiceTest extends TestCase {
 		return bankMovement;
 	}
 
+	private BankMovement getTestBankMovementGotSalary() {
+		BankMovement bankMovement = new BankMovement();
+		bankMovement.setDate(new GregorianCalendar(2017, Calendar.JANUARY, 30, 14, 15).getTime());
+		bankMovement.setAmount(5545f);
+		bankMovement.setCurrency(Currency.PEN);
+		bankMovement.setOperation(BankOperation.TRANSFER_IN);
+		bankMovement.setRemarks("SALARY JAN2017");
+		return bankMovement;
+	}
+
 	private boolean sameExpensesData(Expense testExpense, Expense savedExpense) {
 		return      (testExpense.getDate().compareTo(savedExpense.getDate()) == 0)
 				&&	(testExpense.getAmount().compareTo(savedExpense.getAmount()) == 0)
@@ -195,6 +205,21 @@ public class MoneyTrackServiceTest extends TestCase {
 	public void testRecordWithdrawal() {
 		BankMovement testBankMovement = getTestBankMovementWithdraw();
 		long id = moneyTrackService.recordWithdrawal(testBankMovement);
+
+		assertTrue(id > 0);
+
+		MoneyMovement moneyMovement = moneyMovementDAO.getMoneyMovement(id);
+		assertNotNull(moneyMovement);
+		assertTrue(moneyMovement.getType().equals(TransactionType.BANK_MOVEMENT));
+
+		BankMovement savedBankMovement = bankMovementDAO.getBankMovement(id);
+		assertNotNull(savedBankMovement);
+		assertTrue(sameBankMovementData(testBankMovement, savedBankMovement));
+	}
+
+	public void testRecordGotSalary() {
+		BankMovement testBankMovement = getTestBankMovementGotSalary();
+		long id = moneyTrackService.recordGotSalary(testBankMovement);
 
 		assertTrue(id > 0);
 

@@ -58,4 +58,14 @@ public class MoneyTrackService {
 		return id;
 	}
 
+	public long recordGotSalary(BankMovement bankMovement) {
+		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.BANK_MOVEMENT, bankMovement.getDate(), bankMovement.getAmount(), bankMovement.getCurrency());
+
+		bankMovement.setId(id);
+		bankMovement.setOperation(BankOperation.DEPOSIT);
+		bankMovementDAO.insertBankMovement(bankMovement);
+
+		return id;
+	}
+
 }
