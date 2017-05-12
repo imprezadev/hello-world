@@ -52,7 +52,7 @@ public class MoneyTrackService {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.BANK_MOVEMENT, bankMovement.getDate(), bankMovement.getAmount(), bankMovement.getCurrency());
 
 		bankMovement.setId(id);
-		bankMovement.setOperation(BankOperation.DEBIT);
+		bankMovement.setOperation(BankOperation.WITHDRAWAL);
 		bankMovementDAO.insertBankMovement(bankMovement);
 
 		return id;
@@ -62,7 +62,7 @@ public class MoneyTrackService {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.BANK_MOVEMENT, bankMovement.getDate(), bankMovement.getAmount(), bankMovement.getCurrency());
 
 		bankMovement.setId(id);
-		bankMovement.setOperation(BankOperation.DEPOSIT);
+		bankMovement.setOperation(BankOperation.TRANSFER_IN);
 		bankMovementDAO.insertBankMovement(bankMovement);
 
 		return id;

@@ -186,6 +186,7 @@ public class MoneyTrackServiceTest extends TestCase {
 
 		BankMovement savedBankMovement = bankMovementDAO.getBankMovement(id);
 		assertNotNull(savedBankMovement);
+		assertTrue(savedBankMovement.getOperation().equals(BankOperation.WITHDRAWAL));
 		assertTrue(sameBankMovementData(testWithdrawal, savedBankMovement));
 	}
 
@@ -207,6 +208,7 @@ public class MoneyTrackServiceTest extends TestCase {
 
 		BankMovement savedBankMovement = bankMovementDAO.getBankMovement(id);
 		assertNotNull(savedBankMovement);
+		assertTrue(savedBankMovement.getOperation().equals(BankOperation.TRANSFER_IN));
 		assertTrue(sameBankMovementData(testGotSalary, savedBankMovement));
 	}
 
