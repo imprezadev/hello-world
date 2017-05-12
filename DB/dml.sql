@@ -21,12 +21,16 @@ INSERT INTO expense (id_money_movement, payment_type, category, detail) VALUES (
 INSERT INTO expense (id_money_movement, payment_type, category, detail) VALUES (6, 'DEBIT', 'HOME_SERVICE', 'NETFLIX');
 INSERT INTO expense (id_money_movement, payment_type, category, detail) VALUES (7, 'CREDIT', 'IMPREZA_FUEL', 'G-Prix, 12.6Gl, grifo JPrado');
 
-INSERT INTO bank_movement (id_money_movement, operation) VALUES (8, 'WITHDRAWAL');
-INSERT INTO bank_movement (id_money_movement, operation, remarks) VALUES (9, 'DEPOSIT', 'SALARY FEB2017');
+INSERT INTO bank_movement (id_money_movement, operation, remarks) VALUES (1, 'DEBIT', 'EXPENSE');
+INSERT INTO bank_movement (id_money_movement, operation, remarks) VALUES (6, 'DEBIT', 'EXPENSE');
+INSERT INTO bank_movement (id_money_movement, operation, remarks) VALUES (8, 'WITHDRAWAL', 'TIPICAL WITHDRAWAL');
+INSERT INTO bank_movement (id_money_movement, operation, remarks) VALUES (9, 'TRANSFER_IN', 'SALARY FEB2017');
 INSERT INTO bank_movement (id_money_movement, operation, remarks) VALUES (10, 'TRANSFER_OUT', 'DIEGO - ULIMA Gastos semana 20-24ENE2017');
 
-INSERT INTO credit_card_movement (id_money_movement, operation) VALUES (11, 'PAYMENT');
-INSERT INTO credit_card_movement (id_money_movement, operation) VALUES (12, 'CREDIT');
+INSERT INTO credit_card_movement (id_money_movement, operation, remarks) VALUES (2, 'CREDIT', 'EXPENSE');
+INSERT INTO credit_card_movement (id_money_movement, operation, remarks) VALUES (4, 'CREDIT', 'EXPENSE');
+INSERT INTO credit_card_movement (id_money_movement, operation, remarks) VALUES (7, 'CREDIT', 'EXPENSE');
+INSERT INTO credit_card_movement (id_money_movement, operation, remarks) VALUES (11, 'PAYMENT', 'TOTAL FACTURADO 2908.76');
 
 SELECT * FROM money_movement;
 SELECT * FROM expense;
