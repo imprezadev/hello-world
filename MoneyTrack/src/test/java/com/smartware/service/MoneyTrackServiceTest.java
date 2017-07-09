@@ -3,6 +3,11 @@ package com.smartware.service;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
 import com.smartware.domain.BankMovement;
 import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Expense;
@@ -18,15 +23,21 @@ import com.smartware.persistence.CreditCardMovementDAO;
 import com.smartware.persistence.ExpenseDAO;
 import com.smartware.persistence.MoneyMovementDAO;
 
-import junit.framework.TestCase;
+public class MoneyTrackServiceTest {
+	private static MoneyTrackService moneyTrackService;
+	private static MoneyMovementDAO moneyMovementDAO; 
+	private static BankMovementDAO bankMovementDAO;
+	private static CreditCardMovementDAO creditCardMovementDAO;
+	private static ExpenseDAO expenseDAO;
 
-public class MoneyTrackServiceTest extends TestCase {
-
-	private MoneyTrackService moneyTrackService = new MoneyTrackService();
-	private MoneyMovementDAO moneyMovementDAO = new MoneyMovementDAO(); 
-	private BankMovementDAO bankMovementDAO = new BankMovementDAO();
-	private CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
-	private ExpenseDAO expenseDAO = new ExpenseDAO();
+	@BeforeClass
+	public static void initDAOsServices() {
+		moneyTrackService = new MoneyTrackService();
+		moneyMovementDAO = new MoneyMovementDAO(); 
+		bankMovementDAO = new BankMovementDAO();
+		creditCardMovementDAO = new CreditCardMovementDAO();
+		expenseDAO = new ExpenseDAO();
+	}
 
 	private boolean sameExpensesData(Expense testExpense, Expense savedExpense) {
 		return      (testExpense.getDate().compareTo(savedExpense.getDate()) == 0)
@@ -51,6 +62,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		        &&	(testBankMovement.getRemarks().compareTo(savedBankMovement.getRemarks()) == 0);
 	}
 
+	@Test
 	public void testRecordExpense_CashPayment() {
 		Expense testExpense_CashPayment = new Expense();
 		testExpense_CashPayment.setDate(new GregorianCalendar(2017, Calendar.MARCH, 22, 11, 58).getTime());
@@ -72,6 +84,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameExpensesData(testExpense_CashPayment, savedExpense));
 	}
 
+	@Test
 	public void testRecordExpense_DebitPayment() {
 		Expense testExpense_DebitPayment = new Expense();
 		testExpense_DebitPayment.setDate(new GregorianCalendar(2017, Calendar.MAY, 6, 14, 36).getTime());
@@ -97,6 +110,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameExpensesData(testExpense_DebitPayment, savedExpense));
 	}
 
+	@Test
 	public void testRecordExpense_CreditPayment() {
 		Expense testExpense_CreditPayment = new Expense();
 		testExpense_CreditPayment.setDate(new GregorianCalendar(2017, Calendar.MAY, 1, 10, 46).getTime());
@@ -122,6 +136,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameExpensesData(testExpense_CreditPayment, savedExpense));
 	}
 
+	@Test
 	public void testRecordCreditCardPayment_Cash() {
 		CreditCardMovement testCreditCardPayment = new CreditCardMovement();
 		testCreditCardPayment.setDate(new GregorianCalendar(2017, Calendar.MARCH, 01, 14, 34).getTime());
@@ -143,6 +158,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameCreditCardMovementData(testCreditCardPayment, savedCreditCardMovement));
 	}
 
+	@Test
 	public void testRecordCreditCardPayment_Debit() {
 		CreditCardMovement testCreditCardPayment = new CreditCardMovement();
 		testCreditCardPayment.setDate(new GregorianCalendar(2017, Calendar.MARCH, 01, 14, 34).getTime());
@@ -168,6 +184,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameCreditCardMovementData(testCreditCardPayment, savedCreditCardMovement));
 	}
 
+	@Test
 	public void testRecordWithdrawal() {
 		BankMovement testWithdrawal = new BankMovement();
 		testWithdrawal.setDate(new GregorianCalendar(2017, Calendar.JANUARY, 15, 23, 36).getTime());
@@ -190,6 +207,7 @@ public class MoneyTrackServiceTest extends TestCase {
 		assertTrue(sameBankMovementData(testWithdrawal, savedBankMovement));
 	}
 
+	@Test
 	public void testRecordGotSalary() {
 		BankMovement testGotSalary = new BankMovement();
 		testGotSalary.setDate(new GregorianCalendar(2017, Calendar.JANUARY, 30, 14, 15).getTime());

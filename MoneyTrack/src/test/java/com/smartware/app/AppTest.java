@@ -2,21 +2,14 @@ package com.smartware.app;
 
 import com.smartware.service.MoneyTrackServiceTest;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-public class AppTest extends TestCase {
-
-	public AppTest(String testName) {
-		super(testName);
-	}
-
-	public static Test suite() {
-		TestSuite suite = new TestSuite();
-		suite.addTestSuite(MoneyTrackServiceTest.class);
-
-		return suite;
-	}
+@RunWith(Suite.class)
+@SuiteClasses({
+	MoneyTrackServiceTest.class
+})
+public class AppTest {
 
 }
