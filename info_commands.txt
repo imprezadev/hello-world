@@ -61,6 +61,7 @@ Java 7 uses major version 51
 Java 8 uses major version 52
 Java 9 uses major version 53
 
+mvn eclipse:eclipse -Dwtpversion=2.0
 
 JAVA Exceptions
 ===============
