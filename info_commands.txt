@@ -63,6 +63,8 @@ Java 9 uses major version 53
 
 mvn eclipse:eclipse -Dwtpversion=2.0
 
+mvn clean tomcat6:undeploy tomcat6:deploy
+
 JAVA Exceptions
 ===============
 
