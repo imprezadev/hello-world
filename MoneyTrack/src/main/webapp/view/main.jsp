@@ -6,10 +6,10 @@
 </head>
 <body>
 	<ul>
-	  <li><a href="view/expense.jsp">Record Expense</a></li>
-	  <li><a href="view/creditCardPayment.jsp">Record Credit Card Payment</a></li>
-	  <li><a href="view/withdrawal.jsp">Record Withdrawal</a></li>
-	  <li><a href="view/salary.jsp">Record Salary</a></li>
+	  <li><a href="Expense">Record Expense</a></li>
+	  <li><a href="CreditCardPayment">Record Credit Card Payment</a></li>
+	  <li><a href="Withdrawal">Record Withdrawal</a></li>
+	  <li><a href="Salary">Record Salary</a></li>
 	</ul>
 </body>
 </html>

@@ -11,4 +11,40 @@
     <url-pattern>/Main</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>Expense</servlet-name>
+    <servlet-class>com.smartware.app.web.ExpenseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Expense</servlet-name>
+    <url-pattern>/Expense</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Withdrawal</servlet-name>
+    <servlet-class>com.smartware.app.web.WithdrawalServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Withdrawal</servlet-name>
+    <url-pattern>/Withdrawal</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CreditCardPayment</servlet-name>
+    <servlet-class>com.smartware.app.web.CreditCardPaymentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreditCardPayment</servlet-name>
+    <url-pattern>/CreditCardPayment</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Salary</servlet-name>
+    <servlet-class>com.smartware.app.web.SalaryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Salary</servlet-name>
+    <url-pattern>/Salary</url-pattern>
+  </servlet-mapping>
+
 </web-app>
