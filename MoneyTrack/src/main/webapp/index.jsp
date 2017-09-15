@@ -1,5 +1,8 @@
 <html>
-<body>
-<h2>Hello World!</h2>
+ <body>
+	<script>
+	  window.location.replace(window.location + "Main");
+	</script>
 </body>
+  <h1>Hello World!</h1>
 </html>
