@@ -1,8 +1,11 @@
 package com.smartware.service;
 
+import java.util.List;
+
 import com.smartware.domain.BankMovement;
 import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.Expense;
+import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.PaymentType;
@@ -18,7 +21,7 @@ public class MoneyTrackService {
 	private BankMovementDAO bankMovementDAO = new BankMovementDAO();
 	private CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
 	private ExpenseDAO expenseDAO = new ExpenseDAO();
-
+	
 	public long recordExpense(Expense expense) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.EXPENSE, expense.getDate(), expense.getAmount(), expense.getCurrency());
 
@@ -66,6 +69,10 @@ public class MoneyTrackService {
 		bankMovementDAO.insertBankMovement(bankMovement);
 
 		return id;
+	}
+
+	public List<MoneyMovement> getMoneyMovements() {
+		return moneyMovementDAO.getMoneyMovements();
 	}
 
 }
