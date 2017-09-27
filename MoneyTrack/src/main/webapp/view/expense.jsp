@@ -1,3 +1,4 @@
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,22 +8,23 @@
 <body>
 	<div>
 		<div><h1>Expense</h1></div>
+		<form method="post" action="Expense">
 		<div>
 			<div>
 				<label>Date</label>
-				<input type="text" />
+				<input type="text" name="edtDate" />
 			</div>
 		</div>
 		<div>
 			<div>
 				<label>Amount</label>
-				<input type="text" />
+				<input type="text" name="edtAmount" />
 			</div>
 		</div>
 		<div>
 			<div>
 				<label>Currency</label>
-				<select>
+				<select name="cbCurrency">
 					<option value="PEN">PEN</option>
 					<option value="USD">USD</option>
 				</select>
@@ -31,7 +33,7 @@
 		<div>
 			<div>
 				<label>Payment Type</label>
-				<select>
+				<select name="cbPaymentType">
 					<option value="CASH">Cash</option>
 					<option value="DEBIT">Debit</option>
 					<option value="CREDIT">Credit Card</option>
@@ -41,25 +43,36 @@
 		<div>
 			<div>
 				<label>Category</label>
-				<input list="categories" />
-				<datalist id="categories">
-					<option value="Commute">
-					<option value="Lunch">
-					<option value="Fun">
-					<option value="Fun-Taste">
-					<option value="Diego School">
-				</datalist>
+				<select name="cbExpenseCategory">
+					<option value="COMMUTE">Commute</option>
+					<option value="LUNCH">Lunch</option>
+					<option value="FUN">fun</option>
+					<option value="FUN_TASTE">Fun Taste</option>
+					<option value="DIEGO_SCHOOL">Diego School</option>
+				</select>
 			</div>
 		</div>
 		<div>
 			<div>
 				<label>Detail</label>
-				<textarea rows="4" cols="40" ></textarea>
+				<textarea rows="4" cols="40" name="txtDetail"></textarea>
 			</div>
 		</div>
 		<div>
-			<button>Record Expense</button>
+			<input type="submit" value="Record Expense">
 		</div>
+		</form>
 	</div>
+<%
+	List<String> saveMessages = (List)request.getAttribute("saveMessages");
+	
+	if (saveMessages != null) {
+		out.println("<br>");
+		for (String msg: saveMessages) {
+			out.println("<span>" + msg + "</span><br>");
+		}
+	}
+%>
+
 </body>
 </html>
