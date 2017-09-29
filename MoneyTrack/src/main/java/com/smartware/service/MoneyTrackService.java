@@ -75,4 +75,8 @@ public class MoneyTrackService {
 		return moneyMovementDAO.getMoneyMovements();
 	}
 
+	public Expense getExpense(long id) {
+		return expenseDAO.getExpense(id);
+	}
+
 }
