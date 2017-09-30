@@ -52,7 +52,7 @@
 	for (Currency currency: currencies) {
 		matchCurrency = (expense != null && expense.getCurrency().equals(currency));
 %>
-					<option value="<%= currency %>" <%= (matchCurrency) ? "selected" : "" %> ><%= currency %></option>
+					<option value="<%= currency %>" <%= (matchCurrency) ? "selected" : "" %> ><%= currency.getName() %></option>
 <%
 	}
 %>
@@ -70,7 +70,7 @@
 	for (PaymentType paymentType: paymentTypes) {
 		matchPaymentType = (expense != null && expense.getPaymentType().equals(paymentType));
 %>
-					<option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType %></option>
+					<option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType.getName() %></option>
 <%
 	}
 %>
@@ -88,7 +88,7 @@
 	for (ExpenseCategory expenseCategory: expenseCategories) {
 		matchExpenseCategory = (expense != null && expense.getCategory().equals(expenseCategory));
 %>
-					<option value="<%= expenseCategory %>" <%= (matchExpenseCategory) ? "selected" : "" %> ><%= expenseCategory %></option>
+					<option value="<%= expenseCategory %>" <%= (matchExpenseCategory) ? "selected" : "" %> ><%= expenseCategory.getName() %></option>
 <%
 	}
 %>
