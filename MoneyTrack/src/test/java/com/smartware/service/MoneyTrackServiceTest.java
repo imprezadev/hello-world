@@ -67,7 +67,7 @@ public class MoneyTrackServiceTest {
 		testExpense_CashPayment.setDate(new GregorianCalendar(2017, Calendar.MARCH, 22, 11, 58).getTime());
 		testExpense_CashPayment.setAmount(10f);
 		testExpense_CashPayment.setCurrency(Currency.PEN);
-		testExpense_CashPayment.setPaymenType(PaymentType.CASH);
+		testExpense_CashPayment.setPaymentType(PaymentType.CASH);
 		testExpense_CashPayment.setDetail("Altoque Menu Delivery");
 		testExpense_CashPayment.setCategory(ExpenseCategory.LUNCH);
 		
@@ -79,7 +79,7 @@ public class MoneyTrackServiceTest {
 		testExpense_DebitPayment.setDate(new GregorianCalendar(2017, Calendar.MAY, 6, 14, 36).getTime());
 		testExpense_DebitPayment.setAmount(23f);
 		testExpense_DebitPayment.setCurrency(Currency.PEN);
-		testExpense_DebitPayment.setPaymenType(PaymentType.DEBIT);
+		testExpense_DebitPayment.setPaymentType(PaymentType.DEBIT);
 		testExpense_DebitPayment.setDetail("MASS Car Washer");
 		testExpense_DebitPayment.setCategory(ExpenseCategory.IMPREZA_CLEAN);
 		
@@ -91,7 +91,7 @@ public class MoneyTrackServiceTest {
 		testExpense_CreditPayment.setDate(new GregorianCalendar(2017, Calendar.MAY, 1, 10, 46).getTime());
 		testExpense_CreditPayment.setAmount(48.90f);
 		testExpense_CreditPayment.setCurrency(Currency.PEN);
-		testExpense_CreditPayment.setPaymenType(PaymentType.CREDIT);
+		testExpense_CreditPayment.setPaymentType(PaymentType.CREDIT);
 		testExpense_CreditPayment.setDetail("Limbus Restobar");
 		testExpense_CreditPayment.setCategory(ExpenseCategory.FUN_TASTE);
 

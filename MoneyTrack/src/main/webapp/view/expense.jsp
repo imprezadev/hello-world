@@ -68,7 +68,7 @@
 	PaymentType[] paymentTypes = (PaymentType[])request.getAttribute("paymentTypes");
 	boolean matchPaymentType;
 	for (PaymentType paymentType: paymentTypes) {
-		matchPaymentType = (expense != null && expense.getPaymenType().equals(paymentType));
+		matchPaymentType = (expense != null && expense.getPaymentType().equals(paymentType));
 %>
 					<option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType %></option>
 <%

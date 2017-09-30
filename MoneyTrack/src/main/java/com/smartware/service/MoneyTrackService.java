@@ -39,11 +39,11 @@ public class MoneyTrackService {
 	public long recordExpense(Expense expense) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.EXPENSE, expense.getDate(), expense.getAmount(), expense.getCurrency());
 
-		if (expense.getPaymenType().equals(PaymentType.DEBIT)) {
+		if (expense.getPaymentType().equals(PaymentType.DEBIT)) {
 			bankMovementDAO.insertBankMovement(id, BankOperation.DEBIT, TransactionType.EXPENSE.name());
 		}
 		else
-		if (expense.getPaymenType().equals(PaymentType.CREDIT)) {
+		if (expense.getPaymentType().equals(PaymentType.CREDIT)) {
 			creditCardMovementDAO.insertCreditCardMovement(id, CreditCardOperation.CREDIT, TransactionType.EXPENSE.name());
 		}
 

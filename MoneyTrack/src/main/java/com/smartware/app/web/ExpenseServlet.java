@@ -105,7 +105,7 @@ public class ExpenseServlet extends HttpServlet {
 			expense.setDate(date);
 			expense.setAmount(amount);
 			expense.setCurrency(currency);
-			expense.setPaymenType(paymentType);
+			expense.setPaymentType(paymentType);
 			expense.setDetail(detail);
 			expense.setCategory(expenseCategory);
 			

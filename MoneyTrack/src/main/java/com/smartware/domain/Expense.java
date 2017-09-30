@@ -9,7 +9,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper=true)
 public class Expense extends MoneyMovement {
-	private PaymentType paymenType;
+	private PaymentType paymentType;
 	private ExpenseCategory category;
 	private String detail;
 }

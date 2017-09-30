@@ -24,7 +24,7 @@ public class ExpenseDAO {
 			expense.setDate(rs.getTimestamp("date"));
 			expense.setAmount(rs.getFloat("amount"));
 			expense.setCurrency(Currency.valueOf(rs.getString("currency")));
-			expense.setPaymenType(PaymentType.valueOf(rs.getString("payment_type")));
+			expense.setPaymentType(PaymentType.valueOf(rs.getString("payment_type")));
 			expense.setDetail(rs.getString("detail"));
 			expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
 		}
@@ -106,7 +106,7 @@ public class ExpenseDAO {
 				String sql = "INSERT INTO expense (id_money_movement, payment_type, category, detail) VALUES (?, ?, ?, ?)";
 				st = conn.prepareStatement(sql);
 				st.setLong(1, expense.getId());
-				st.setString(2, expense.getPaymenType().name());
+				st.setString(2, expense.getPaymentType().name());
 				st.setString(3, expense.getCategory().name());
 				st.setString(4, expense.getDetail());
 
