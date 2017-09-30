@@ -49,11 +49,11 @@
 
 %>
 	  <tr>
-	    <td align="center"><% out.print(dateFormat.format(date)); %></td>
-	    <td align="center"><% out.print(timeFormat.format(date)); %></td>
-	    <td align="right"><% out.print(String.format("%.2f", moneyMovement.getAmount())); %></td>
-	    <td align="center"><% out.print(moneyMovement.getCurrency()); %></td>
-	    <td align="left"><a href="<% out.print(urlDetail); %>">Detail: <% out.print(transactionType); %></a></td>
+	    <td align="center"><%= dateFormat.format(date) %></td>
+	    <td align="center"><%= timeFormat.format(date) %></td>
+	    <td align="right"><%= String.format("%.2f", moneyMovement.getAmount()) %></td>
+	    <td align="center"><%= moneyMovement.getCurrency() %></td>
+	    <td align="left"><a href="<%= urlDetail %>">Detail: <%= transactionType %></a></td>
 	  </tr>
 <%
 	}

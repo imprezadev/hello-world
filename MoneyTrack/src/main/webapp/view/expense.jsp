@@ -30,13 +30,13 @@
 		<div>
 			<div>
 				<label>Date</label>
-				<input type="text" name="edtDate" value="<% out.print(date); %>"/>
+				<input type="text" name="edtDate" value="<%= date %>"/>
 			</div>
 		</div>
 		<div>
 			<div>
 				<label>Amount</label>
-				<input type="text" name="edtAmount" value="<% out.print(amount); %>"/>
+				<input type="text" name="edtAmount" value="<%= amount %>"/>
 			</div>
 		</div>
 		<div>
@@ -44,8 +44,8 @@
 				<label>Currency</label>
 				<select name="cbCurrency">
 					<option></option>
-					<option value="PEN" <% if (expense != null && "PEN".equals(expense.getCurrency().name())) out.print("selected"); %> >PEN</option>
-					<option value="USD" <% if (expense != null && "USD".equals(expense.getCurrency().name())) out.print("selected"); %> >USD</option>
+					<option value="PEN" <%= (expense != null && "PEN".equals(expense.getCurrency().name())) ? "selected" : "" %> >PEN</option>
+					<option value="USD" <%= (expense != null && "USD".equals(expense.getCurrency().name())) ? "selected" : "" %> >USD</option>
 				</select>
 			</div>
 		</div>
@@ -54,9 +54,9 @@
 				<label>Payment Type</label>
 				<select name="cbPaymentType">
 					<option></option>
-					<option value="CASH" <% if (expense != null && "CASH".equals(expense.getPaymenType().name())) out.print("selected"); %> >Cash</option>
-					<option value="DEBIT" <% if (expense != null && "DEBIT".equals(expense.getPaymenType().name())) out.print("selected"); %> >Debit</option>
-					<option value="CREDIT" <% if (expense != null && "CREDIT".equals(expense.getPaymenType().name())) out.print("selected"); %> >Credit Card</option>
+					<option value="CASH" <%=(expense != null && "CASH".equals(expense.getPaymenType().name())) ? "selected" : "" %> >Cash</option>
+					<option value="DEBIT" <%= (expense != null && "DEBIT".equals(expense.getPaymenType().name())) ? "selected" : "" %> >Debit</option>
+					<option value="CREDIT" <%= (expense != null && "CREDIT".equals(expense.getPaymenType().name())) ? "selected" : "" %> >Credit Card</option>
 				</select>
 			</div>
 		</div>
@@ -65,22 +65,22 @@
 				<label>Category</label>
 				<select name="cbExpenseCategory">
 					<option></option>
-					<option value="COMMUTE" <% if (expense != null && "COMMUTE".equals(expense.getCategory().name())) out.print("selected"); %> >Commute</option>
-					<option value="LUNCH" <% if (expense != null && "LUNCH".equals(expense.getCategory().name())) out.print("selected"); %> >Lunch</option>
-					<option value="FUN" <% if (expense != null && "FUN".equals(expense.getCategory().name())) out.print("selected"); %> >fun</option>
-					<option value="FUN_TASTE"  <% if (expense != null && "FUN_TASTE".equals(expense.getCategory().name())) out.print("selected"); %> >Fun Taste</option>
-					<option value="DIEGO_SCHOOL" <% if (expense != null && "DIEGO_SCHOOL".equals(expense.getCategory().name())) out.print("selected"); %> >Diego School</option>
+					<option value="COMMUTE" <%= (expense != null && "COMMUTE".equals(expense.getCategory().name())) ? "selected" : "" %> >Commute</option>
+					<option value="LUNCH" <%= (expense != null && "LUNCH".equals(expense.getCategory().name())) ? "selected" : "" %> >Lunch</option>
+					<option value="FUN" <%= (expense != null && "FUN".equals(expense.getCategory().name())) ? "selected" : "" %> >fun</option>
+					<option value="FUN_TASTE"  <%= (expense != null && "FUN_TASTE".equals(expense.getCategory().name())) ? "selected" : "" %> >Fun Taste</option>
+					<option value="DIEGO_SCHOOL" <%= (expense != null && "DIEGO_SCHOOL".equals(expense.getCategory().name())) ? "selected" : "" %> >Diego School</option>
 				</select>
 			</div>
 		</div>
 		<div>
 			<div>
 				<label>Detail</label>
-				<textarea rows="4" cols="40" name="txtDetail"><% if (expense != null) out.print(expense.getDetail()); %></textarea>
+				<textarea rows="4" cols="40" name="txtDetail"><%= (expense != null) ? expense.getDetail() : "" %></textarea>
 			</div>
 		</div>
 		<div>
-			<input type="submit" value="Record Expense" <% if (expense != null) out.print("disabled"); %>>
+			<input type="submit" value="Record Expense" <%= (expense != null) ? "disabled" : "" %>>
 		</div>
 		</form>
 	</div>
