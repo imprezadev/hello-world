@@ -1,6 +1,7 @@
 package com.smartware.app.web;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -18,6 +19,8 @@ public class MainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MoneyTrackService moneyTrackService = new MoneyTrackService();
 		List<MoneyMovement> moneyMovements = moneyTrackService.getMoneyMovements();
+		Collections.sort(moneyMovements);
+		Collections.reverse(moneyMovements);
 
 		request.setAttribute("moneyMovements", moneyMovements);
 

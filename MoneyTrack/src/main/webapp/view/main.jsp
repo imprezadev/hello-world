@@ -29,7 +29,7 @@
 	  </tr>
 <%
 	List<MoneyMovement> moneyMovements = (List)request.getAttribute("moneyMovements");
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	for(MoneyMovement moneyMovement: moneyMovements) {
 		Date date = moneyMovement.getDate();
