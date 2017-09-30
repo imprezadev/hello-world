@@ -23,6 +23,17 @@ public class ExpenseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		MoneyTrackService moneyTrackService = new MoneyTrackService();
+
+		Currency[] currencies = moneyTrackService.getCurrencies();
+		request.setAttribute("currencies", currencies);
+
+		PaymentType[] paymentTypes = moneyTrackService.getPaymentTypes();
+		request.setAttribute("paymentTypes", paymentTypes);
+
+		ExpenseCategory[] expenseCategories = moneyTrackService.getExpenseCategories();
+		request.setAttribute("expenseCategories", expenseCategories);
+
 		long expenseId = 0;
 		if (request.getParameter("id") != null) {
 			expenseId = Long.valueOf(request.getParameter("id"));
@@ -33,7 +44,6 @@ public class ExpenseServlet extends HttpServlet {
 		}
 
 		if (expenseId > 0) {
-			MoneyTrackService moneyTrackService = new MoneyTrackService();
 			Expense expense = moneyTrackService.getExpense(expenseId);
 
 			request.setAttribute("expense", expense);

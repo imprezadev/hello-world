@@ -1,8 +1,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 
-
 <%@ page import="com.smartware.domain.Expense" %>
+<%@ page import="com.smartware.domain.catalog.Currency" %>
+<%@ page import="com.smartware.domain.catalog.PaymentType" %>
+<%@ page import="com.smartware.domain.catalog.ExpenseCategory" %>
 
 <!DOCTYPE html>
 <html>
@@ -44,8 +46,16 @@
 				<label>Currency</label>
 				<select name="cbCurrency">
 					<option></option>
-					<option value="PEN" <%= (expense != null && "PEN".equals(expense.getCurrency().name())) ? "selected" : "" %> >PEN</option>
-					<option value="USD" <%= (expense != null && "USD".equals(expense.getCurrency().name())) ? "selected" : "" %> >USD</option>
+<%
+	Currency[] currencies = (Currency[])request.getAttribute("currencies");
+	boolean matchCurrency;
+	for (Currency currency: currencies) {
+		matchCurrency = (expense != null && expense.getCurrency().equals(currency));
+%>
+					<option value="<%= currency %>" <%= (matchCurrency) ? "selected" : "" %> ><%= currency %></option>
+<%
+	}
+%>
 				</select>
 			</div>
 		</div>
@@ -54,9 +64,16 @@
 				<label>Payment Type</label>
 				<select name="cbPaymentType">
 					<option></option>
-					<option value="CASH" <%=(expense != null && "CASH".equals(expense.getPaymenType().name())) ? "selected" : "" %> >Cash</option>
-					<option value="DEBIT" <%= (expense != null && "DEBIT".equals(expense.getPaymenType().name())) ? "selected" : "" %> >Debit</option>
-					<option value="CREDIT" <%= (expense != null && "CREDIT".equals(expense.getPaymenType().name())) ? "selected" : "" %> >Credit Card</option>
+<%
+	PaymentType[] paymentTypes = (PaymentType[])request.getAttribute("paymentTypes");
+	boolean matchPaymentType;
+	for (PaymentType paymentType: paymentTypes) {
+		matchPaymentType = (expense != null && expense.getPaymenType().equals(paymentType));
+%>
+					<option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType %></option>
+<%
+	}
+%>
 				</select>
 			</div>
 		</div>
@@ -65,11 +82,16 @@
 				<label>Category</label>
 				<select name="cbExpenseCategory">
 					<option></option>
-					<option value="COMMUTE" <%= (expense != null && "COMMUTE".equals(expense.getCategory().name())) ? "selected" : "" %> >Commute</option>
-					<option value="LUNCH" <%= (expense != null && "LUNCH".equals(expense.getCategory().name())) ? "selected" : "" %> >Lunch</option>
-					<option value="FUN" <%= (expense != null && "FUN".equals(expense.getCategory().name())) ? "selected" : "" %> >fun</option>
-					<option value="FUN_TASTE"  <%= (expense != null && "FUN_TASTE".equals(expense.getCategory().name())) ? "selected" : "" %> >Fun Taste</option>
-					<option value="DIEGO_SCHOOL" <%= (expense != null && "DIEGO_SCHOOL".equals(expense.getCategory().name())) ? "selected" : "" %> >Diego School</option>
+<%
+	ExpenseCategory[] expenseCategories = (ExpenseCategory[])request.getAttribute("expenseCategories");
+	boolean matchExpenseCategory;
+	for (ExpenseCategory expenseCategory: expenseCategories) {
+		matchExpenseCategory = (expense != null && expense.getCategory().equals(expenseCategory));
+%>
+					<option value="<%= expenseCategory %>" <%= (matchExpenseCategory) ? "selected" : "" %> ><%= expenseCategory %></option>
+<%
+	}
+%>
 				</select>
 			</div>
 		</div>

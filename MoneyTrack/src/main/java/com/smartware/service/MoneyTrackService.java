@@ -8,6 +8,8 @@ import com.smartware.domain.Expense;
 import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.CreditCardOperation;
+import com.smartware.domain.catalog.Currency;
+import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
 import com.smartware.domain.catalog.TransactionType;
 import com.smartware.persistence.BankMovementDAO;
@@ -21,7 +23,19 @@ public class MoneyTrackService {
 	private BankMovementDAO bankMovementDAO = new BankMovementDAO();
 	private CreditCardMovementDAO creditCardMovementDAO = new CreditCardMovementDAO();
 	private ExpenseDAO expenseDAO = new ExpenseDAO();
-	
+
+	public Currency[] getCurrencies() {
+		return Currency.values();
+	}
+
+	public PaymentType[] getPaymentTypes() {
+		return PaymentType.values();
+	}
+
+	public ExpenseCategory[] getExpenseCategories() {
+		return ExpenseCategory.values();
+	}
+
 	public long recordExpense(Expense expense) {
 		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.EXPENSE, expense.getDate(), expense.getAmount(), expense.getCurrency());
 
