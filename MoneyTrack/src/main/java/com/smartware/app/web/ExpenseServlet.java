@@ -54,7 +54,7 @@ public class ExpenseServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<String> saveMessages = new ArrayList();
+		List<String> errorMsgs = new ArrayList<String>();
 
 		Date date = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -62,7 +62,7 @@ public class ExpenseServlet extends HttpServlet {
 			date = sdf.parse(request.getParameter("edtDate"));
 		}
 		catch (ParseException ex) {
-			saveMessages.add("Date: " + ex);
+			errorMsgs.add("Date: " + ex);
 		}
 
 		Float amount = 0f;
@@ -70,7 +70,7 @@ public class ExpenseServlet extends HttpServlet {
 			amount = Float.valueOf(request.getParameter("edtAmount"));
 		}
 		catch (Exception ex) {
-			saveMessages.add("Amount: " + ex);
+			errorMsgs.add("Amount: " + ex);
 		}
 
 		Currency currency = null;
@@ -78,7 +78,7 @@ public class ExpenseServlet extends HttpServlet {
 			currency = Currency.valueOf(request.getParameter("cbCurrency"));
 		}
 		catch (Exception ex) {
-			saveMessages.add("Currency: " + ex);
+			errorMsgs.add("Currency: " + ex);
 		}
 
 		PaymentType paymentType = null;
@@ -86,7 +86,7 @@ public class ExpenseServlet extends HttpServlet {
 			paymentType = PaymentType.valueOf(request.getParameter("cbPaymentType"));
 		}
 		catch (Exception ex) {
-			saveMessages.add("Payment Type: " + ex);
+			errorMsgs.add("Payment Type: " + ex);
 		}
 
 		ExpenseCategory expenseCategory = null;
@@ -94,13 +94,13 @@ public class ExpenseServlet extends HttpServlet {
 			expenseCategory = ExpenseCategory.valueOf(request.getParameter("cbExpenseCategory"));
 		}
 		catch (Exception ex) {
-			saveMessages.add("Expense Category: " + ex);
+			errorMsgs.add("Expense Category: " + ex);
 		}
 
 		String detail = null;
 		detail = request.getParameter("txtDetail");
 
-		if (saveMessages.isEmpty()) {
+		if (errorMsgs.isEmpty()) {
 			Expense expense = new Expense();
 			expense.setDate(date);
 			expense.setAmount(amount);
@@ -112,12 +112,12 @@ public class ExpenseServlet extends HttpServlet {
 			MoneyTrackService moneyTrackService = new MoneyTrackService();
 			long id = moneyTrackService.recordExpense(expense);
 			request.setAttribute("id", id);
-
-			saveMessages.add("Successfull!!");
 		}
-		
-		request.setAttribute("saveMessages", saveMessages);
+		else {
+			request.setAttribute("errorMsgs", errorMsgs);
+		}
 
+		request.setAttribute("saveOperation", true);
 		doGet(request, response);
 	}
 

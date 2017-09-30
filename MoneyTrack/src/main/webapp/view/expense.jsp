@@ -106,13 +106,22 @@
 		</div>
 		</form>
 	</div>
+	<br>
 <%
-	List<String> saveMessages = (List)request.getAttribute("saveMessages");
-	
-	if (saveMessages != null) {
-		out.println("<br>");
-		for (String msg: saveMessages) {
-			out.println("<span>" + msg + "</span><br>");
+	if (request.getAttribute("saveOperation") != null) {
+		List<String> errorMsgs = (List)request.getAttribute("errorMsgs");
+		
+		if (errorMsgs != null) {
+			for (String errorMsg: errorMsgs) {
+%>
+	<li style="color:red" ><%= errorMsg %></li>
+<%
+			}
+		}
+		else {
+%>
+	<span style="color:blue" >Saved!!</span>
+<%
 		}
 	}
 %>
