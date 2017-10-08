@@ -14,16 +14,38 @@
 </head>
 <body>
 <%
-	String date = "";
-	String amount = "";
+	String edtDate = "";
+	String edtAmount = "";
+	String cbCurrency = "";
+	String cbPaymentType = "";
+	String cbExpenseCategory = "";
+	String txtDetail = "";
+
+	Boolean afterSaveOperation = request.getAttribute("saveOperation") != null;
+	Boolean errorAfterSaveOperation = request.getAttribute("saveOperation") != null && request.getAttribute("errorMsgs") != null;
+	Boolean toShowExpense = request.getAttribute("expense") != null; 
+
 	Expense expense = null;
-	if (request.getAttribute("expense") != null) {
+	if (toShowExpense) {
 		expense = (Expense)request.getAttribute("expense");
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		date = sdf.format(expense.getDate());
-
-		amount = String.format("%.2f", expense.getAmount());
+		edtDate = sdf.format(expense.getDate());
+		edtAmount = String.format("%.2f", expense.getAmount());
+		cbCurrency = expense.getCurrency().name();
+		cbPaymentType = expense.getPaymentType().name();
+		cbExpenseCategory = expense.getCategory().name();
+		txtDetail = expense.getDetail();
+	}
+	else {
+		if (errorAfterSaveOperation) {
+			edtDate = request.getParameter("edtDate");
+			edtAmount = request.getParameter("edtAmount");
+			cbCurrency = request.getParameter("cbCurrency");
+			cbPaymentType = request.getParameter("cbPaymentType");
+			cbExpenseCategory = request.getParameter("cbExpenseCategory");
+			txtDetail = request.getParameter("txtDetail");
+		}
 	}
 %>
 	<div>
@@ -32,25 +54,25 @@
 		<div>
 			<div>
 				<label>Date</label>
-				<input type="text" name="edtDate" value="<%= date %>"/>
+				<input type="text" name="edtDate" value="<%= edtDate %>" <%= (toShowExpense) ? "disabled" : "" %> />
 			</div>
 		</div>
 		<div>
 			<div>
 				<label>Amount</label>
-				<input type="text" name="edtAmount" value="<%= amount %>"/>
+				<input type="text" name="edtAmount" value="<%= edtAmount %>" <%= (toShowExpense) ? "disabled" : "" %> />
 			</div>
 		</div>
 		<div>
 			<div>
 				<label>Currency</label>
-				<select name="cbCurrency">
+				<select name="cbCurrency" <%= (toShowExpense) ? "disabled" : "" %>>
 					<option></option>
 <%
 	Currency[] currencies = (Currency[])request.getAttribute("currencies");
 	boolean matchCurrency;
 	for (Currency currency: currencies) {
-		matchCurrency = (expense != null && expense.getCurrency().equals(currency));
+		matchCurrency = (cbCurrency != "" && cbCurrency.equals(currency.name()));
 %>
 					<option value="<%= currency %>" <%= (matchCurrency) ? "selected" : "" %> ><%= currency.getName() %></option>
 <%
@@ -62,13 +84,13 @@
 		<div>
 			<div>
 				<label>Payment Type</label>
-				<select name="cbPaymentType">
+				<select name="cbPaymentType" <%= (toShowExpense) ? "disabled" : "" %>>
 					<option></option>
 <%
 	PaymentType[] paymentTypes = (PaymentType[])request.getAttribute("paymentTypes");
 	boolean matchPaymentType;
 	for (PaymentType paymentType: paymentTypes) {
-		matchPaymentType = (expense != null && expense.getPaymentType().equals(paymentType));
+		matchPaymentType = (cbPaymentType != "" && cbPaymentType.equals(paymentType.name()));
 %>
 					<option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType.getName() %></option>
 <%
@@ -80,13 +102,13 @@
 		<div>
 			<div>
 				<label>Category</label>
-				<select name="cbExpenseCategory">
+				<select name="cbExpenseCategory" <%= (toShowExpense) ? "disabled" : "" %>>
 					<option></option>
 <%
 	ExpenseCategory[] expenseCategories = (ExpenseCategory[])request.getAttribute("expenseCategories");
 	boolean matchExpenseCategory;
 	for (ExpenseCategory expenseCategory: expenseCategories) {
-		matchExpenseCategory = (expense != null && expense.getCategory().equals(expenseCategory));
+		matchExpenseCategory = (cbExpenseCategory != "" && cbExpenseCategory.equals(expenseCategory.name()));
 %>
 					<option value="<%= expenseCategory %>" <%= (matchExpenseCategory) ? "selected" : "" %> ><%= expenseCategory.getName() %></option>
 <%
@@ -98,20 +120,25 @@
 		<div>
 			<div>
 				<label>Detail</label>
-				<textarea rows="4" cols="40" name="txtDetail"><%= (expense != null) ? expense.getDetail() : "" %></textarea>
+				<textarea rows="4" cols="40" name="txtDetail" <%= (toShowExpense) ? "disabled" : "" %>><%= txtDetail %></textarea>
 			</div>
 		</div>
+<%
+	if (!toShowExpense) {
+%>
 		<div>
-			<input type="submit" value="Record Expense" <%= (expense != null) ? "disabled" : "" %>>
+			<input type="submit" value="Record Expense" />
 		</div>
+<%
+	}
+%>
 		</form>
 	</div>
 	<br>
 <%
-	if (request.getAttribute("saveOperation") != null) {
-		List<String> errorMsgs = (List)request.getAttribute("errorMsgs");
-		
-		if (errorMsgs != null) {
+	if (afterSaveOperation) {
+		if (errorAfterSaveOperation) {
+			List<String> errorMsgs = (List)request.getAttribute("errorMsgs");
 			for (String errorMsg: errorMsgs) {
 %>
 	<li style="color:red" ><%= errorMsg %></li>
