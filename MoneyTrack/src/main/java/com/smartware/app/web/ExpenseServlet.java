@@ -22,9 +22,9 @@ import com.smartware.service.MoneyTrackService;
 public class ExpenseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MoneyTrackService moneyTrackService = new MoneyTrackService();
+	MoneyTrackService moneyTrackService = new MoneyTrackService();
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Currency[] currencies = moneyTrackService.getCurrencies();
 		request.setAttribute("currencies", currencies);
 
@@ -109,7 +109,6 @@ public class ExpenseServlet extends HttpServlet {
 			expense.setDetail(detail);
 			expense.setCategory(expenseCategory);
 			
-			MoneyTrackService moneyTrackService = new MoneyTrackService();
 			long id = moneyTrackService.recordExpense(expense);
 			request.setAttribute("id", id);
 		}
