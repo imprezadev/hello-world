@@ -8,25 +8,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Money Track</title>
+  <meta charset="ISO-8859-1">
+  <title>Money Track</title>
 </head>
 <body>
-	<ul>
-	  <li><a href="Expense">Record Expense</a></li>
-	  <li><a href="CreditCardPayment">Record Credit Card Payment</a></li>
-	  <li><a href="Withdrawal">Record Withdrawal</a></li>
-	  <li><a href="Salary">Record Salary</a></li>
-	</ul>
+  <ul>
+    <li><a href="Expense">Record Expense</a></li>
+    <li><a href="CreditCardPayment">Record Credit Card Payment</a></li>
+    <li><a href="Withdrawal">Record Withdrawal</a></li>
+    <li><a href="Salary">Record Salary</a></li>
+  </ul>
 
-	<table border="1" width="100%">
-		<tr>
-			<th>Date</th>
-			<th>Time</th>
-			<th>Amount</th>
-			<th>Currency</th>
-			<th>Transaction</th>
-	 	</tr>
+  <table border="1" width="100%">
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Amount</th>
+      <th>Currency</th>
+      <th>Transaction</th>
+    </tr>
 <%
 	List<MoneyMovement> moneyMovements = (List)request.getAttribute("moneyMovements");
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
@@ -51,16 +51,16 @@
 			urlDetail = "Salary" + urlDetail;
 		}
 %>
-		<tr>
-			<td align="center"><%= dateFormat.format(date) %></td>
-			<td align="center"><%= timeFormat.format(date) %></td>
-			<td align="right"><%= String.format("%.2f", moneyMovement.getAmount()) %></td>
-			<td align="center"><%= moneyMovement.getCurrency() %></td>
-			<td align="left"><a href="<%= urlDetail %>">Detail: <%= operation %></a></td>
-		</tr>
+    <tr>
+      <td align="center"><%= dateFormat.format(date) %></td>
+      <td align="center"><%= timeFormat.format(date) %></td>
+      <td align="right"><%= String.format("%.2f", moneyMovement.getAmount()) %></td>
+      <td align="center"><%= moneyMovement.getCurrency() %></td>
+      <td align="left"><a href="<%= urlDetail %>">Detail: <%= operation %></a></td>
+    </tr>
 <%
 	}
 %>
-	</table>
+  </table>
 </body>
 </html>

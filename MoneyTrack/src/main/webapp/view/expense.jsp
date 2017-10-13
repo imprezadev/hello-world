@@ -9,8 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Money Track</title>
+  <meta charset="ISO-8859-1">
+  <title>Money Track</title>
 </head>
 <body>
 <%
@@ -48,106 +48,99 @@
 		}
 	}
 %>
-	<div>
-		<div><h1>Expense</h1></div>
-		<form method="post" action="Expense">
-		<div>
-			<div>
-				<label>Date</label>
-				<input type="text" name="edtDate" value="<%= edtDate %>" <%= (toShowExpense) ? "disabled" : "" %> />
-			</div>
-		</div>
-		<div>
-			<div>
-				<label>Amount</label>
-				<input type="text" name="edtAmount" value="<%= edtAmount %>" <%= (toShowExpense) ? "disabled" : "" %> />
-			</div>
-		</div>
-		<div>
-			<div>
-				<label>Currency</label>
-				<select name="cbCurrency" <%= (toShowExpense) ? "disabled" : "" %>>
-					<option></option>
+  <h1>Expense</h1>
+
+  <form method="post" action="Expense">
+  <table>
+    <tr>
+      <td><label>Date</label></td>
+      <td><input type="text" name="edtDate" value="<%= edtDate %>" <%= (toShowExpense) ? "disabled" : "" %> /></td>
+    </tr>
+    <tr>
+      <td><label>Amount</label></td>
+      <td><input type="text" name="edtAmount" value="<%= edtAmount %>" <%= (toShowExpense) ? "disabled" : "" %> /></td>
+    </tr>
+    <tr>
+      <td><label>Currency</label></td>
+      <td>
+        <select name="cbCurrency" <%= (toShowExpense) ? "disabled" : "" %>>
+          <option></option>
 <%
 	Currency[] currencies = (Currency[])request.getAttribute("currencies");
 	boolean matchCurrency;
 	for (Currency currency: currencies) {
 		matchCurrency = (cbCurrency != "" && cbCurrency.equals(currency.name()));
 %>
-					<option value="<%= currency %>" <%= (matchCurrency) ? "selected" : "" %> ><%= currency.getName() %></option>
+          <option value="<%= currency %>" <%= (matchCurrency) ? "selected" : "" %> ><%= currency.getName() %></option>
 <%
 	}
 %>
-				</select>
-			</div>
-		</div>
-		<div>
-			<div>
-				<label>Payment Type</label>
-				<select name="cbPaymentType" <%= (toShowExpense) ? "disabled" : "" %>>
-					<option></option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Payment Type</label></td>
+      <td>
+        <select name="cbPaymentType" <%= (toShowExpense) ? "disabled" : "" %>>
+          <option></option>
 <%
 	PaymentType[] paymentTypes = (PaymentType[])request.getAttribute("paymentTypes");
 	boolean matchPaymentType;
 	for (PaymentType paymentType: paymentTypes) {
 		matchPaymentType = (cbPaymentType != "" && cbPaymentType.equals(paymentType.name()));
 %>
-					<option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType.getName() %></option>
+          <option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType.getName() %></option>
 <%
 	}
 %>
-				</select>
-			</div>
-		</div>
-		<div>
-			<div>
-				<label>Category</label>
-				<select name="cbExpenseCategory" <%= (toShowExpense) ? "disabled" : "" %>>
-					<option></option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Category</label></td>
+      <td>
+        <select name="cbExpenseCategory" <%= (toShowExpense) ? "disabled" : "" %>>
+          <option></option>
 <%
 	ExpenseCategory[] expenseCategories = (ExpenseCategory[])request.getAttribute("expenseCategories");
 	boolean matchExpenseCategory;
 	for (ExpenseCategory expenseCategory: expenseCategories) {
 		matchExpenseCategory = (cbExpenseCategory != "" && cbExpenseCategory.equals(expenseCategory.name()));
 %>
-					<option value="<%= expenseCategory %>" <%= (matchExpenseCategory) ? "selected" : "" %> ><%= expenseCategory.getName() %></option>
+          <option value="<%= expenseCategory %>" <%= (matchExpenseCategory) ? "selected" : "" %> ><%= expenseCategory.getName() %></option>
 <%
 	}
 %>
-				</select>
-			</div>
-		</div>
-		<div>
-			<div>
-				<label>Detail</label>
-				<textarea rows="4" cols="40" name="txtDetail" <%= (toShowExpense) ? "disabled" : "" %>><%= txtDetail %></textarea>
-			</div>
-		</div>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Detail</label></td>
+      <td><textarea rows="4" cols="40" name="txtDetail" <%= (toShowExpense) ? "disabled" : "" %>><%= txtDetail %></textarea></td>
+    </tr>
+  </table>
 <%
 	if (!toShowExpense) {
 %>
-		<div>
-			<input type="submit" value="Record Expense" />
-		</div>
+  <input type="submit" value="Record Expense" />
 <%
 	}
 %>
-		</form>
-	</div>
-	<br>
+  </form>
+  <br>
 <%
 	if (afterSaveOperation) {
 		if (errorAfterSaveOperation) {
 			List<String> errorMsgs = (List)request.getAttribute("errorMsgs");
 			for (String errorMsg: errorMsgs) {
 %>
-	<li style="color:red" ><%= errorMsg %></li>
+  <li style="color:red" ><%= errorMsg %></li>
 <%
 			}
 		}
 		else {
 %>
-	<span style="color:blue" >Saved!!</span>
+  <span style="color:blue" >Saved!!</span>
 <%
 		}
 	}
