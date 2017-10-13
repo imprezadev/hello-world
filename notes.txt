@@ -1,7 +1,7 @@
 
 
 TODO-LIST:
-
+- reestructure-functionality: leave the expense category field to put it as structured label system, with kind of the following values:
 	// HOME: VICTUALS, SERVICES(SEDAPAL, LUZDELSUR, DIRECTV, CLEANING), STUFFS, IMPROVEMENTS
 	// IMPREZA: CLEAN, FUEL, MAINTENANCE, INSURANCE, TAXES, BUYING
 	// DIEGO: COLLEGE(DUTIES, STUFFS, SPENDS), CLOTHES, FUN, HEALTH, CELLPHONE
@@ -17,3 +17,12 @@ TODO-LIST:
 }
 // EVENT_CATEGORY:
 // WORK, FUN_NITE, TRIP, TREKK, IMPREZA_BUYING
+
+
+- refactor: date functions to utils helper
+- refactor: MoneyTrackServiceTest.testGetMoneyMovements - improve the way to seek every created object as the item in the list
+- ux: implement jsp error page
+- refactor-fix: let the database connection errors raise to the client this way it can be shown in error page
+- ux: pagination of movement-money list in dashboard page
+- refactor: leave the jsp pages only with enough form elements, so remove for example all div structure that have though for bootstrap, then put it again when bootstrap comes in to that pages
+
