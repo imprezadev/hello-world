@@ -12,7 +12,6 @@ import com.smartware.domain.Expense;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
-import com.smartware.domain.catalog.TransactionType;
 
 public class ExpenseDAO {
 	
@@ -20,7 +19,6 @@ public class ExpenseDAO {
 		Expense expense = new Expense();
 		try {
 			expense.setId(rs.getLong("id"));
-			expense.setType(TransactionType.valueOf(rs.getString("type")));
 			expense.setDate(rs.getTimestamp("date"));
 			expense.setAmount(rs.getFloat("amount"));
 			expense.setCurrency(Currency.valueOf(rs.getString("currency")));
@@ -46,7 +44,7 @@ public class ExpenseDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT mm.id, mm.type, mm.date, mm.amount, mm.currency, e.payment_type, e.detail, e.category" +
+						"SELECT mm.id, mm.date, mm.amount, mm.currency, e.payment_type, e.detail, e.category" +
 						"  FROM expense e" +
 						" INNER JOIN money_movement mm ON mm.id = e.id_money_movement" +
 						" WHERE e.id_money_movement = ?";

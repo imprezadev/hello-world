@@ -3,15 +3,17 @@ package com.smartware.service;
 import java.util.List;
 
 import com.smartware.domain.BankMovement;
-import com.smartware.domain.CreditCardMovement;
+import com.smartware.domain.CreditCardPayment;
 import com.smartware.domain.Expense;
+import com.smartware.domain.GotSalary;
 import com.smartware.domain.MoneyMovement;
+import com.smartware.domain.Withdrawal;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
 import com.smartware.domain.catalog.PaymentType;
-import com.smartware.domain.catalog.TransactionType;
+import com.smartware.domain.catalog.MoneyMovementOperation;
 import com.smartware.persistence.BankMovementDAO;
 import com.smartware.persistence.CreditCardMovementDAO;
 import com.smartware.persistence.ExpenseDAO;
@@ -37,14 +39,14 @@ public class MoneyTrackService {
 	}
 
 	public long recordExpense(Expense expense) {
-		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.EXPENSE, expense.getDate(), expense.getAmount(), expense.getCurrency());
+		long id = moneyMovementDAO.insertMoneyMovement(expense.getDate(), expense.getAmount(), expense.getCurrency());
 
 		if (expense.getPaymentType().equals(PaymentType.DEBIT)) {
-			bankMovementDAO.insertBankMovement(id, BankOperation.DEBIT, TransactionType.EXPENSE.name());
+			bankMovementDAO.insertBankMovement(id, BankOperation.DEBIT, MoneyMovementOperation.EXPENSE.name());
 		}
 		else
 		if (expense.getPaymentType().equals(PaymentType.CREDIT)) {
-			creditCardMovementDAO.insertCreditCardMovement(id, CreditCardOperation.CREDIT, TransactionType.EXPENSE.name());
+			creditCardMovementDAO.insertCreditCardMovement(id, CreditCardOperation.CREDIT, MoneyMovementOperation.EXPENSE.name());
 		}
 
 		expense.setId(id);
@@ -53,33 +55,37 @@ public class MoneyTrackService {
 		return id;
 	}
 
-	public long recordCreditCardPayment(CreditCardMovement creditCardMovement, PaymentType paymentType) {
-		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.CREDIT_CARD_MOVEMENT, creditCardMovement.getDate(), creditCardMovement.getAmount(), creditCardMovement.getCurrency());
+	public long recordCreditCardPayment(CreditCardPayment creditCardPayment) {
+		long id = moneyMovementDAO.insertMoneyMovement(creditCardPayment.getDate(), creditCardPayment.getAmount(), creditCardPayment.getCurrency());
 
-		if (paymentType.equals(PaymentType.DEBIT)) {
-			bankMovementDAO.insertBankMovement(id, BankOperation.DEBIT, TransactionType.CREDIT_CARD_MOVEMENT.name());
+		if (creditCardPayment.getPaymentType().equals(PaymentType.DEBIT)) {
+			bankMovementDAO.insertBankMovement(id, BankOperation.DEBIT, MoneyMovementOperation.CREDIT_CARD_PAYMENT.name());
 		}
 
-		creditCardMovementDAO.insertCreditCardMovement(id, CreditCardOperation.PAYMENT, creditCardMovement.getRemarks());
+		creditCardMovementDAO.insertCreditCardMovement(id, CreditCardOperation.PAYMENT, creditCardPayment.getRemarks());
 
 		return id;
 	}
 
-	public long recordWithdrawal(BankMovement bankMovement) {
-		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.BANK_MOVEMENT, bankMovement.getDate(), bankMovement.getAmount(), bankMovement.getCurrency());
+	public long recordWithdrawal(Withdrawal withdrawal) {
+		long id = moneyMovementDAO.insertMoneyMovement(withdrawal.getDate(), withdrawal.getAmount(), withdrawal.getCurrency());
 
+		BankMovement bankMovement = new BankMovement();
 		bankMovement.setId(id);
-		bankMovement.setOperation(BankOperation.WITHDRAWAL);
+		bankMovement.setBankOperation(BankOperation.WITHDRAWAL);
+		bankMovement.setRemarks(withdrawal.getRemarks());
 		bankMovementDAO.insertBankMovement(bankMovement);
 
 		return id;
 	}
 
-	public long recordGotSalary(BankMovement bankMovement) {
-		long id = moneyMovementDAO.insertMoneyMovement(TransactionType.BANK_MOVEMENT, bankMovement.getDate(), bankMovement.getAmount(), bankMovement.getCurrency());
+	public long recordGotSalary(GotSalary gotSalary) {
+		long id = moneyMovementDAO.insertMoneyMovement(gotSalary.getDate(), gotSalary.getAmount(), Currency.PEN);
 
+		BankMovement bankMovement = new BankMovement();
 		bankMovement.setId(id);
-		bankMovement.setOperation(BankOperation.TRANSFER_IN);
+		bankMovement.setBankOperation(BankOperation.TRANSFER_IN);
+		bankMovement.setRemarks("SALARY " + gotSalary.getRemarks());
 		bankMovementDAO.insertBankMovement(bankMovement);
 
 		return id;

@@ -11,19 +11,22 @@ import java.util.List;
 import com.smartware.common.AppDBHelper;
 import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.catalog.Currency;
-import com.smartware.domain.catalog.TransactionType;
+import com.smartware.domain.catalog.MoneyMovementOperation;
 
 public class MoneyMovementDAO {
 
 	private MoneyMovement populateMoneyMovement(ResultSet rs) {
+		return populateMoneyMovement(rs, false);
+	}
+
+	private MoneyMovement populateMoneyMovement(ResultSet rs, Boolean operationColumnExists) {
 		MoneyMovement moneyMovement = new MoneyMovement();
 		try {
 			moneyMovement.setId(rs.getLong("id"));
-			moneyMovement.setType(TransactionType.valueOf(rs.getString("type")));
 			moneyMovement.setDate(rs.getTimestamp("date"));
 			moneyMovement.setAmount(rs.getFloat("amount"));
 			moneyMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
-
+			if (operationColumnExists) moneyMovement.setOperation(MoneyMovementOperation.valueOf(rs.getString("operation")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			moneyMovement = null;
@@ -41,7 +44,7 @@ public class MoneyMovementDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT id, type, date, amount, currency FROM money_movement WHERE id = ?");
+				st = conn.prepareStatement("SELECT id, date, amount, currency FROM money_movement WHERE id = ?");
 				st.setLong(1, id);
 				rs = st.executeQuery();
 
@@ -65,12 +68,33 @@ public class MoneyMovementDAO {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				st = conn.prepareStatement("SELECT id, type, date, amount, currency FROM money_movement");
+				StringBuilder sql = new StringBuilder();
+				sql.append("SELECT mm.id, mm.date, mm.amount, mm.currency, '").append(MoneyMovementOperation.EXPENSE).append("' AS operation ");
+				sql.append("  FROM expense e ");
+				sql.append(" INNER JOIN money_movement mm ON e.id_money_movement = mm.id ");
+				sql.append("UNION ");
+				sql.append("SELECT mm.id, mm.date, mm.amount, mm.currency, '").append(MoneyMovementOperation.WITHDRAWAL).append("' AS operation ");
+				sql.append("  FROM bank_movement bm ");
+				sql.append(" INNER JOIN money_movement mm ON bm.id_money_movement = mm.id ");
+				sql.append(" WHERE bm.operation = 'WITHDRAWAL' ");
+				sql.append("UNION ");
+				sql.append("SELECT mm.id, mm.date, mm.amount, mm.currency, '").append(MoneyMovementOperation.CREDIT_CARD_PAYMENT).append("' AS operation ");
+				sql.append("  FROM credit_card_movement ccm ");
+				sql.append(" INNER JOIN money_movement mm ON ccm.id_money_movement = mm.id ");
+				sql.append(" WHERE ccm.operation = 'PAYMENT' ");
+				sql.append("UNION ");
+				sql.append("SELECT mm.id, mm.date, mm.amount, mm.currency, '").append(MoneyMovementOperation.GOT_SALARY).append("' AS operation ");
+				sql.append("  FROM bank_movement bm ");
+				sql.append(" INNER JOIN money_movement mm ON bm.id_money_movement = mm.id ");
+				sql.append(" WHERE bm.operation = 'TRANSFER_IN' ");
+				sql.append("   AND bm.remarks LIKE 'SALARY %' ");
+
+				st = conn.prepareStatement(sql.toString());
 				rs = st.executeQuery();
 
 				MoneyMovement moneyMovement = null;
 				while (rs.next()) {
-					moneyMovement = populateMoneyMovement(rs);
+					moneyMovement = populateMoneyMovement(rs, true);
 					moneyMovements.add(moneyMovement);
 				}
 			} catch (SQLException e) {
@@ -89,12 +113,11 @@ public class MoneyMovementDAO {
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
-				String sql = "INSERT INTO money_movement (type, date, amount, currency) VALUES (?, ?, ?, ?)";
+				String sql = "INSERT INTO money_movement (date, amount, currency) VALUES (?, ?, ?)";
 				st = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-				st.setString(1, moneyMovement.getType().name());
-				st.setTimestamp(2, new java.sql.Timestamp(moneyMovement.getDate().getTime()));
-				st.setFloat(3, moneyMovement.getAmount());
-				st.setString(4, moneyMovement.getCurrency().name());
+				st.setTimestamp(1, new java.sql.Timestamp(moneyMovement.getDate().getTime()));
+				st.setFloat(2, moneyMovement.getAmount());
+				st.setString(3, moneyMovement.getCurrency().name());
 
 				st.execute();
 
@@ -111,9 +134,8 @@ public class MoneyMovementDAO {
 		return id;
 	}
 
-	public long insertMoneyMovement(TransactionType transactionType, Date date, Float amount, Currency currency) {
+	public long insertMoneyMovement(Date date, Float amount, Currency currency) {
 		MoneyMovement moneyMovement = new MoneyMovement();
-		moneyMovement.setType(transactionType);
 		moneyMovement.setDate(date);
 		moneyMovement.setAmount(amount);
 		moneyMovement.setCurrency(currency);

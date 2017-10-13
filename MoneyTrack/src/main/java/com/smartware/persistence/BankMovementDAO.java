@@ -11,7 +11,6 @@ import com.smartware.common.AppDBHelper;
 import com.smartware.domain.BankMovement;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.Currency;
-import com.smartware.domain.catalog.TransactionType;
 
 public class BankMovementDAO {
 
@@ -19,11 +18,10 @@ public class BankMovementDAO {
 		BankMovement bankMovement = new BankMovement();
 		try {
 			bankMovement.setId(rs.getLong("id"));
-			bankMovement.setType(TransactionType.valueOf(rs.getString("type")));
 			bankMovement.setDate(rs.getTimestamp("date"));
 			bankMovement.setAmount(rs.getFloat("amount"));
 			bankMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
-			bankMovement.setOperation(BankOperation.valueOf(rs.getString("operation")));
+			bankMovement.setBankOperation(BankOperation.valueOf(rs.getString("operation")));
 			bankMovement.setRemarks(rs.getString("remarks"));
 		}
 		catch (Exception e) {
@@ -45,7 +43,7 @@ public class BankMovementDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT mm.id, mm.type, mm.date, mm.amount, mm.currency, bm.operation, bm.remarks" +
+						"SELECT mm.id, mm.date, mm.amount, mm.currency, bm.operation, bm.remarks" +
 						"  FROM bank_movement bm" +
 						" INNER JOIN money_movement mm ON mm.id = bm.id_money_movement" +
 						" WHERE bm.id_money_movement = ?";
@@ -106,7 +104,7 @@ public class BankMovementDAO {
 				String sql = "INSERT INTO bank_movement (id_money_movement, operation, remarks) VALUES (?, ?, ?)";
 				st = conn.prepareStatement(sql);
 				st.setLong(1, bankMovement.getId());
-				st.setString(2, bankMovement.getOperation().name());
+				st.setString(2, bankMovement.getBankOperation().name());
 				st.setString(3, bankMovement.getRemarks());
 
 				st.execute();
@@ -120,7 +118,7 @@ public class BankMovementDAO {
 	public void insertBankMovement(long id, BankOperation bankOperation, String remarks) {
 		BankMovement bankMovement = new BankMovement();
 		bankMovement.setId(id);
-		bankMovement.setOperation(bankOperation);
+		bankMovement.setBankOperation(bankOperation);
 		bankMovement.setRemarks(remarks);
 
 		insertBankMovement(bankMovement);

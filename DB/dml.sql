@@ -1,17 +1,17 @@
 USE moneytrack;
 
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (1, 'EXPENSE', '2017-2-27', 22, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (2, 'EXPENSE', '2017-03-17', 51.9, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (3, 'EXPENSE', '2017-03-17', 5.50, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (4, 'EXPENSE', '2017-03-11', 2023.45, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (5, 'EXPENSE', '2017-03-07 21:30', 18.50, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (6, 'EXPENSE', '2017-2-01 00:30', 9.90, 'USD');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (7, 'EXPENSE', '2017-03-23 10:37', 176.59, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (8, 'BANK_MOVEMENT', '2017-1-12 15:40', 80, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (9, 'BANK_MOVEMENT', '2017-2-27 12:15', 7560.76, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (10, 'BANK_MOVEMENT', '2017-1-20 8:40', 50, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (11, 'CREDIT_CARD_MOVEMENT', '2017-1-31 13:40', 4560.98, 'PEN');
-INSERT INTO money_movement (id, type, date, amount, currency) VALUES (12, 'CREDIT_CARD_MOVEMENT', '2017-1-31 23:30', 60.00, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (1, '2017-2-27', 22, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (2, '2017-03-17', 51.9, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (3, '2017-03-17', 5.50, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (4, '2017-03-11', 2023.45, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (5, '2017-03-07 21:30', 18.50, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (6, '2017-2-01 00:30', 9.90, 'USD');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (7, '2017-03-23 10:37', 176.59, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (8, '2017-1-12 15:40', 80, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (9, '2017-2-27 12:15', 7560.76, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (10, '2017-1-20 8:40', 50, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (11, '2017-1-31 13:40', 4560.98, 'PEN');
+INSERT INTO money_movement (id, date, amount, currency) VALUES (12, '2017-1-31 23:30', 60.00, 'PEN');
 
 INSERT INTO expense (id_money_movement, payment_type, category, detail) VALUES (1, 'DEBIT', 'IMPREZA_CLEAN', 'lavada y encerada del impreza');
 INSERT INTO expense (id_money_movement, payment_type, category, detail) VALUES (2, 'CREDIT', 'FUN_TASTE', 'almuerzo en Caplina Sta Cruz');

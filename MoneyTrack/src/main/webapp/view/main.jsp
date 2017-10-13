@@ -3,7 +3,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <%@ page import="com.smartware.domain.MoneyMovement" %>
-<%@ page import="com.smartware.domain.catalog.TransactionType" %>
+<%@ page import="com.smartware.domain.catalog.MoneyMovementOperation" %>
 
 <!DOCTYPE html>
 <html>
@@ -18,43 +18,46 @@
 	  <li><a href="Withdrawal">Record Withdrawal</a></li>
 	  <li><a href="Salary">Record Salary</a></li>
 	</ul>
-	
+
 	<table border="1" width="100%">
-	  <tr>
-	    <th>Date</th>
-	    <th>Time</th>
-	    <th>Amount</th>
-	    <th>Currency</th>
-	    <th>Transaction</th>
-	  </tr>
+		<tr>
+			<th>Date</th>
+			<th>Time</th>
+			<th>Amount</th>
+			<th>Currency</th>
+			<th>Transaction</th>
+	 	</tr>
 <%
 	List<MoneyMovement> moneyMovements = (List)request.getAttribute("moneyMovements");
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	for(MoneyMovement moneyMovement: moneyMovements) {
 		Date date = moneyMovement.getDate();
-		String transactionType = moneyMovement.getType().name();
+		String operation = moneyMovement.getOperation().name();
 		String urlDetail = "?id=" + Long.toString(moneyMovement.getId());
-		if (moneyMovement.getType().equals(TransactionType.EXPENSE)) {
+		if (moneyMovement.getOperation().equals(MoneyMovementOperation.EXPENSE)) {
 			urlDetail = "Expense" + urlDetail;
 		}
 		else
-		if (moneyMovement.getType().equals(TransactionType.BANK_MOVEMENT)) {
+		if (moneyMovement.getOperation().equals(MoneyMovementOperation.WITHDRAWAL)) {
 			urlDetail = "Withdrawal" + urlDetail;
 		}
 		else
-		if (moneyMovement.getType().equals(TransactionType.CREDIT_CARD_MOVEMENT)) {
+		if (moneyMovement.getOperation().equals(MoneyMovementOperation.CREDIT_CARD_PAYMENT)) {
 			urlDetail = "CreditCardPayment" + urlDetail;
 		}
-
+		else
+		if (moneyMovement.getOperation().equals(MoneyMovementOperation.GOT_SALARY)) {
+			urlDetail = "Salary" + urlDetail;
+		}
 %>
-	  <tr>
-	    <td align="center"><%= dateFormat.format(date) %></td>
-	    <td align="center"><%= timeFormat.format(date) %></td>
-	    <td align="right"><%= String.format("%.2f", moneyMovement.getAmount()) %></td>
-	    <td align="center"><%= moneyMovement.getCurrency() %></td>
-	    <td align="left"><a href="<%= urlDetail %>">Detail: <%= transactionType %></a></td>
-	  </tr>
+		<tr>
+			<td align="center"><%= dateFormat.format(date) %></td>
+			<td align="center"><%= timeFormat.format(date) %></td>
+			<td align="right"><%= String.format("%.2f", moneyMovement.getAmount()) %></td>
+			<td align="center"><%= moneyMovement.getCurrency() %></td>
+			<td align="left"><a href="<%= urlDetail %>">Detail: <%= operation %></a></td>
+		</tr>
 <%
 	}
 %>

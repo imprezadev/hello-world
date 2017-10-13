@@ -11,7 +11,6 @@ import com.smartware.common.AppDBHelper;
 import com.smartware.domain.CreditCardMovement;
 import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.Currency;
-import com.smartware.domain.catalog.TransactionType;
 
 public class CreditCardMovementDAO {
 	
@@ -19,11 +18,10 @@ public class CreditCardMovementDAO {
 		CreditCardMovement creditCardMovement = new CreditCardMovement();
 		try {
 			creditCardMovement.setId(rs.getLong("id"));
-			creditCardMovement.setType(TransactionType.valueOf(rs.getString("type")));
 			creditCardMovement.setDate(rs.getTimestamp("date"));
 			creditCardMovement.setAmount(rs.getFloat("amount"));
 			creditCardMovement.setCurrency(Currency.valueOf(rs.getString("currency")));
-			creditCardMovement.setOperation(CreditCardOperation.valueOf(rs.getString("operation")));
+			creditCardMovement.setCreditCardOperation(CreditCardOperation.valueOf(rs.getString("operation")));
 			creditCardMovement.setRemarks(rs.getString("remarks"));
 		}
 		catch (Exception e) {
@@ -45,7 +43,7 @@ public class CreditCardMovementDAO {
 			ResultSet rs = null;
 			try {
 				String sql = 
-						"SELECT mm.id, mm.type, mm.date, mm.amount, mm.currency, ccm.operation, ccm.remarks" +
+						"SELECT mm.id, mm.date, mm.amount, mm.currency, ccm.operation, ccm.remarks" +
 						"  FROM credit_card_movement ccm" +
 						" INNER JOIN money_movement mm ON mm.id = ccm.id_money_movement" +
 						" WHERE ccm.id_money_movement = ?";
@@ -106,7 +104,7 @@ public class CreditCardMovementDAO {
 				String sql = "INSERT INTO credit_card_movement (id_money_movement, operation, remarks) VALUES (?, ?, ?)";
 				st = conn.prepareStatement(sql);
 				st.setLong(1, creditCardMovement.getId());
-				st.setString(2, creditCardMovement.getOperation().name());
+				st.setString(2, creditCardMovement.getCreditCardOperation().name());
 				st.setString(3, creditCardMovement.getRemarks());
 
 				st.execute();
@@ -120,7 +118,7 @@ public class CreditCardMovementDAO {
 	public void insertCreditCardMovement(long id, CreditCardOperation creditCardOperation, String remarks) {
 		CreditCardMovement creditCardMovement = new CreditCardMovement();
 		creditCardMovement.setId(id);
-		creditCardMovement.setOperation(creditCardOperation);
+		creditCardMovement.setCreditCardOperation(creditCardOperation);
 		creditCardMovement.setRemarks(remarks);
 
 		insertCreditCardMovement(creditCardMovement);

@@ -8,6 +8,6 @@ import lombok.ToString;
 @Data
 @ToString(callSuper=true)
 public class CreditCardMovement extends MoneyMovement {
-	private CreditCardOperation operation;
+	private CreditCardOperation creditCardOperation;
 	private String remarks;
 }
