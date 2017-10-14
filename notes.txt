@@ -1,34 +1,47 @@
 
+- RETHINK: leave the expense category field to put it as jerarquic category under of event-category. 
+Kind of the jerarquic category could be:
+* HOME: VICTUALS, SERVICES(SEDAPAL, LUZDELSUR, DIRECTV, CLEANING), STUFFS, IMPROVEMENTS
+* IMPREZA: CLEAN, FUEL, MAINTENANCE, INSURANCE, TAXES, BUYING
+* DIEGO: COLLEGE(DUTIES, STUFFS, SPENDS), CLOTHES, FUN, HEALTH, CELLPHONE
+* PANTO: FOOD, CLEAN, HEALTH
+* FUN: TASTE, CINE, NITE, TRIP, HR
+* SERVICES: CELLPHONE, SPOTIFY, GOOGLE_MUSIC, 
+* CLOTHES: CASUAL_DRESS, TREKK_SPORT_DRESS, FUN_NITE_DRESS
+* CAREER_DEV: ENGLISH, NETWORKING, SOFTWARE_ENG, MANAGEMENT
+* CASH_LOAN_PAYMENT 
+* CREDIT: CREDIT_CARD (PAYMENT, FEES(INTERESES, STATEMENT, INSURANCE), CASHLOAN_PAYMENT
+* MOM: CELPHONE, SUPPORT
+* STUFFS, COMMUTE, LUNCH, HEALTH, HAIRCUT
+Kind of event-categories could be:
+* WORK
+* FUN_NITE
+* TRIP
+* TREKK
+* IMPREZA_BUYING
 
-TODO-LIST:
-- reestructure-functionality: leave the expense category field to put it as structured label system, with kind of the following values:
-	// HOME: VICTUALS, SERVICES(SEDAPAL, LUZDELSUR, DIRECTV, CLEANING), STUFFS, IMPROVEMENTS
-	// IMPREZA: CLEAN, FUEL, MAINTENANCE, INSURANCE, TAXES, BUYING
-	// DIEGO: COLLEGE(DUTIES, STUFFS, SPENDS), CLOTHES, FUN, HEALTH, CELLPHONE
-	// PANTO: FOOD, CLEAN, HEALTH
-	// FUN: TASTE, CINE, NITE, TRIP, HR
-	// SERVICES: CELLPHONE, SPOTIFY, GOOGLE_MUSIC, 
-	// CLOTHES: CASUAL_DRESS, TREKK_SPORT_DRESS, FUN_NITE_DRESS
-	// CAREER_DEV: ENGLISH, NETWORKING, SOFTWARE_ENG, MANAGEMENT
-	// CASH_LOAN_PAYMENT 
-	// CREDIT: CREDIT_CARD (PAYMENT, FEES(INTERESES, STATEMENT, INSURANCE), CASHLOAN_PAYMENT
-	// MOM: CELPHONE, SUPPORT
-	// STUFFS, COMMUTE, LUNCH, HEALTH, HAIRCUT
-}
-// EVENT_CATEGORY:
-// WORK, FUN_NITE, TRIP, TREKK, IMPREZA_BUYING
+- REFACTOR: date functions to utils helper.
 
+- REFACTOR: MoneyTrackServiceTest.testGetMoneyMovements - improve the way to seek every created object as the item in the list.
 
-- refactor: date functions to utils helper
-- refactor: MoneyTrackServiceTest.testGetMoneyMovements - improve the way to seek every created object as the item in the list
-- ux: implement jsp error page
-- refactor-fix: let the database connection errors raise to the client this way it can be shown in error page
-- ux: pagination of movement-money list in dashboard page
-- refactor: servlet supeclass to hold and initialize moneytrackservice as a protected method to be consumed for the childrens
-- rethink: as the new vision, date, amount and curency data in expense, bank_movement, credit_card_movement tables  will be stored in just one table as log of money movements, that have been added as long as a money movement operation is recorded. A value that represent what   operation triggered the log and its id will be added to the log as reference. Tables for every  money movement operation will be created to store additional information according to their nature.
-- refactor: payment types for credit card different than payment types for expense (payment credit card could not be by credit card itself), that is why we have to separate them.
-- functionality: adding bank transfer as paymenttype
-- FUNCTIONALITY: define all domain validations and implement the logic to support them on service tier
-- REFACTOR: apply jstl tags, expresions, etc instead expresions
-- UX: apply bootstrap
-- REFACTOR: unit test to database in memory
+- UX: implement jsp error page.
+
+- REFACTOR-FIX: let the database connection errors raise to the client, this way it can be shown in error page.
+
+- UX: pagination for movement-money list in dashboard page.
+
+- REFACTOR: servlet supeclass to hold and initialize moneytrackservice as a protected method to be consumed for the current servlets as children.
+
+- RETHINK: as the new vision, date, amount and curency data in expense, bank_movement, credit_card_movement tables  will be stored in just one table as log of money movements that have been added as long as a money movement operation is recorded. A value that represent what   operation triggered the log and its id will be added to the log as reference. Tables for every kind of money movement operation will be created to store additional information according to their nature.
+
+- REFACTOR: payment types for credit card different than payment types for expense (payment credit card could not be by credit card itself), that is why we have to separate them.
+
+- FUNCTIONALITY: adding bank transfer as paymenttype.
+
+- FUNCTIONALITY: define all domain validations and implement the logic to support them on service tier.
+
+- REFACTOR: apply jstl tags, expresions, etc instead expresions.
+
+- UX: apply bootstrap.
+
+- REFACTOR: unit test to database in memory.
