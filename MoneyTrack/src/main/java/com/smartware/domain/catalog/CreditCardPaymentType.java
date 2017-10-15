@@ -1,11 +1,11 @@
 package com.smartware.domain.catalog;
 
-public enum PaymentType {
-	CASH("Cash"), DEBIT("Debit"), CREDIT("Credit");
+public enum CreditCardPaymentType {
+	DEPOSIT("Deposit"), BANK_TRANSFER("Bank Transfer");
 
 	private String name;
 
-	private PaymentType(String name) {
+	private CreditCardPaymentType(String name) {
 		this.name = name;
 	}
 

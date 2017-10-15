@@ -3,7 +3,7 @@
 
 <%@ page import="com.smartware.domain.Expense" %>
 <%@ page import="com.smartware.domain.catalog.Currency" %>
-<%@ page import="com.smartware.domain.catalog.PaymentType" %>
+<%@ page import="com.smartware.domain.catalog.ExpensePaymentType" %>
 <%@ page import="com.smartware.domain.catalog.ExpenseCategory" %>
 
 <!DOCTYPE html>
@@ -84,9 +84,9 @@
         <select name="cbPaymentType" <%= (toShowExpense) ? "disabled" : "" %>>
           <option></option>
 <%
-	PaymentType[] paymentTypes = (PaymentType[])request.getAttribute("paymentTypes");
+	ExpensePaymentType[] paymentTypes = (ExpensePaymentType[])request.getAttribute("paymentTypes");
 	boolean matchPaymentType;
-	for (PaymentType paymentType: paymentTypes) {
+	for (ExpensePaymentType paymentType: paymentTypes) {
 		matchPaymentType = (cbPaymentType != "" && cbPaymentType.equals(paymentType.name()));
 %>
           <option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType.getName() %></option>

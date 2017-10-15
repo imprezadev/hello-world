@@ -10,9 +10,10 @@ import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.Withdrawal;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.CreditCardOperation;
+import com.smartware.domain.catalog.CreditCardPaymentType;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
-import com.smartware.domain.catalog.PaymentType;
+import com.smartware.domain.catalog.ExpensePaymentType;
 import com.smartware.domain.catalog.MoneyMovementOperation;
 import com.smartware.persistence.BankMovementDAO;
 import com.smartware.persistence.CreditCardMovementDAO;
@@ -30,23 +31,31 @@ public class MoneyTrackService {
 		return Currency.values();
 	}
 
-	public PaymentType[] getPaymentTypes() {
-		return PaymentType.values();
+	public ExpensePaymentType[] getExpensePaymentTypes() {
+		return ExpensePaymentType.values();
 	}
 
 	public ExpenseCategory[] getExpenseCategories() {
 		return ExpenseCategory.values();
 	}
 
+	public CreditCardPaymentType[] getCreditCardPaymentTypes() {
+		return CreditCardPaymentType.values();
+	}
+
 	public long recordExpense(Expense expense) {
 		long id = moneyMovementDAO.insertMoneyMovement(expense.getDate(), expense.getAmount(), expense.getCurrency());
 
-		if (expense.getPaymentType().equals(PaymentType.DEBIT)) {
+		if (expense.getPaymentType().equals(ExpensePaymentType.DEBIT)) {
 			bankMovementDAO.insertBankMovement(id, BankOperation.DEBIT, MoneyMovementOperation.EXPENSE.name());
 		}
 		else
-		if (expense.getPaymentType().equals(PaymentType.CREDIT)) {
+		if (expense.getPaymentType().equals(ExpensePaymentType.CREDIT_CARD)) {
 			creditCardMovementDAO.insertCreditCardMovement(id, CreditCardOperation.CREDIT, MoneyMovementOperation.EXPENSE.name());
+		}
+		else
+		if (expense.getPaymentType().equals(ExpensePaymentType.BANK_TRANSFER)) {
+			bankMovementDAO.insertBankMovement(id, BankOperation.TRANSFER_OUT, MoneyMovementOperation.EXPENSE.name());
 		}
 
 		expense.setId(id);
@@ -58,7 +67,7 @@ public class MoneyTrackService {
 	public long recordCreditCardPayment(CreditCardPayment creditCardPayment) {
 		long id = moneyMovementDAO.insertMoneyMovement(creditCardPayment.getDate(), creditCardPayment.getAmount(), creditCardPayment.getCurrency());
 
-		if (creditCardPayment.getPaymentType().equals(PaymentType.DEBIT)) {
+		if (creditCardPayment.getPaymentType().equals(CreditCardPaymentType.BANK_TRANSFER)) {
 			bankMovementDAO.insertBankMovement(id, BankOperation.DEBIT, MoneyMovementOperation.CREDIT_CARD_PAYMENT.name());
 		}
 

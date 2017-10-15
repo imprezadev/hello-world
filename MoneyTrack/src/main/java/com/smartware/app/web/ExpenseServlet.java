@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.smartware.domain.Expense;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
-import com.smartware.domain.catalog.PaymentType;
+import com.smartware.domain.catalog.ExpensePaymentType;
 import com.smartware.service.MoneyTrackService;
 
 public class ExpenseServlet extends HttpServlet {
@@ -28,7 +28,7 @@ public class ExpenseServlet extends HttpServlet {
 		Currency[] currencies = moneyTrackService.getCurrencies();
 		request.setAttribute("currencies", currencies);
 
-		PaymentType[] paymentTypes = moneyTrackService.getPaymentTypes();
+		ExpensePaymentType[] paymentTypes = moneyTrackService.getExpensePaymentTypes();
 		request.setAttribute("paymentTypes", paymentTypes);
 
 		ExpenseCategory[] expenseCategories = moneyTrackService.getExpenseCategories();
@@ -81,9 +81,9 @@ public class ExpenseServlet extends HttpServlet {
 			errorMsgs.add("Currency: " + ex);
 		}
 
-		PaymentType paymentType = null;
+		ExpensePaymentType paymentType = null;
 		try {
-			paymentType = PaymentType.valueOf(request.getParameter("cbPaymentType"));
+			paymentType = ExpensePaymentType.valueOf(request.getParameter("cbPaymentType"));
 		}
 		catch (Exception ex) {
 			errorMsgs.add("Payment Type: " + ex);

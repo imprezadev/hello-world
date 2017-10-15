@@ -34,10 +34,6 @@ Kind of event-categories could be:
 
 - RETHINK: as the new vision, date, amount and curency data in expense, bank_movement, credit_card_movement tables  will be stored in just one table as log of money movements that have been added as long as a money movement operation is recorded. A value that represent what   operation triggered the log and its id will be added to the log as reference. Tables for every kind of money movement operation will be created to store additional information according to their nature.
 
-- REFACTOR: payment types for credit card different than payment types for expense (payment credit card could not be by credit card itself), that is why we have to separate them.
-
-- FUNCTIONALITY: adding bank transfer as paymenttype.
-
 - FUNCTIONALITY: define all domain validations and implement the logic to support them on service tier.
 
 - REFACTOR: apply jstl tags, expresions, etc instead expresions.

@@ -11,7 +11,7 @@ import com.smartware.common.AppDBHelper;
 import com.smartware.domain.Expense;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
-import com.smartware.domain.catalog.PaymentType;
+import com.smartware.domain.catalog.ExpensePaymentType;
 
 public class ExpenseDAO {
 	
@@ -22,7 +22,7 @@ public class ExpenseDAO {
 			expense.setDate(rs.getTimestamp("date"));
 			expense.setAmount(rs.getFloat("amount"));
 			expense.setCurrency(Currency.valueOf(rs.getString("currency")));
-			expense.setPaymentType(PaymentType.valueOf(rs.getString("payment_type")));
+			expense.setPaymentType(ExpensePaymentType.valueOf(rs.getString("payment_type")));
 			expense.setDetail(rs.getString("detail"));
 			expense.setCategory(ExpenseCategory.valueOf(rs.getString("category")));
 		}

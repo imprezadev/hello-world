@@ -18,9 +18,10 @@ import com.smartware.domain.MoneyMovement;
 import com.smartware.domain.Withdrawal;
 import com.smartware.domain.catalog.BankOperation;
 import com.smartware.domain.catalog.CreditCardOperation;
+import com.smartware.domain.catalog.CreditCardPaymentType;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
-import com.smartware.domain.catalog.PaymentType;
+import com.smartware.domain.catalog.ExpensePaymentType;
 import com.smartware.domain.catalog.MoneyMovementOperation;
 import com.smartware.persistence.BankMovementDAO;
 import com.smartware.persistence.CreditCardMovementDAO;
@@ -55,7 +56,7 @@ public class MoneyTrackServiceTest {
 		testExpense_CashPayment.setDate(new GregorianCalendar(2017, Calendar.MARCH, 22, 11, 58).getTime());
 		testExpense_CashPayment.setAmount(10f);
 		testExpense_CashPayment.setCurrency(Currency.PEN);
-		testExpense_CashPayment.setPaymentType(PaymentType.CASH);
+		testExpense_CashPayment.setPaymentType(ExpensePaymentType.CASH);
 		testExpense_CashPayment.setDetail("Altoque Menu Delivery");
 		testExpense_CashPayment.setCategory(ExpenseCategory.LUNCH);
 		
@@ -67,42 +68,54 @@ public class MoneyTrackServiceTest {
 		testExpense_DebitPayment.setDate(new GregorianCalendar(2017, Calendar.MAY, 6, 14, 36).getTime());
 		testExpense_DebitPayment.setAmount(23f);
 		testExpense_DebitPayment.setCurrency(Currency.PEN);
-		testExpense_DebitPayment.setPaymentType(PaymentType.DEBIT);
+		testExpense_DebitPayment.setPaymentType(ExpensePaymentType.DEBIT);
 		testExpense_DebitPayment.setDetail("MASS Car Washer");
 		testExpense_DebitPayment.setCategory(ExpenseCategory.IMPREZA_CLEAN);
 		
 		return testExpense_DebitPayment;
 	}
 
-	private Expense getTestRecordExpense_CreditPayment() {
+	private Expense getTestRecordExpense_CreditCardPayment() {
 		Expense testExpense_CreditPayment = new Expense();
 		testExpense_CreditPayment.setDate(new GregorianCalendar(2017, Calendar.MAY, 1, 10, 46).getTime());
 		testExpense_CreditPayment.setAmount(48.90f);
 		testExpense_CreditPayment.setCurrency(Currency.PEN);
-		testExpense_CreditPayment.setPaymentType(PaymentType.CREDIT);
+		testExpense_CreditPayment.setPaymentType(ExpensePaymentType.CREDIT_CARD);
 		testExpense_CreditPayment.setDetail("Limbus Restobar");
 		testExpense_CreditPayment.setCategory(ExpenseCategory.FUN_TASTE);
 
 		return testExpense_CreditPayment;
 	}
 
-	private CreditCardPayment getTestRecordCreditCardPayment_Cash() {
+	private Expense getTestRecordExpense_BankTransferPayment() {
+		Expense testExpense_CreditPayment = new Expense();
+		testExpense_CreditPayment.setDate(new GregorianCalendar(2017, Calendar.AUGUST, 23, 10, 46).getTime());
+		testExpense_CreditPayment.setAmount(3006f);
+		testExpense_CreditPayment.setCurrency(Currency.PEN);
+		testExpense_CreditPayment.setPaymentType(ExpensePaymentType.BANK_TRANSFER);
+		testExpense_CreditPayment.setDetail("PMC LATAM, ITIL PPO");
+		testExpense_CreditPayment.setCategory(ExpenseCategory.CAREER_DEV);
+
+		return testExpense_CreditPayment;
+	}
+
+	private CreditCardPayment getTestRecordCreditCardPayment_BankDeposit() {
 		CreditCardPayment testCreditCardPayment = new CreditCardPayment();
 		testCreditCardPayment.setDate(new GregorianCalendar(2017, Calendar.MARCH, 01, 14, 34).getTime());
 		testCreditCardPayment.setAmount(4790.45f);
 		testCreditCardPayment.setCurrency(Currency.PEN);
-		testCreditCardPayment.setPaymentType(PaymentType.CASH);
+		testCreditCardPayment.setPaymentType(CreditCardPaymentType.DEPOSIT);
 		testCreditCardPayment.setRemarks("TOTAL FACTURADO 23908");
 
 		return testCreditCardPayment;
 	}
 
-	private CreditCardPayment getTestRecordCreditCardPayment_Debit() {
+	private CreditCardPayment getTestRecordCreditCardPayment_BankTransfer() {
 		CreditCardPayment testCreditCardPayment = new CreditCardPayment();
 		testCreditCardPayment.setDate(new GregorianCalendar(2017, Calendar.MARCH, 01, 14, 34).getTime());
 		testCreditCardPayment.setAmount(4790.45f);
 		testCreditCardPayment.setCurrency(Currency.PEN);
-		testCreditCardPayment.setPaymentType(PaymentType.DEBIT);
+		testCreditCardPayment.setPaymentType(CreditCardPaymentType.BANK_TRANSFER);
 		testCreditCardPayment.setRemarks("TOTAL FACTURADO 23908");
 
 		return testCreditCardPayment;
@@ -160,8 +173,8 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordExpense_CreditPayment() {
-		Expense testExpense_CreditPayment = getTestRecordExpense_CreditPayment();
+	public void testRecordExpense_CreditCardPayment() {
+		Expense testExpense_CreditPayment = getTestRecordExpense_CreditCardPayment();
  		long id = moneyTrackService.recordExpense(testExpense_CreditPayment);
 
 		assertTrue(id > 0);
@@ -178,8 +191,26 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordCreditCardPayment_Cash() {
-		CreditCardPayment testCreditCardPayment = getTestRecordCreditCardPayment_Cash();
+	public void testRecordExpense_BankTransferPayment() {
+		Expense testExpense_BankTransferPayment = getTestRecordExpense_BankTransferPayment();
+		long id = moneyTrackService.recordExpense(testExpense_BankTransferPayment);
+
+		assertTrue(id > 0);
+
+		MoneyMovement moneyMovement = moneyMovementDAO.getMoneyMovement(id);
+		assertNotNull(moneyMovement);
+
+		BankMovement bankMovement = bankMovementDAO.getBankMovement(id);
+		assertNotNull(bankMovement);
+		assertTrue(bankMovement.getBankOperation().equals(BankOperation.TRANSFER_OUT));
+
+		Expense savedExpense = expenseDAO.getExpense(id);
+		assertTrue(sameExpensesData(testExpense_BankTransferPayment, savedExpense));
+	}
+
+	@Test
+	public void testRecordCreditCardPayment_BankDeposit() {
+		CreditCardPayment testCreditCardPayment = getTestRecordCreditCardPayment_BankDeposit();
 		long id = moneyTrackService.recordCreditCardPayment(testCreditCardPayment);
 
 		assertTrue(id > 0);
@@ -192,8 +223,8 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordCreditCardPayment_Debit() {
-		CreditCardPayment testCreditCardPayment = getTestRecordCreditCardPayment_Debit();
+	public void testRecordCreditCardPayment_BankTransfer() {
+		CreditCardPayment testCreditCardPayment = getTestRecordCreditCardPayment_BankTransfer();
 		long id = moneyTrackService.recordCreditCardPayment(testCreditCardPayment);
 
 		assertTrue(id > 0);
@@ -243,8 +274,8 @@ public class MoneyTrackServiceTest {
 	public void testGetMoneyMovements() {
 		long idCashExpense = moneyTrackService.recordExpense(getTestRecordExpense_CashPayment());
 		long idDebitExpense = moneyTrackService.recordExpense(getTestRecordExpense_DebitPayment());
-		long idCreditExpense =  moneyTrackService.recordExpense(getTestRecordExpense_CreditPayment());
-		long idCreditCardPayment = moneyTrackService.recordCreditCardPayment(getTestRecordCreditCardPayment_Cash());
+		long idCreditExpense =  moneyTrackService.recordExpense(getTestRecordExpense_CreditCardPayment());
+		long idCreditCardPayment = moneyTrackService.recordCreditCardPayment(getTestRecordCreditCardPayment_BankTransfer());
 		long idWithDrawal = moneyTrackService.recordWithdrawal(getTestWithdrawal());
 		long idGotSalary = moneyTrackService.recordGotSalary(getTestGotSalary());
 

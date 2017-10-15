@@ -1,7 +1,7 @@
 package com.smartware.domain;
 
 import com.smartware.domain.catalog.ExpenseCategory;
-import com.smartware.domain.catalog.PaymentType;
+import com.smartware.domain.catalog.ExpensePaymentType;
 
 import lombok.Data;
 import lombok.ToString;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper=true)
 public class Expense extends MoneyMovement {
-	private PaymentType paymentType;
+	private ExpensePaymentType paymentType;
 	private ExpenseCategory category;
 	private String detail;
 }

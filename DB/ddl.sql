@@ -12,7 +12,7 @@ CREATE TABLE moneytrack.money_movement (
 
 CREATE TABLE moneytrack.expense (
   id_money_movement INT NOT NULL,
-  payment_type      VARCHAR(8) NOT NULL,
+  payment_type      VARCHAR(15) NOT NULL,
   category          VARCHAR(24) NOT NULL,
   detail            VARCHAR(100) NOT NULL,
   CONSTRAINT FK__expense__money_movement FOREIGN KEY(id_money_movement) REFERENCES moneytrack.money_movement(id),
