@@ -26,6 +26,8 @@ git remote
 
 git commit --ammend --no-edit
 
+git mv ../notes.txt Management/notes.txt  #mover archivos
+git log --follow Management/info_commands.txt #chequear el historial de un archivo en particular
 
 Java Commands (JDK 6)
 =====================
