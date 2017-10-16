@@ -31,7 +31,7 @@
 		expense = (Expense)request.getAttribute("expense");
 
 		edtDate = Utils.getFormattedDateTime(expense.getDate());
-		edtAmount = String.format("%.2f", expense.getAmount());
+		edtAmount = Utils.getFormattedFloat(expense.getAmount());
 		cbCurrency = expense.getCurrency().name();
 		cbPaymentType = expense.getPaymentType().name();
 		cbExpenseCategory = expense.getCategory().name();

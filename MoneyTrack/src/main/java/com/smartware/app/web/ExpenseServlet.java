@@ -1,8 +1,6 @@
 package com.smartware.app.web;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,12 +64,11 @@ public class ExpenseServlet extends HttpServlet {
 		}
 
 		Float amount = 0f;
-		try {
-			amount = Float.valueOf(request.getParameter("edtAmount"));
+		if (Utils.isValidFloatNumberString(request.getParameter("edtAmount"))) {
+			amount = Utils.getFloatNumberFromString(request.getParameter("edtAmount"));
 		}
-		catch (Exception ex) {
-			errorMsgs.add("Amount: " + ex);
-		}
+		else
+			errorMsgs.add("Amount: It should be a decimal number.");
 
 		Currency currency = null;
 		try {

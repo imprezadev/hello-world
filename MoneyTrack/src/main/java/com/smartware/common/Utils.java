@@ -15,6 +15,8 @@ public class Utils {
 	public static final String DATE_DEFAULT_FORMAT = "dd/MM/yyyy";
 	public static final String TIME_DEFAULT_FORMAT = "HH:mm";
 
+	public static final String AMOUNT_FORMAT_PATTERN = "%.2f";
+
 	public Properties getFileProperties(String propertiesFileName) {
 		Properties prop = null;
 		
@@ -97,6 +99,25 @@ public class Utils {
 
 	public static Date getTimeFromString(String dateTimeStr) {
 		return getDateTimeFromString(dateTimeStr, TIME_DEFAULT_FORMAT);
+	}
+
+	public static String getFormattedFloat(float floatNumber) {
+		return String.format(AMOUNT_FORMAT_PATTERN, floatNumber);
+	}
+
+	public static boolean isValidFloatNumberString(String strFloatNumber) {
+		boolean valid = true;
+		try {
+			Float.valueOf(strFloatNumber);
+		}
+		catch (Exception ex) {
+			valid = false;
+		}
+		return valid;
+	}
+
+	public static Float getFloatNumberFromString(String strFloatNumber) {
+		return Float.valueOf(strFloatNumber);
 	}
 
 }
