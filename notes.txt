@@ -20,8 +20,6 @@ Kind of event-categories could be:
 * TREKK
 * IMPREZA_BUYING
 
-- REFACTOR: date functions to utils helper.
-
 - REFACTOR: MoneyTrackServiceTest.testGetMoneyMovements - improve the way to seek every created object as the item in the list.
 
 - UX: implement jsp error page.

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.smartware.common.Utils;
 import com.smartware.domain.Expense;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.ExpenseCategory;
@@ -57,12 +58,11 @@ public class ExpenseServlet extends HttpServlet {
 		List<String> errorMsgs = new ArrayList<String>();
 
 		Date date = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		try {
-			date = sdf.parse(request.getParameter("edtDate"));
+		if (Utils.isValidDateTimeString(request.getParameter("edtDate"))) {
+			date = Utils.getDateTimeFromString(request.getParameter("edtDate"));
 		}
-		catch (ParseException ex) {
-			errorMsgs.add("Date: " + ex);
+		else {
+			errorMsgs.add("Date: Invalid Date, format should be '" + Utils.DATE_TIME_DEFAULT_FORMAT + "'.");
 		}
 
 		Float amount = 0f;

@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+
+<%@ page import="com.smartware.common.Utils" %>
 
 <%@ page import="com.smartware.domain.Expense" %>
 <%@ page import="com.smartware.domain.catalog.Currency" %>
@@ -29,8 +30,7 @@
 	if (toShowExpense) {
 		expense = (Expense)request.getAttribute("expense");
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		edtDate = sdf.format(expense.getDate());
+		edtDate = Utils.getFormattedDateTime(expense.getDate());
 		edtAmount = String.format("%.2f", expense.getAmount());
 		cbCurrency = expense.getCurrency().name();
 		cbPaymentType = expense.getPaymentType().name();
