@@ -9,7 +9,9 @@ import java.util.List;
 
 import com.smartware.common.AppDBHelper;
 import com.smartware.domain.CreditCardMovement;
+import com.smartware.domain.CreditCardPayment;
 import com.smartware.domain.catalog.CreditCardOperation;
+import com.smartware.domain.catalog.CreditCardPaymentType;
 import com.smartware.domain.catalog.Currency;
 
 public class CreditCardMovementDAO {
@@ -30,6 +32,24 @@ public class CreditCardMovementDAO {
 		}
 
 		return creditCardMovement;
+	}
+
+	private CreditCardPayment populateCreditCardPayment(ResultSet rs) {
+		CreditCardPayment creditCardPayment = new CreditCardPayment();
+		try {
+			creditCardPayment.setId(rs.getLong("id"));
+			creditCardPayment.setDate(rs.getTimestamp("date"));
+			creditCardPayment.setAmount(rs.getFloat("amount"));
+			creditCardPayment.setCurrency(Currency.valueOf(rs.getString("currency")));
+			creditCardPayment.setPaymentType(CreditCardPaymentType.valueOf(rs.getString("payment_type")));
+			creditCardPayment.setRemarks(rs.getString("remarks"));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			creditCardPayment = null;
+		}
+
+		return creditCardPayment;
 	}
 
 	public CreditCardMovement getCreditCardMovement(long id) {
@@ -122,6 +142,47 @@ public class CreditCardMovementDAO {
 		creditCardMovement.setRemarks(remarks);
 
 		insertCreditCardMovement(creditCardMovement);
+	}
+
+	public CreditCardPayment getCreditCardPayment(long id) {
+		CreditCardPayment creditCardPayment = null;
+
+		AppDBHelper appDBHelper = new AppDBHelper();
+
+		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		if (conn != null) {
+			PreparedStatement st = null;
+			ResultSet rs = null;
+			try {
+				String sql =
+						"SELECT mm.id" +
+						"     , mm.date" +
+						"     , mm.amount" +
+						"     , mm.currency" +
+						"     , CASE bm.id_money_movement" +
+						"         WHEN NULL THEN '" + CreditCardPaymentType.DEPOSIT + "'" +
+						"         ELSE '" + CreditCardPaymentType.BANK_TRANSFER + "'" +
+						"       END AS payment_type" +
+						"     , ccm.remarks" +
+						"  FROM credit_card_movement ccm" +
+						" INNER JOIN money_movement mm ON mm.id = ccm.id_money_movement" +
+						"  LEFT JOIN bank_movement bm ON mm.id = bm.id_money_movement" +
+						" WHERE ccm.operation = 'PAYMENT' " +
+						"   AND ccm.id_money_movement = ?";
+
+				st = conn.prepareStatement(sql);
+				st.setLong(1, id);
+				rs = st.executeQuery();
+
+				if (rs.next()) {
+					creditCardPayment = populateCreditCardPayment(rs);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return creditCardPayment;
 	}
 
 }

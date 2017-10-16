@@ -108,4 +108,8 @@ public class MoneyTrackService {
 		return expenseDAO.getExpense(id);
 	}
 
+	public CreditCardPayment getCreditCardPayment(long id) {
+		return creditCardMovementDAO.getCreditCardPayment(id);
+	}
+
 }
