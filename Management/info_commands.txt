@@ -29,6 +29,13 @@ git commit --ammend --no-edit
 git mv ../notes.txt Management/notes.txt  #mover archivos
 git log --follow Management/info_commands.txt #chequear el historial de un archivo en particular
 
+git clone https://github.com/imprezadev/hello-world.git # make hello-world folder in current folder and clone repo into it
+
+git clone https://github.com/imprezadev/hello-world.git kkkk # make kkkk folder in current folder and clone repo into it
+
+git clone https://github.com/imprezadev/hello-world.git . # clone repo into current folder
+
+
 Java Commands (JDK 6)
 =====================
 javac HelloWorld.java
