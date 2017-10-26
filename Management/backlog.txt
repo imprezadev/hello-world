@@ -17,3 +17,17 @@
 - UX: apply bootstrap.
 
 - REFACTOR: unit test to database in memory.
+
+- DEVOPS: start working with jenkins
+
+- DEVOPS: migrate mysql db engine to docker
+
+- DEVOPS: migrate tomcat server to docker
+
+- DEVOPS: migrate this app to be ran from docker container
+
+- REFACTOR-FUNCTIONALITY: Got Salary is always in PEN as currency
+
+- REFACTOR: payment type as a unique class that will have an attribute to be applicable to expense or credit card payment type. This way ExpensePaymentType and CreditCardPaymentType enums classes could be unifiedin PaymentType
+
+
