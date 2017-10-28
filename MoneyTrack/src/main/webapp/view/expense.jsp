@@ -14,66 +14,33 @@
   <title>Money Track</title>
 </head>
 <body>
-<%
-	String edtDate = "";
-	String edtAmount = "";
-	String cbCurrency = "";
-	String cbPaymentType = "";
-	String cbExpenseCategory = "";
-	String txtDetail = "";
-
-	Boolean afterSaveOperation = request.getAttribute("saveOperation") != null;
-	Boolean errorAfterSaveOperation = request.getAttribute("saveOperation") != null && request.getAttribute("errorMsgs") != null;
-	Boolean toShowExpense = request.getAttribute("expense") != null; 
-
-	Expense expense = null;
-	if (toShowExpense) {
-		expense = (Expense)request.getAttribute("expense");
-
-		edtDate = Utils.getFormattedDateTime(expense.getDate());
-		edtAmount = Utils.getFormattedFloat(expense.getAmount());
-		cbCurrency = expense.getCurrency().name();
-		cbPaymentType = expense.getPaymentType().name();
-		cbExpenseCategory = expense.getCategory().name();
-		txtDetail = expense.getDetail();
-	}
-	else {
-		if (errorAfterSaveOperation) {
-			edtDate = request.getParameter("edtDate");
-			edtAmount = request.getParameter("edtAmount");
-			cbCurrency = request.getParameter("cbCurrency");
-			cbPaymentType = request.getParameter("cbPaymentType");
-			cbExpenseCategory = request.getParameter("cbExpenseCategory");
-			txtDetail = request.getParameter("txtDetail");
-		}
-	}
-%>
   <h1>Expense</h1>
 
   <form method="post" action="Expense">
   <table>
     <tr>
       <td><label>Date</label></td>
-      <td><input type="text" name="edtDate" value="<%= edtDate %>" <%= (toShowExpense) ? "disabled" : "" %> /></td>
+      <td><input type="text" name="edtDate" value="<%= request.getAttribute("strDate") %>" <%= (Boolean)request.getAttribute("editable") ? "" : "readonly" %> /></td>
     </tr>
     <tr>
       <td><label>Amount</label></td>
-      <td><input type="text" name="edtAmount" value="<%= edtAmount %>" <%= (toShowExpense) ? "disabled" : "" %> /></td>
+      <td><input type="text" name="edtAmount" value="<%= request.getAttribute("strAmount") %>" <%= (Boolean)request.getAttribute("editable") ? "" : "readonly" %> /></td>
     </tr>
     <tr>
       <td><label>Currency</label></td>
       <td>
-        <select name="cbCurrency" <%= (toShowExpense) ? "disabled" : "" %>>
+        <select name="cbCurrency" <%= (Boolean)request.getAttribute("editable") ? "" : "disabled" %> >
           <option></option>
 <%
-	Currency[] currencies = (Currency[])request.getAttribute("currencies");
-	boolean matchCurrency;
-	for (Currency currency: currencies) {
-		matchCurrency = (cbCurrency != "" && cbCurrency.equals(currency.name()));
+  String strCurrency = (String)request.getAttribute("strCurrency");
+  Currency[] currencies = (Currency[])request.getAttribute("currencies");
+  boolean matchCurrency;
+  for (Currency currency: currencies) {
+    matchCurrency = (strCurrency != "" && strCurrency.equals(currency.name()));
 %>
           <option value="<%= currency %>" <%= (matchCurrency) ? "selected" : "" %> ><%= currency.getName() %></option>
 <%
-	}
+  }
 %>
         </select>
       </td>
@@ -81,13 +48,14 @@
     <tr>
       <td><label>Payment Type</label></td>
       <td>
-        <select name="cbPaymentType" <%= (toShowExpense) ? "disabled" : "" %>>
+        <select name="cbPaymentType" <%= (Boolean)request.getAttribute("editable") ? "" : "disabled" %> >
           <option></option>
 <%
-	ExpensePaymentType[] paymentTypes = (ExpensePaymentType[])request.getAttribute("paymentTypes");
-	boolean matchPaymentType;
-	for (ExpensePaymentType paymentType: paymentTypes) {
-		matchPaymentType = (cbPaymentType != "" && cbPaymentType.equals(paymentType.name()));
+  String strPaymentType = (String)request.getAttribute("strPaymentType");
+  ExpensePaymentType[] paymentTypes = (ExpensePaymentType[])request.getAttribute("paymentTypes");
+  boolean matchPaymentType;
+  for (ExpensePaymentType paymentType: paymentTypes) {
+    matchPaymentType = (strPaymentType != "" && strPaymentType.equals(paymentType.name()));
 %>
           <option value="<%= paymentType %>" <%= (matchPaymentType) ? "selected" : "" %> ><%= paymentType.getName() %></option>
 <%
@@ -99,13 +67,14 @@
     <tr>
       <td><label>Category</label></td>
       <td>
-        <select name="cbExpenseCategory" <%= (toShowExpense) ? "disabled" : "" %>>
+        <select name="cbExpenseCategory" <%= (Boolean)request.getAttribute("editable") ? "" : "disabled" %> >
           <option></option>
 <%
-	ExpenseCategory[] expenseCategories = (ExpenseCategory[])request.getAttribute("expenseCategories");
-	boolean matchExpenseCategory;
-	for (ExpenseCategory expenseCategory: expenseCategories) {
-		matchExpenseCategory = (cbExpenseCategory != "" && cbExpenseCategory.equals(expenseCategory.name()));
+  String strExpenseCategory = (String)request.getAttribute("strExpenseCategory");
+  ExpenseCategory[] expenseCategories = (ExpenseCategory[])request.getAttribute("expenseCategories");
+  boolean matchExpenseCategory;
+  for (ExpenseCategory expenseCategory: expenseCategories) {
+    matchExpenseCategory = (strExpenseCategory != "" && strExpenseCategory.equals(expenseCategory.name()));
 %>
           <option value="<%= expenseCategory %>" <%= (matchExpenseCategory) ? "selected" : "" %> ><%= expenseCategory.getName() %></option>
 <%
@@ -116,34 +85,36 @@
     </tr>
     <tr>
       <td><label>Detail</label></td>
-      <td><textarea rows="4" cols="40" name="txtDetail" <%= (toShowExpense) ? "disabled" : "" %>><%= txtDetail %></textarea></td>
+      <td><textarea rows="4" cols="40" name="txtDetail" <%= (Boolean)request.getAttribute("editable") ? "" : "readonly" %> ><%= request.getAttribute("strDetail") %></textarea></td>
     </tr>
   </table>
 <%
-	if (!toShowExpense) {
+  if ((Boolean)request.getAttribute("editable")) {
 %>
   <input type="submit" value="Record Expense" />
 <%
-	}
+  }
 %>
   </form>
-  <br>
 <%
-	if (afterSaveOperation) {
-		if (errorAfterSaveOperation) {
-			List<String> errorMsgs = (List)request.getAttribute("errorMsgs");
-			for (String errorMsg: errorMsgs) {
+  Boolean afterSaveOperation = request.getAttribute("saveOperation") != null;
+  Boolean errorAfterSaveOperation = request.getAttribute("saveOperation") != null && request.getAttribute("errorMsgs") != null;
+
+  if (afterSaveOperation) {
+    if (errorAfterSaveOperation) {
+      List<String> errorMsgs = (List)request.getAttribute("errorMsgs");
+      for (String errorMsg: errorMsgs) {
 %>
   <li style="color:red" ><%= errorMsg %></li>
 <%
-			}
-		}
-		else {
+      }
+    }
+    else {
 %>
   <span style="color:blue" >Saved!!</span>
 <%
-		}
-	}
+    }
+  }
 %>
 
 </body>

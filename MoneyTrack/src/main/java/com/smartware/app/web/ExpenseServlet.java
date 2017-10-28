@@ -24,6 +24,15 @@ public class ExpenseServlet extends HttpServlet {
 	MoneyTrackService moneyTrackService = new MoneyTrackService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String strDate            = (request.getParameter("edtDate") != null)           ? request.getParameter("edtDate")           : "";
+		String strAmount          = (request.getParameter("edtAmount") != null)         ? request.getParameter("edtAmount")         : "";
+		String strCurrency        = (request.getParameter("cbCurrency") != null)        ? request.getParameter("cbCurrency")        : "";
+		String strPaymentType     = (request.getParameter("cbPaymentType") != null)     ? request.getParameter("cbPaymentType")     : "";
+		String strExpenseCategory = (request.getParameter("cbExpenseCategory") != null) ? request.getParameter("cbExpenseCategory") : "";
+		String strDetail          = (request.getParameter("txtDetail") != null)         ? request.getParameter("txtDetail")         : "";
+
+		Boolean editable = true;
+
 		Currency[] currencies = moneyTrackService.getCurrencies();
 		request.setAttribute("currencies", currencies);
 
@@ -34,19 +43,31 @@ public class ExpenseServlet extends HttpServlet {
 		request.setAttribute("expenseCategories", expenseCategories);
 
 		long expenseId = 0;
-		if (request.getParameter("id") != null) {
-			expenseId = Long.valueOf(request.getParameter("id"));
-		}
-		else
-		if (request.getAttribute("id") != null) {
-			expenseId = (Long)request.getAttribute("id");
-		}
+		if (request.getParameter("id") != null || request.getAttribute("id") != null) {
+			expenseId = (request.getParameter("id") != null) ? Long.valueOf(request.getParameter("id")) : (Long)request.getAttribute("id");
 
-		if (expenseId > 0) {
 			Expense expense = moneyTrackService.getExpense(expenseId);
+
+			strDate            = Utils.getFormattedDateTime(expense.getDate());
+			strAmount          = Utils.getFormattedFloat(expense.getAmount());
+			strCurrency        = expense.getCurrency().name();
+			strPaymentType     = expense.getPaymentType().name();
+			strExpenseCategory = expense.getCategory().name();
+			strDetail          = expense.getDetail();
+
+			editable = false;
 
 			request.setAttribute("expense", expense);
 		}
+
+		request.setAttribute("strDate", strDate);
+		request.setAttribute("strAmount", strAmount);
+		request.setAttribute("strCurrency", strCurrency);
+		request.setAttribute("strPaymentType", strPaymentType);
+		request.setAttribute("strExpenseCategory", strExpenseCategory);
+		request.setAttribute("strDetail", strDetail);
+
+		request.setAttribute("editable", editable);
 
 		RequestDispatcher view = request.getRequestDispatcher("view/expense.jsp");
 		view.forward(request, response); 
