@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,20 +8,49 @@
 </head>
 <body>
   <h1>Salary</h1>
+  <form method="post" action="Salary">
   <table>
     <tr>
       <td><label>Date</label></td>
-      <td><input type="text" /></td>
+      <td><input type="text" name="edtDate" value="<%= request.getAttribute("strDate") %>" <%= (Boolean)request.getAttribute("editable") ? "" : "readonly" %> /></td>
     </tr>
     <tr>
       <td><label>Amount</label></td>
-      <td><input type="text" /></td>
+      <td><input type="text" name="edtAmount" value="<%= request.getAttribute("strAmount") %>" <%= (Boolean)request.getAttribute("editable") ? "" : "readonly" %> /></td>
     </tr>
     <tr>
-      <td><label>Detail</label></td>
-      <td><textarea rows="4" cols="40" ></textarea></td>
+      <td><label>Remarks</label></td>
+      <td><textarea name="txtRemarks" rows="4" cols="40" <%= (Boolean)request.getAttribute("editable") ? "" : "readonly" %> ><%= request.getAttribute("strRemarks") %></textarea></td>
     </tr>
   </table>
-  <button>Record Got Salary</button>
+<%
+  if ((Boolean)request.getAttribute("editable")) {
+%>
+  <input type="submit" value="Record Got Salary" />
+<%
+  }
+%>
+  </form>
+<%
+  Boolean afterSaveOperation = request.getAttribute("saveOperation") != null;
+  Boolean errorAfterSaveOperation = request.getAttribute("saveOperation") != null && request.getAttribute("errorMsgs") != null;
+
+  if (afterSaveOperation) {
+    if (errorAfterSaveOperation) {
+      List<String> errorMsgs = (List)request.getAttribute("errorMsgs");
+      for (String errorMsg: errorMsgs) {
+%>
+  <li style="color:red" ><%= errorMsg %></li>
+<%
+      }
+    }
+    else {
+%>
+  <span style="color:blue" >Saved!!</span>
+<%
+    }
+  }
+%>
+
 </body>
 </html>

@@ -112,4 +112,12 @@ public class MoneyTrackService {
 		return creditCardMovementDAO.getCreditCardPayment(id);
 	}
 
+	public GotSalary getGotSalary(long id) {
+		return bankMovementDAO.getGotSalary(id);
+	}
+
+	public Withdrawal getWithdrawal(long id) {
+		return bankMovementDAO.getWithdrawal(id);
+	}
+
 }
