@@ -30,4 +30,8 @@
 
 - REFACTOR: payment type as a unique class that will have an attribute to be applicable to expense or credit card payment type. This way ExpensePaymentType and CreditCardPaymentType enums classes could be unifiedin PaymentType
 
+- REFACTOR: define Salary or GotSalary, then rename accordingly.
 
+- REFACTOR: query to get money movements should don't have hard bm.operation in where clauses, instead they have to get values from enum BankOperation.
+
+- RETHINK: Group of items packed in one transaction, like items are buyed in Tottus or items consumed in a restaurant, etc.
