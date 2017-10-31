@@ -16,7 +16,7 @@
     <li><a href="Expense">Record Expense</a></li>
     <li><a href="CreditCardPayment">Record Credit Card Payment</a></li>
     <li><a href="Withdrawal">Record Withdrawal</a></li>
-    <li><a href="Salary">Record Salary</a></li>
+    <li><a href="GotSalary">Record Got Salary</a></li>
   </ul>
 
   <table border="1" width="100%">
@@ -48,7 +48,7 @@
 		}
 		else
 		if (moneyMovement.getOperation().equals(MoneyMovementOperation.GOT_SALARY)) {
-			urlDetail = "Salary" + urlDetail;
+			urlDetail = "GotSalary" + urlDetail;
 		}
 %>
     <tr>

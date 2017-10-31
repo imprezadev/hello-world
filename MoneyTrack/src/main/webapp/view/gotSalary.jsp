@@ -7,8 +7,8 @@
   <title>Money Track</title>
 </head>
 <body>
-  <h1>Salary</h1>
-  <form method="post" action="Salary">
+  <h1>Got Salary</h1>
+  <form method="post" action="GotSalary">
   <table>
     <tr>
       <td><label>Date</label></td>

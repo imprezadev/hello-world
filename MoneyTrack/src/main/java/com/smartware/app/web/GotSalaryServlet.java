@@ -14,7 +14,7 @@ import com.smartware.common.Utils;
 import com.smartware.domain.GotSalary;
 import com.smartware.service.MoneyTrackService;
 
-public class SalaryServlet extends HttpServlet {
+public class GotSalaryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	MoneyTrackService moneyTrackService = new MoneyTrackService();
@@ -44,7 +44,7 @@ public class SalaryServlet extends HttpServlet {
 
 		request.setAttribute("editable", editable);
 
-		RequestDispatcher view = request.getRequestDispatcher("view/salary.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("view/gotSalary.jsp");
 		view.forward(request, response); 
 	}
 

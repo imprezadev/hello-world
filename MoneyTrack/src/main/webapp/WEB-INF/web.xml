@@ -44,12 +44,12 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>Salary</servlet-name>
-    <servlet-class>com.smartware.app.web.SalaryServlet</servlet-class>
+    <servlet-name>GotSalary</servlet-name>
+    <servlet-class>com.smartware.app.web.GotSalaryServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Salary</servlet-name>
-    <url-pattern>/Salary</url-pattern>
+    <servlet-name>GotSalary</servlet-name>
+    <url-pattern>/GotSalary</url-pattern>
   </servlet-mapping>
 
 </web-app>
