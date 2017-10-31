@@ -37,3 +37,5 @@
 - DEVOPS: added script to backup and restore DB
 
 - REFACTOR: Make url paths come from back end thru, expresion instead of have hardcoded in views
+
+- REFACTOR: rethink wise names for what now is named as money movements operations, bank operations and credit card operations
