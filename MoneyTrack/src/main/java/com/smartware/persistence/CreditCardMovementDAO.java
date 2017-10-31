@@ -167,7 +167,7 @@ public class CreditCardMovementDAO {
 						"  FROM credit_card_movement ccm" +
 						" INNER JOIN money_movement mm ON mm.id = ccm.id_money_movement" +
 						"  LEFT JOIN bank_movement bm ON mm.id = bm.id_money_movement" +
-						" WHERE ccm.operation = 'PAYMENT' " +
+						" WHERE ccm.operation = '" + CreditCardOperation.PAYMENT.name() + "' " +
 						"   AND ccm.id_money_movement = ?";
 
 				st = conn.prepareStatement(sql);

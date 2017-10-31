@@ -10,6 +10,8 @@ import java.util.List;
 
 import com.smartware.common.AppDBHelper;
 import com.smartware.domain.MoneyMovement;
+import com.smartware.domain.catalog.BankOperation;
+import com.smartware.domain.catalog.CreditCardOperation;
 import com.smartware.domain.catalog.Currency;
 import com.smartware.domain.catalog.MoneyMovementOperation;
 
@@ -76,17 +78,17 @@ public class MoneyMovementDAO {
 				sql.append("SELECT mm.id, mm.date, mm.amount, mm.currency, '").append(MoneyMovementOperation.WITHDRAWAL).append("' AS operation ");
 				sql.append("  FROM bank_movement bm ");
 				sql.append(" INNER JOIN money_movement mm ON bm.id_money_movement = mm.id ");
-				sql.append(" WHERE bm.operation = 'WITHDRAWAL' ");
+				sql.append(" WHERE bm.operation = '").append(BankOperation.WITHDRAWAL.name()).append("' ");
 				sql.append("UNION ");
 				sql.append("SELECT mm.id, mm.date, mm.amount, mm.currency, '").append(MoneyMovementOperation.CREDIT_CARD_PAYMENT).append("' AS operation ");
 				sql.append("  FROM credit_card_movement ccm ");
 				sql.append(" INNER JOIN money_movement mm ON ccm.id_money_movement = mm.id ");
-				sql.append(" WHERE ccm.operation = 'PAYMENT' ");
+				sql.append(" WHERE ccm.operation = '").append(CreditCardOperation.PAYMENT.name()).append("' ");
 				sql.append("UNION ");
 				sql.append("SELECT mm.id, mm.date, mm.amount, mm.currency, '").append(MoneyMovementOperation.GOT_SALARY).append("' AS operation ");
 				sql.append("  FROM bank_movement bm ");
 				sql.append(" INNER JOIN money_movement mm ON bm.id_money_movement = mm.id ");
-				sql.append(" WHERE bm.operation = 'TRANSFER_IN' ");
+				sql.append(" WHERE bm.operation = '").append(BankOperation.TRANSFER_IN.name()).append("' ");
 				sql.append("   AND bm.remarks LIKE 'SALARY %' ");
 
 				st = conn.prepareStatement(sql.toString());
