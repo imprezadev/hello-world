@@ -32,7 +32,10 @@
 
 - REFACTOR: define Salary or GotSalary, then rename accordingly.
 
-- RETHINK: Group of items packed in one transaction, like items are buyed in Tottus or items consumed in a restaurant, etc.
+- FUNCTIONALITY: Group of items packed in one transaction, like items are buyed in Tottus or items consumed in a restaurant, etc.
 
 - FUNCTIONALITY: amount of withdrawal should be valid accordingly ATM can provide, I mean ATMs can provide only bills of 20, 50, 100, 200 soles, so it is not possible amounts like 45, 98, or decimal, beacuse there is no way to select those amounts.
 
+- DEVOPS: added script to backup and restore DB
+
+- REFACTOR: Make url paths come from back end thru, expresion instead of have hardcoded in views
