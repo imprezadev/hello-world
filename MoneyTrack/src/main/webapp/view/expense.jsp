@@ -6,6 +6,7 @@
 <%@ page import="com.smartware.domain.catalog.Currency" %>
 <%@ page import="com.smartware.domain.catalog.ExpensePaymentType" %>
 <%@ page import="com.smartware.domain.catalog.ExpenseCategory" %>
+<%@ page import="com.smartware.domain.catalog.MoneyMovementOperation" %>
 
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,7 @@
 <body>
   <h1>Expense</h1>
 
-  <form method="post" action="Expense">
+  <form method="post" action="<%= MoneyMovementOperation.EXPENSE.getUrlRoot() %>">
   <table>
     <tr>
       <td><label>Date</label></td>

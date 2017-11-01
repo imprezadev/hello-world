@@ -1,5 +1,7 @@
 <%@ page import="java.util.List" %>
 
+<%@ page import="com.smartware.domain.catalog.MoneyMovementOperation" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +10,7 @@
 </head>
 <body>
   <h1>Got Salary</h1>
-  <form method="post" action="GotSalary">
+  <form method="post" action="<%= MoneyMovementOperation.GOT_SALARY.getUrlRoot() %>">
   <table>
     <tr>
       <td><label>Date</label></td>

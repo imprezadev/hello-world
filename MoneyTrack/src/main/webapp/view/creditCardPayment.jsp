@@ -2,6 +2,7 @@
 
 <%@ page import="com.smartware.domain.catalog.Currency" %>
 <%@ page import="com.smartware.domain.catalog.CreditCardPaymentType" %>
+<%@ page import="com.smartware.domain.catalog.MoneyMovementOperation" %>
 
 <!DOCTYPE html>
 <html>
@@ -11,7 +12,7 @@
 </head>
 <body>
   <h1>Credit Card Payment</h1>
-  <form method="post" action="CreditCardPayment">
+  <form method="post" action="<%= MoneyMovementOperation.CREDIT_CARD_PAYMENT.getUrlRoot() %>">
   <table>
     <tr>
       <td><label>Date</label></td>
@@ -73,8 +74,8 @@
 %>
   </form>
 <%
-	Boolean afterSaveOperation = request.getAttribute("saveOperation") != null;
-	Boolean errorAfterSaveOperation = request.getAttribute("saveOperation") != null && request.getAttribute("errorMsgs") != null;
+  Boolean afterSaveOperation = request.getAttribute("saveOperation") != null;
+  Boolean errorAfterSaveOperation = request.getAttribute("saveOperation") != null && request.getAttribute("errorMsgs") != null;
 
   if (afterSaveOperation) {
     if (errorAfterSaveOperation) {

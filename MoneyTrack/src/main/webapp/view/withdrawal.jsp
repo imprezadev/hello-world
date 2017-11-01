@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 
 <%@ page import="com.smartware.domain.catalog.Currency" %>
+<%@ page import="com.smartware.domain.catalog.MoneyMovementOperation" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +11,7 @@
 </head>
 <body>
   <h1>Withdrawal</h1>
-  <form method="post" target="Withdrawal">
+  <form method="post" action="<%= MoneyMovementOperation.WITHDRAWAL.getUrlRoot() %>">
   <table>
     <tr>
       <td><label>Date</label></td>
