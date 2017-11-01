@@ -1,9 +1,8 @@
-<%@ page import="java.util.Date" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+
+<%@ page import="com.smartware.common.Utils" %>
 
 <%@ page import="com.smartware.domain.MoneyMovement" %>
-<%@ page import="com.smartware.domain.catalog.MoneyMovementOperation" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,34 +28,14 @@
     </tr>
 <%
 	List<MoneyMovement> moneyMovements = (List)request.getAttribute("moneyMovements");
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	for(MoneyMovement moneyMovement: moneyMovements) {
-		Date date = moneyMovement.getDate();
-		String operation = moneyMovement.getOperation().name();
-		String urlDetail = "?id=" + Long.toString(moneyMovement.getId());
-		if (moneyMovement.getOperation().equals(MoneyMovementOperation.EXPENSE)) {
-			urlDetail = "Expense" + urlDetail;
-		}
-		else
-		if (moneyMovement.getOperation().equals(MoneyMovementOperation.WITHDRAWAL)) {
-			urlDetail = "Withdrawal" + urlDetail;
-		}
-		else
-		if (moneyMovement.getOperation().equals(MoneyMovementOperation.CREDIT_CARD_PAYMENT)) {
-			urlDetail = "CreditCardPayment" + urlDetail;
-		}
-		else
-		if (moneyMovement.getOperation().equals(MoneyMovementOperation.GOT_SALARY)) {
-			urlDetail = "GotSalary" + urlDetail;
-		}
 %>
     <tr>
-      <td align="center"><%= dateFormat.format(date) %></td>
-      <td align="center"><%= timeFormat.format(date) %></td>
-      <td align="right"><%= String.format("%.2f", moneyMovement.getAmount()) %></td>
+      <td align="center"><%= Utils.getFormattedDate(moneyMovement.getDate()) %></td>
+      <td align="center"><%= Utils.getFormattedTime(moneyMovement.getDate()) %></td>
+      <td align="right"><%= Utils.getFormattedFloat(moneyMovement.getAmount()) %></td>
       <td align="center"><%= moneyMovement.getCurrency() %></td>
-      <td align="left"><a href="<%= urlDetail %>">Detail: <%= operation %></a></td>
+      <td align="left"><a href="<%= moneyMovement.getOperation().getUrlRoot() + "?id=" + Long.toString(moneyMovement.getId()) %>">Detail: <%= moneyMovement.getOperation().name() %></a></td>
     </tr>
 <%
 	}
