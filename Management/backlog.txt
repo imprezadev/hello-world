@@ -26,8 +26,6 @@
 
 - DEVOPS: migrate this app to be ran from docker container
 
-- REFACTOR-FUNCTIONALITY: Got Salary is always in PEN as currency
-
 - REFACTOR: payment type as a unique class that will have an attribute to be applicable to expense or credit card payment type. This way ExpensePaymentType and CreditCardPaymentType enums classes could be unifiedin PaymentType
 
 - FUNCTIONALITY: Group of items packed in one transaction, like items are buyed in Tottus or items consumed in a restaurant, etc.
