@@ -1,7 +1,5 @@
 <%@ page import="java.util.List" %>
 
-<%@ page import="com.smartware.common.Utils" %>
-
 <%@ page import="com.smartware.domain.Expense" %>
 <%@ page import="com.smartware.domain.catalog.Currency" %>
 <%@ page import="com.smartware.domain.catalog.ExpensePaymentType" %>
