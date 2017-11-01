@@ -35,3 +35,7 @@
 - DEVOPS: added script to backup and restore DB
 
 - REFACTOR: rethink wise names for what now is named as money movements operations, bank operations and credit card operations
+
+- UX: adding link to back main page from money movements operations
+
+- UX: set header and footer to all views
