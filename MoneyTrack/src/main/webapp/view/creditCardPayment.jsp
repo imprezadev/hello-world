@@ -11,6 +11,7 @@
 	<title>Money Track</title>
 </head>
 <body>
+  <a href="Main">Back to main</a>
   <h1>Credit Card Payment</h1>
   <form method="post" action="<%= MoneyMovementOperation.CREDIT_CARD_PAYMENT.getUrlRoot() %>">
   <table>

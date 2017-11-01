@@ -15,8 +15,8 @@
   <title>Money Track</title>
 </head>
 <body>
+  <a href="Main">Back to main</a>
   <h1>Expense</h1>
-
   <form method="post" action="<%= MoneyMovementOperation.EXPENSE.getUrlRoot() %>">
   <table>
     <tr>

@@ -9,6 +9,7 @@
   <title>Money Track</title>
 </head>
 <body>
+  <a href="Main">Back to main</a>
   <h1>Got Salary</h1>
   <form method="post" action="<%= MoneyMovementOperation.GOT_SALARY.getUrlRoot() %>">
   <table>
