@@ -37,3 +37,13 @@
 - REFACTOR: rethink wise names for what now is named as money movements operations, bank operations and credit card operations
 
 - UX: set header and footer to all views
+
+- REFACTOR: Info which is in DBConfigParams class and logic to load it, is just needed by getConnection method so it would be good have them inside AppDBHelper class.
+
+- REFACTOR: no need to check for db engine driver every time getConnection is called, it should be checked just first time.
+
+- REFACTOR: close connections, statments, resutset once their are no longer used.
+
+- REFACTOR: make AppDBHelper class static.
+
+- REFACTOR: service calls under same transaction in order to rollback all envolved transactions if any error happen.
