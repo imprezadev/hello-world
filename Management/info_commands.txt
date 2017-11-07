@@ -35,6 +35,8 @@ git clone https://github.com/imprezadev/hello-world.git kkkk # make kkkk folder 
 
 git clone https://github.com/imprezadev/hello-world.git . # clone repo into current folder
 
+git add --patch src/main/java/com/smartware/common/AppDBHelper.java # command to add hunk by hunk
+
 
 Java Commands (JDK 6)
 =====================
