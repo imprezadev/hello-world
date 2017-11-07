@@ -94,6 +94,11 @@ public class BankMovementDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				appDBHelper.CloseResutSet(rs);
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
+			}
 		}
 
 		return bankMovement;
@@ -125,6 +130,11 @@ public class BankMovementDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				appDBHelper.CloseResutSet(rs);
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
+			}
 		}
 
 		return bankMovements;
@@ -147,6 +157,10 @@ public class BankMovementDAO {
 
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}
+			finally {
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
 			}
 		}
 	}
@@ -192,6 +206,11 @@ public class BankMovementDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				appDBHelper.CloseResutSet(rs);
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
+			}
 		}
 
 		return gotSalary;
@@ -227,6 +246,11 @@ public class BankMovementDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}
+			finally {
+				appDBHelper.CloseResutSet(rs);
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
 			}
 		}
 

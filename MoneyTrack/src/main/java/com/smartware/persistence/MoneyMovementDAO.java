@@ -102,6 +102,12 @@ public class MoneyMovementDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				appDBHelper.CloseResutSet(rs);
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
+			}
+
 		}
 
 		return moneyMovements;
@@ -114,6 +120,7 @@ public class MoneyMovementDAO {
 		Connection conn = appDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
+			ResultSet rs = null;
 			try {
 				String sql = "INSERT INTO money_movement (date, amount, currency) VALUES (?, ?, ?)";
 				st = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -123,13 +130,18 @@ public class MoneyMovementDAO {
 
 				st.execute();
 
-				ResultSet rs = st.getGeneratedKeys();
+				rs = st.getGeneratedKeys();
 				if (rs.next()) {
 					id = rs.getLong(1);
 				}
 
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}
+			finally {
+				appDBHelper.CloseResutSet(rs);
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
 			}
 		}
 

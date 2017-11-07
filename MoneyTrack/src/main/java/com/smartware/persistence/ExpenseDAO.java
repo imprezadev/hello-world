@@ -90,6 +90,11 @@ public class ExpenseDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				appDBHelper.CloseResutSet(rs);
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
+			}
 		}
 
 		return expenses;
@@ -112,6 +117,10 @@ public class ExpenseDAO {
 
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}
+			finally {
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
 			}
 		}
 	}

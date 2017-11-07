@@ -15,7 +15,7 @@ import com.smartware.domain.catalog.CreditCardPaymentType;
 import com.smartware.domain.catalog.Currency;
 
 public class CreditCardMovementDAO {
-	
+
 	private CreditCardMovement populateCreditCardMovement(ResultSet rs) {
 		CreditCardMovement creditCardMovement = new CreditCardMovement();
 		try {
@@ -132,6 +132,11 @@ public class CreditCardMovementDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
+			}
+
 		}
 	}
 
@@ -179,6 +184,11 @@ public class CreditCardMovementDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}
+			finally {
+				appDBHelper.CloseResutSet(rs);
+				appDBHelper.CloseStatement(st);
+				appDBHelper.CloseConnection(conn);
 			}
 		}
 

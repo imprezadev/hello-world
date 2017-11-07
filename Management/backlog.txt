@@ -38,8 +38,6 @@
 
 - UX: set header and footer to all views
 
-- REFACTOR: close connections, statments, resutset once their are no longer used.
-
 - REFACTOR: make AppDBHelper class static.
 
 - REFACTOR: service calls under same transaction in order to rollback all envolved transactions if any error happen.

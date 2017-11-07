@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,6 +105,39 @@ public class AppDBHelper {
 		}
 
 		return conn;
+	}
+
+	public void CloseConnection(Connection conn) {
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "Connection close error");
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void CloseStatement(Statement st) {
+		if (st != null) {
+			try {
+				st.close();
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "Statement close error");
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void CloseResutSet(ResultSet rs) {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "ResultSet close error");
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
