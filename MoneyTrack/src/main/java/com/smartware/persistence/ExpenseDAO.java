@@ -58,6 +58,11 @@ public class ExpenseDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				AppDBHelper.CloseResutSet(rs);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
+			}
 		}
 
 		return expense;

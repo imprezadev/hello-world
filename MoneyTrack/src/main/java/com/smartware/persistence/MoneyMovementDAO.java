@@ -54,6 +54,11 @@ public class MoneyMovementDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				AppDBHelper.CloseResutSet(rs);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
+			}
 		}
 
 		return moneyMovement;

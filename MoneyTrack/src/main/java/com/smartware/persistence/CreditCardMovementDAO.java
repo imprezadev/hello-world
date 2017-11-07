@@ -76,6 +76,11 @@ public class CreditCardMovementDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			finally {
+				AppDBHelper.CloseResutSet(rs);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
+			}
 		}
 
 		return creditCardMovement;
@@ -104,6 +109,11 @@ public class CreditCardMovementDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}
+			finally {
+				AppDBHelper.CloseResutSet(rs);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
 			}
 		}
 
