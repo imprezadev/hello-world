@@ -38,8 +38,6 @@
 
 - UX: set header and footer to all views
 
-- REFACTOR: Info which is in DBConfigParams class and logic to load it, is just needed by getConnection method so it would be good have them inside AppDBHelper class.
-
 - REFACTOR: close connections, statments, resutset once their are no longer used.
 
 - REFACTOR: make AppDBHelper class static.
