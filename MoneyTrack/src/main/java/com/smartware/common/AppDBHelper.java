@@ -16,14 +16,14 @@ public class AppDBHelper {
 	
 	private static final String CONFIG_FILENAME = "config.properties";
 
-	DBConfigParams dbConfigParams = null;
-	private Driver driver = null;
+	private static DBConfigParams dbConfigParams = null;
+	private static Driver driver = null;
 
-	private Properties getFileProperties(String propertiesFileName) {
+	private static Properties getFileProperties(String propertiesFileName) {
 		Properties prop = null;
 
 		try {
-			InputStream configPropStream = getClass().getClassLoader().getResourceAsStream(propertiesFileName);
+			InputStream configPropStream = AppDBHelper.class.getClassLoader().getResourceAsStream(propertiesFileName);
 
 			if (configPropStream != null) {
 				prop = new Properties();
@@ -38,7 +38,7 @@ public class AppDBHelper {
 		return prop;
 	}
 
-	private DBConfigParams getDBConfigParams() {
+	private static DBConfigParams getDBConfigParams() {
 		DBConfigParams dbConfigParams = null;
 
 		Properties dbConfigProperties = getFileProperties(CONFIG_FILENAME);
@@ -53,7 +53,7 @@ public class AppDBHelper {
 		return dbConfigParams;
 	}
 
-	public Connection getMoneyTrackDBConnection() {
+	public static Connection getMoneyTrackDBConnection() {
 		Connection conn = null;
 
 		if (dbConfigParams == null) {
@@ -107,7 +107,7 @@ public class AppDBHelper {
 		return conn;
 	}
 
-	public void CloseConnection(Connection conn) {
+	public static void CloseConnection(Connection conn) {
 		if (conn != null) {
 			try {
 				conn.close();
@@ -118,7 +118,7 @@ public class AppDBHelper {
 		}
 	}
 
-	public void CloseStatement(Statement st) {
+	public static void CloseStatement(Statement st) {
 		if (st != null) {
 			try {
 				st.close();
@@ -129,7 +129,7 @@ public class AppDBHelper {
 		}
 	}
 
-	public void CloseResutSet(ResultSet rs) {
+	public static void CloseResutSet(ResultSet rs) {
 		if (rs != null) {
 			try {
 				rs.close();

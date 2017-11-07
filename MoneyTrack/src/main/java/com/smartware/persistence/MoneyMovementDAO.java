@@ -39,9 +39,7 @@ public class MoneyMovementDAO {
 	public MoneyMovement getMoneyMovement(long id) {
 		MoneyMovement moneyMovement = null;
 		
-		AppDBHelper appDBHelper = new AppDBHelper();
-		
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -64,8 +62,7 @@ public class MoneyMovementDAO {
 	public List<MoneyMovement> getMoneyMovements() {
 		List<MoneyMovement> moneyMovements = new ArrayList<MoneyMovement>();
 
-		AppDBHelper appDBHelper = new AppDBHelper();
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -103,9 +100,9 @@ public class MoneyMovementDAO {
 				e.printStackTrace();
 			}
 			finally {
-				appDBHelper.CloseResutSet(rs);
-				appDBHelper.CloseStatement(st);
-				appDBHelper.CloseConnection(conn);
+				AppDBHelper.CloseResutSet(rs);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
 			}
 
 		}
@@ -116,8 +113,7 @@ public class MoneyMovementDAO {
 	public long insertMoneyMovement(MoneyMovement moneyMovement) {
 		long id = -1;
 
-		AppDBHelper appDBHelper = new AppDBHelper();
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -139,9 +135,9 @@ public class MoneyMovementDAO {
 				e.printStackTrace();
 			}
 			finally {
-				appDBHelper.CloseResutSet(rs);
-				appDBHelper.CloseStatement(st);
-				appDBHelper.CloseConnection(conn);
+				AppDBHelper.CloseResutSet(rs);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
 			}
 		}
 

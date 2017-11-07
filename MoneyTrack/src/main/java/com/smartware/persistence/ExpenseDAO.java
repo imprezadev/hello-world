@@ -37,8 +37,7 @@ public class ExpenseDAO {
 	public Expense getExpense(long id) {
 		Expense expense = null;
 
-		AppDBHelper appDBHelper = new AppDBHelper();
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -67,9 +66,7 @@ public class ExpenseDAO {
 	public List<Expense> getExpenses() {
 		List<Expense> expenses = new ArrayList<Expense>();
 
-		AppDBHelper appDBHelper = new AppDBHelper();
-
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -91,9 +88,9 @@ public class ExpenseDAO {
 				e.printStackTrace();
 			}
 			finally {
-				appDBHelper.CloseResutSet(rs);
-				appDBHelper.CloseStatement(st);
-				appDBHelper.CloseConnection(conn);
+				AppDBHelper.CloseResutSet(rs);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
 			}
 		}
 
@@ -101,8 +98,7 @@ public class ExpenseDAO {
 	}
 
 	public void insertExpense(Expense expense) {
-		AppDBHelper appDBHelper = new AppDBHelper();
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
@@ -119,8 +115,8 @@ public class ExpenseDAO {
 				e.printStackTrace();
 			}
 			finally {
-				appDBHelper.CloseStatement(st);
-				appDBHelper.CloseConnection(conn);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
 			}
 		}
 	}

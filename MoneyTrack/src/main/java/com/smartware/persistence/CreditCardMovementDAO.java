@@ -55,9 +55,7 @@ public class CreditCardMovementDAO {
 	public CreditCardMovement getCreditCardMovement(long id) {
 		CreditCardMovement creditCardMovement = null;
 
-		AppDBHelper appDBHelper = new AppDBHelper();
-
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -86,9 +84,7 @@ public class CreditCardMovementDAO {
 	public List<CreditCardMovement> getCreditCardMovements() {
 		List<CreditCardMovement> creditCardMovements = new ArrayList<CreditCardMovement>();
 
-		AppDBHelper appDBHelper = new AppDBHelper();
-
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -115,9 +111,7 @@ public class CreditCardMovementDAO {
 	}
 
 	public void insertCreditCardMovement(CreditCardMovement creditCardMovement) {
-		AppDBHelper appDBHelper = new AppDBHelper();
-
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			try {
@@ -133,8 +127,8 @@ public class CreditCardMovementDAO {
 				e.printStackTrace();
 			}
 			finally {
-				appDBHelper.CloseStatement(st);
-				appDBHelper.CloseConnection(conn);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
 			}
 
 		}
@@ -152,9 +146,7 @@ public class CreditCardMovementDAO {
 	public CreditCardPayment getCreditCardPayment(long id) {
 		CreditCardPayment creditCardPayment = null;
 
-		AppDBHelper appDBHelper = new AppDBHelper();
-
-		Connection conn = appDBHelper.getMoneyTrackDBConnection();
+		Connection conn = AppDBHelper.getMoneyTrackDBConnection();
 		if (conn != null) {
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -186,9 +178,9 @@ public class CreditCardMovementDAO {
 				e.printStackTrace();
 			}
 			finally {
-				appDBHelper.CloseResutSet(rs);
-				appDBHelper.CloseStatement(st);
-				appDBHelper.CloseConnection(conn);
+				AppDBHelper.CloseResutSet(rs);
+				AppDBHelper.CloseStatement(st);
+				AppDBHelper.CloseConnection(conn);
 			}
 		}
 
