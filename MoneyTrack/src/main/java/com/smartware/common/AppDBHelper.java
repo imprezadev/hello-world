@@ -54,7 +54,7 @@ public class AppDBHelper {
 	public Connection getMoneyTrackDBConnection() {
 		Connection conn = null;
 
-		if (dbConfigParams != null) {
+		if (dbConfigParams == null) {
 			dbConfigParams = getDBConfigParams();
 		}
 
