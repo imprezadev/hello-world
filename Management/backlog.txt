@@ -39,3 +39,5 @@
 - UX: set header and footer to all views
 
 - REFACTOR: service calls under same transaction in order to rollback all envolved transactions if any error happen.
+
+- REFACTOR: Persistent tier ONLY can be accessed by Service tier, remove calls to any DAO in Unit test class, instead use Service class.
