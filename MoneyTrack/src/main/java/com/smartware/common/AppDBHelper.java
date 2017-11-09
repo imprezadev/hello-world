@@ -42,37 +42,32 @@ public class AppDBHelper {
 		return prop;
 	}
 
-	private static DBConfigParams getDBConfigParams() throws Exception {
-		DBConfigParams dbConfigParams = null;
-
+	private static void setDBConfigParams() throws Exception {
 		Properties dbConfigProperties = getFileProperties(CONFIG_FILENAME);
-		if (dbConfigProperties != null) {
-			dbConfigParams = new DBConfigParams();
-			dbConfigParams.setDriver(dbConfigProperties.getProperty("driver"));
-			dbConfigParams.setUri(dbConfigProperties.getProperty("uri"));
-			dbConfigParams.setUsername(dbConfigProperties.getProperty("username"));
-			dbConfigParams.setPassword(dbConfigProperties.getProperty("password"));
-		}
 
-		return dbConfigParams;
+		dbConfigParams = new DBConfigParams();
+		dbConfigParams.setJdbcDriver(dbConfigProperties.getProperty("jdbcdriver"));
+		dbConfigParams.setUri(dbConfigProperties.getProperty("uri"));
+		dbConfigParams.setUserName(dbConfigProperties.getProperty("username"));
+		dbConfigParams.setPassword(dbConfigProperties.getProperty("password"));
 	}
 
 	public static Connection getMoneyTrackDBConnection() throws Exception {
 		Connection conn = null;
 
 		if (dbConfigParams == null) {
-			dbConfigParams = getDBConfigParams();
+			setDBConfigParams();
 		}
 
 		try {
 			if (driver == null) {
 				Class jdbcDriverClass = null;
-				jdbcDriverClass = Class.forName(dbConfigParams.getDriver()); // Validating if MySQL JDBC Driver is registered in the classpath
+				jdbcDriverClass = Class.forName(dbConfigParams.getJdbcDriver()); // Validating if MySQL JDBC Driver is registered in the classpath
 				driver = (Driver) jdbcDriverClass.newInstance();
 				DriverManager.registerDriver(driver);
 			}
 
-			conn = java.sql.DriverManager.getConnection(dbConfigParams.getUri(), dbConfigParams.getUsername(), dbConfigParams.getPassword());
+			conn = java.sql.DriverManager.getConnection(dbConfigParams.getUri(), dbConfigParams.getUserName(), dbConfigParams.getPassword());
 
 		} catch (ClassNotFoundException cnfex) {
 			String errMsg = "JDBC Driver Class not found >> " + cnfex.getMessage();
