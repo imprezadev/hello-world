@@ -1,10 +1,12 @@
 package com.smartware.common;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -19,26 +21,28 @@ public class AppDBHelper {
 	private static DBConfigParams dbConfigParams = null;
 	private static Driver driver = null;
 
-	private static Properties getFileProperties(String propertiesFileName) {
+	private static Properties getFileProperties(String propertiesFileName) throws Exception {
 		Properties prop = null;
 
 		try {
 			InputStream configPropStream = AppDBHelper.class.getClassLoader().getResourceAsStream(propertiesFileName);
+			prop = new Properties();
+			prop.load(configPropStream);
 
-			if (configPropStream != null) {
-				prop = new Properties();
-				prop.load(configPropStream);
-			} else {
-				logger.log(Level.SEVERE, "property file '" + propertiesFileName + "' not found in the classpath");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException ioex) {
+			String errMsg = "problem loading property file '" + propertiesFileName + "', could not be found in the classpath >> " + ioex.getMessage();
+			logger.log(Level.SEVERE, errMsg);
+			throw new Exception(errMsg);
+		} catch (Exception ex) {
+			String errMsg = ex.getMessage();
+			logger.log(Level.SEVERE, errMsg);
+			throw new Exception(errMsg);
 		}
 
 		return prop;
 	}
 
-	private static DBConfigParams getDBConfigParams() {
+	private static DBConfigParams getDBConfigParams() throws Exception {
 		DBConfigParams dbConfigParams = null;
 
 		Properties dbConfigProperties = getFileProperties(CONFIG_FILENAME);
@@ -53,54 +57,41 @@ public class AppDBHelper {
 		return dbConfigParams;
 	}
 
-	public static Connection getMoneyTrackDBConnection() {
+	public static Connection getMoneyTrackDBConnection() throws Exception {
 		Connection conn = null;
 
 		if (dbConfigParams == null) {
 			dbConfigParams = getDBConfigParams();
 		}
 
-		if (dbConfigParams != null) {
+		try {
 			if (driver == null) {
-				try {
-					Class jdbcDriverClass = null;
-					try {
-						jdbcDriverClass = Class.forName(dbConfigParams.getDriver()); // Validating if MySQL JDBC Driver is registered in the classpath
-					}
-					catch (ClassNotFoundException e) {
-						logger.log(Level.SEVERE, "Class not found");
-						e.printStackTrace();
-					}
-
-					try {
-						driver = (Driver) jdbcDriverClass.newInstance();
-					}
-					catch (InstantiationException e) {
-						logger.log(Level.SEVERE, e.getMessage());
-						e.printStackTrace();
-					}
-					catch (IllegalAccessException e) {
-						logger.log(Level.SEVERE, e.getMessage());
-						e.printStackTrace();
-					}
-
-					DriverManager.registerDriver(driver);
-				}
-				catch (Exception e) {
-					logger.log(Level.SEVERE, e.getMessage());
-					driver = null;
-					e.printStackTrace();
-				}
+				Class jdbcDriverClass = null;
+				jdbcDriverClass = Class.forName(dbConfigParams.getDriver()); // Validating if MySQL JDBC Driver is registered in the classpath
+				driver = (Driver) jdbcDriverClass.newInstance();
+				DriverManager.registerDriver(driver);
 			}
 
-			logger.config("MySQL is registered");
+			conn = java.sql.DriverManager.getConnection(dbConfigParams.getUri(), dbConfigParams.getUsername(), dbConfigParams.getPassword());
 
-			try {
-				conn = DriverManager.getConnection(dbConfigParams.getUri(), dbConfigParams.getUsername(), dbConfigParams.getPassword());
-			} catch (Exception e) {
-				logger.log(Level.SEVERE, "Connection Failed! Check output console");
-				e.printStackTrace();
-			}
+		} catch (ClassNotFoundException cnfex) {
+			String errMsg = "JDBC Driver Class not found >> " + cnfex.getMessage();
+			logger.log(Level.SEVERE, errMsg);
+			throw new Exception(errMsg);
+		} catch (InstantiationException iex) {
+			String errMsg = iex.getMessage();
+			logger.log(Level.SEVERE, errMsg);
+			throw new Exception(errMsg);
+		} catch (IllegalAccessException iaex) {
+			String errMsg = iaex.getMessage();
+			logger.log(Level.SEVERE, errMsg);
+			throw new Exception(errMsg);
+		} catch (SQLException sqlex) {
+			String errMsg = sqlex.getMessage();
+			logger.log(Level.SEVERE, errMsg);
+			throw new Exception(errMsg);
+		}
+		finally {
 			logger.config("Connection to DB is succesfully!");
 		}
 
@@ -111,9 +102,9 @@ public class AppDBHelper {
 		if (conn != null) {
 			try {
 				conn.close();
-			} catch (Exception e) {
-				logger.log(Level.SEVERE, "Connection close error");
-				e.printStackTrace();
+			} catch (SQLException sqlex) {
+				String errMsg = "Connection close error >> " + sqlex.getMessage();
+				logger.log(Level.WARNING, errMsg);
 			}
 		}
 	}
@@ -122,9 +113,9 @@ public class AppDBHelper {
 		if (st != null) {
 			try {
 				st.close();
-			} catch (Exception e) {
-				logger.log(Level.SEVERE, "Statement close error");
-				e.printStackTrace();
+			} catch (SQLException sqlex) {
+				String errMsg = "Statement close error >> " + sqlex.getMessage();
+				logger.log(Level.WARNING, errMsg);
 			}
 		}
 	}
@@ -133,9 +124,9 @@ public class AppDBHelper {
 		if (rs != null) {
 			try {
 				rs.close();
-			} catch (Exception e) {
-				logger.log(Level.SEVERE, "ResultSet close error");
-				e.printStackTrace();
+			} catch (SQLException sqlex) {
+				String errMsg = "ResultSet close error >> " + sqlex.getMessage();
+				logger.log(Level.WARNING, errMsg);
 			}
 		}
 	}

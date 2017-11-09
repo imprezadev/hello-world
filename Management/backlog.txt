@@ -2,8 +2,6 @@
 
 - REFACTOR: MoneyTrackServiceTest.testGetMoneyMovements - improve the way to seek every created object as the item in the list.
 
-- REFACTOR-FIX: let the database connection errors raise to the client, this way it can be shown in error page.
-
 - UX: pagination for movement-money list in dashboard page.
 
 - REFACTOR: servlet supeclass to hold and initialize moneytrackservice as a protected method to be consumed for the current servlets as children.

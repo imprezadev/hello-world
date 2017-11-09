@@ -46,7 +46,12 @@ public class ExpenseServlet extends HttpServlet {
 		if (request.getParameter("id") != null || request.getAttribute("id") != null) {
 			expenseId = (request.getParameter("id") != null) ? Long.valueOf(request.getParameter("id")) : (Long)request.getAttribute("id");
 
-			Expense expense = moneyTrackService.getExpense(expenseId);
+			Expense expense = null;
+			try {
+				expense = moneyTrackService.getExpense(expenseId);
+			} catch(Exception ex) {
+				throw new ServletException(ex);
+			}
 
 			strDate            = Utils.getFormattedDateTime(expense.getDate());
 			strAmount          = Utils.getFormattedFloat(expense.getAmount());
@@ -126,8 +131,14 @@ public class ExpenseServlet extends HttpServlet {
 			expense.setPaymentType(paymentType);
 			expense.setDetail(detail);
 			expense.setCategory(expenseCategory);
-			
-			long id = moneyTrackService.recordExpense(expense);
+
+			long id = 0;
+			try {
+				id = moneyTrackService.recordExpense(expense);
+			} catch(Exception ex) {
+				throw new ServletException(ex);
+			}
+
 			request.setAttribute("id", id);
 		}
 		else {

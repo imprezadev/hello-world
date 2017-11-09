@@ -18,7 +18,14 @@ public class MainServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MoneyTrackService moneyTrackService = new MoneyTrackService();
-		List<MoneyMovement> moneyMovements = moneyTrackService.getMoneyMovements();
+
+		List<MoneyMovement> moneyMovements = null;
+		try {
+			moneyMovements = moneyTrackService.getMoneyMovements();
+		} catch(Exception ex) {
+			throw new ServletException(ex);
+		}
+
 		Collections.sort(moneyMovements);
 		Collections.reverse(moneyMovements);
 

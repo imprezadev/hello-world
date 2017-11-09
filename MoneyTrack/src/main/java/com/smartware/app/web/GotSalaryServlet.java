@@ -29,7 +29,12 @@ public class GotSalaryServlet extends HttpServlet {
 		if (request.getAttribute("id") != null || request.getParameter("id") != null) {
 			long gotSalaryId = (request.getParameter("id") != null) ? Long.valueOf(request.getParameter("id")) : (Long)request.getAttribute("id");
 
-			GotSalary gotSalary = moneyTrackService.getGotSalary(gotSalaryId);
+			GotSalary gotSalary = null;
+			try {
+				gotSalary = moneyTrackService.getGotSalary(gotSalaryId);
+			} catch(Exception ex) {
+				throw new ServletException(ex);
+			}
 
 			strDate = Utils.getFormattedDateTime(gotSalary.getDate());
 			strAmount = Utils.getFormattedFloat(gotSalary.getAmount());
@@ -73,7 +78,13 @@ public class GotSalaryServlet extends HttpServlet {
 		gotSalary.setRemarks(strRemarks);
 
 		if (errorMsgs.isEmpty()) {
-			long id = moneyTrackService.recordGotSalary(gotSalary);
+			long id = 0;
+			try {
+				id = moneyTrackService.recordGotSalary(gotSalary);
+			} catch(Exception ex) {
+				throw new ServletException(ex);
+			}
+
 			request.setAttribute("id", id);
 		}
 		else {

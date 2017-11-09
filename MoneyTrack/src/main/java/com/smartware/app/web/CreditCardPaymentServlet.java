@@ -39,7 +39,12 @@ public class CreditCardPaymentServlet extends HttpServlet {
 		if (request.getAttribute("id") != null || request.getParameter("id") != null) {
 			long creditCardPaymentId = (request.getParameter("id") != null) ? Long.valueOf(request.getParameter("id")) : (Long)request.getAttribute("id");
 
-			CreditCardPayment creditCardPayment = moneyTrackService.getCreditCardPayment(creditCardPaymentId);
+			CreditCardPayment creditCardPayment = null;
+			try {
+				creditCardPayment = moneyTrackService.getCreditCardPayment(creditCardPaymentId);
+			} catch(Exception ex) {
+				throw new ServletException(ex);
+			}
 
 			strDate = Utils.getFormattedDate(creditCardPayment.getDate());
 			strAmount = Utils.getFormattedFloat(creditCardPayment.getAmount());
@@ -107,7 +112,12 @@ public class CreditCardPaymentServlet extends HttpServlet {
 		creditCardPayment.setRemarks(strRemarks);
 
 		if (errorMsgs.isEmpty()) {
-			long id = moneyTrackService.recordCreditCardPayment(creditCardPayment);
+			long id = 0;
+			try {
+				id = moneyTrackService.recordCreditCardPayment(creditCardPayment);
+			} catch(Exception ex) {
+				throw new ServletException(ex);
+			}
 			request.setAttribute("id", id);
 		}
 		else {

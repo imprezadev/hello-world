@@ -141,7 +141,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordExpense_CashPayment() {
+	public void testRecordExpense_CashPayment() throws Exception {
 		Expense testExpense_CashPayment = getTestRecordExpense_CashPayment();
 		long id = moneyTrackService.recordExpense(testExpense_CashPayment);
 
@@ -155,7 +155,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordExpense_DebitPayment() {
+	public void testRecordExpense_DebitPayment() throws Exception {
 		Expense testExpense_DebitPayment = getTestRecordExpense_DebitPayment();
 		long id = moneyTrackService.recordExpense(testExpense_DebitPayment);
 
@@ -173,7 +173,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordExpense_CreditCardPayment() {
+	public void testRecordExpense_CreditCardPayment() throws Exception {
 		Expense testExpense_CreditPayment = getTestRecordExpense_CreditCardPayment();
  		long id = moneyTrackService.recordExpense(testExpense_CreditPayment);
 
@@ -191,7 +191,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordExpense_BankTransferPayment() {
+	public void testRecordExpense_BankTransferPayment() throws Exception {
 		Expense testExpense_BankTransferPayment = getTestRecordExpense_BankTransferPayment();
 		long id = moneyTrackService.recordExpense(testExpense_BankTransferPayment);
 
@@ -209,7 +209,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordCreditCardPayment_BankDeposit() {
+	public void testRecordCreditCardPayment_BankDeposit() throws Exception {
 		CreditCardPayment testCreditCardPayment = getTestRecordCreditCardPayment_BankDeposit();
 		long id = moneyTrackService.recordCreditCardPayment(testCreditCardPayment);
 
@@ -223,7 +223,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordCreditCardPayment_BankTransfer() {
+	public void testRecordCreditCardPayment_BankTransfer() throws Exception {
 		CreditCardPayment testCreditCardPayment = getTestRecordCreditCardPayment_BankTransfer();
 		long id = moneyTrackService.recordCreditCardPayment(testCreditCardPayment);
 
@@ -241,7 +241,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordWithdrawal() {
+	public void testRecordWithdrawal() throws Exception {
 		Withdrawal testWithdrawal = getTestWithdrawal();
 		long id = moneyTrackService.recordWithdrawal(testWithdrawal);
 
@@ -256,7 +256,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testRecordGotSalary() {
+	public void testRecordGotSalary() throws Exception {
 		GotSalary testGotSalary = getTestGotSalary();
 		long id = moneyTrackService.recordGotSalary(testGotSalary);
 
@@ -271,7 +271,7 @@ public class MoneyTrackServiceTest {
 	}
 
 	@Test
-	public void testGetMoneyMovements() {
+	public void testGetMoneyMovements() throws Exception {
 		long idCashExpense = moneyTrackService.recordExpense(getTestRecordExpense_CashPayment());
 		long idDebitExpense = moneyTrackService.recordExpense(getTestRecordExpense_DebitPayment());
 		long idCreditExpense =  moneyTrackService.recordExpense(getTestRecordExpense_CreditCardPayment());
@@ -280,6 +280,7 @@ public class MoneyTrackServiceTest {
 		long idGotSalary = moneyTrackService.recordGotSalary(getTestGotSalary());
 
 		List<MoneyMovement> moneyMovements = moneyTrackService.getMoneyMovements();
+
 		assertFalse(moneyMovements.isEmpty());
 		assertTrue(moneyMovements.size() >= 6);
 

@@ -43,7 +43,7 @@ public class MoneyTrackService {
 		return CreditCardPaymentType.values();
 	}
 
-	public long recordExpense(Expense expense) {
+	public long recordExpense(Expense expense) throws Exception {
 		long id = moneyMovementDAO.insertMoneyMovement(expense.getDate(), expense.getAmount(), expense.getCurrency());
 
 		if (expense.getPaymentType().equals(ExpensePaymentType.DEBIT)) {
@@ -64,7 +64,7 @@ public class MoneyTrackService {
 		return id;
 	}
 
-	public long recordCreditCardPayment(CreditCardPayment creditCardPayment) {
+	public long recordCreditCardPayment(CreditCardPayment creditCardPayment) throws Exception {
 		long id = moneyMovementDAO.insertMoneyMovement(creditCardPayment.getDate(), creditCardPayment.getAmount(), creditCardPayment.getCurrency());
 
 		if (creditCardPayment.getPaymentType().equals(CreditCardPaymentType.BANK_TRANSFER)) {
@@ -76,7 +76,7 @@ public class MoneyTrackService {
 		return id;
 	}
 
-	public long recordWithdrawal(Withdrawal withdrawal) {
+	public long recordWithdrawal(Withdrawal withdrawal) throws Exception {
 		long id = moneyMovementDAO.insertMoneyMovement(withdrawal.getDate(), withdrawal.getAmount(), withdrawal.getCurrency());
 
 		BankMovement bankMovement = new BankMovement();
@@ -88,7 +88,7 @@ public class MoneyTrackService {
 		return id;
 	}
 
-	public long recordGotSalary(GotSalary gotSalary) {
+	public long recordGotSalary(GotSalary gotSalary) throws Exception {
 		long id = moneyMovementDAO.insertMoneyMovement(gotSalary.getDate(), gotSalary.getAmount(), Currency.PEN);
 
 		BankMovement bankMovement = new BankMovement();
@@ -100,23 +100,23 @@ public class MoneyTrackService {
 		return id;
 	}
 
-	public List<MoneyMovement> getMoneyMovements() {
+	public List<MoneyMovement> getMoneyMovements() throws Exception {
 		return moneyMovementDAO.getMoneyMovements();
 	}
 
-	public Expense getExpense(long id) {
+	public Expense getExpense(long id) throws Exception {
 		return expenseDAO.getExpense(id);
 	}
 
-	public CreditCardPayment getCreditCardPayment(long id) {
+	public CreditCardPayment getCreditCardPayment(long id) throws Exception {
 		return creditCardMovementDAO.getCreditCardPayment(id);
 	}
 
-	public GotSalary getGotSalary(long id) {
+	public GotSalary getGotSalary(long id) throws Exception {
 		return bankMovementDAO.getGotSalary(id);
 	}
 
-	public Withdrawal getWithdrawal(long id) {
+	public Withdrawal getWithdrawal(long id) throws Exception {
 		return bankMovementDAO.getWithdrawal(id);
 	}
 

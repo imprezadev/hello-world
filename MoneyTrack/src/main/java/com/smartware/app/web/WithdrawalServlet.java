@@ -34,7 +34,12 @@ public class WithdrawalServlet extends HttpServlet {
 		if (request.getAttribute("id") != null || request.getParameter("id") != null) {
 			long withdrawalId = (request.getParameter("id") != null) ? Long.valueOf(request.getParameter("id")) : (Long)request.getAttribute("id");
 
-			Withdrawal withdrawal = moneyTrackService.getWithdrawal(withdrawalId);
+			Withdrawal withdrawal = null;
+			try {
+				withdrawal = moneyTrackService.getWithdrawal(withdrawalId);
+			} catch(Exception ex) {
+				throw new ServletException(ex);
+			}
 
 			strDate = Utils.getFormattedDateTime(withdrawal.getDate());
 			strAmount = Utils.getFormattedFloat(withdrawal.getAmount());
@@ -90,7 +95,13 @@ public class WithdrawalServlet extends HttpServlet {
 		withdrawal.setRemarks(strRemarks);
 
 		if (errorMsgs.isEmpty()) {
-			long id = moneyTrackService.recordWithdrawal(withdrawal);
+			long id = 0;
+			try {
+				id = moneyTrackService.recordWithdrawal(withdrawal);
+			} catch(Exception ex) {
+				throw new ServletException(ex);
+			}
+
 			request.setAttribute("id", id);
 		}
 		else {
