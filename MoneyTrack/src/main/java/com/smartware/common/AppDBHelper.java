@@ -15,11 +15,11 @@ import java.util.logging.Logger;
 public class AppDBHelper {
 
 	private static final Logger logger = Logger.getLogger(AppDBHelper.class.getName());
-	
+
 	private static final String CONFIG_FILENAME = "config.properties";
 
 	private static DBConfigParams dbConfigParams = null;
-	private static Driver driver = null;
+	private static Driver jdbcDriver = null;
 
 	private static Properties getFileProperties(String propertiesFileName) throws Exception {
 		Properties prop = null;
@@ -52,6 +52,32 @@ public class AppDBHelper {
 		dbConfigParams.setPassword(dbConfigProperties.getProperty("password"));
 	}
 
+	private static void checkJdbcDriver(String jdbcDriverName) throws Exception {
+		if (jdbcDriver == null) {
+			try {
+				Class jdbcDriverClass = Class.forName(jdbcDriverName); // Validating if MySQL JDBC Driver is registered in the classpath
+				jdbcDriver = (Driver) jdbcDriverClass.newInstance();
+				DriverManager.registerDriver(jdbcDriver);
+			} catch (ClassNotFoundException cnfex) {
+				String errMsg = "JDBC Driver Class not found >> " + cnfex.getMessage();
+				logger.log(Level.SEVERE, errMsg);
+				throw new Exception(errMsg);
+			} catch (InstantiationException iex) {
+				String errMsg = iex.getMessage();
+				logger.log(Level.SEVERE, errMsg);
+				throw new Exception(errMsg);
+			} catch (IllegalAccessException iaex) {
+				String errMsg = iaex.getMessage();
+				logger.log(Level.SEVERE, errMsg);
+				throw new Exception(errMsg);
+			} catch (SQLException sqlex) {
+				String errMsg = sqlex.getMessage();
+				logger.log(Level.SEVERE, errMsg);
+				throw new Exception(errMsg);
+			}
+		}
+	}
+
 	public static Connection getMoneyTrackDBConnection() throws Exception {
 		Connection conn = null;
 
@@ -60,27 +86,8 @@ public class AppDBHelper {
 		}
 
 		try {
-			if (driver == null) {
-				Class jdbcDriverClass = null;
-				jdbcDriverClass = Class.forName(dbConfigParams.getJdbcDriver()); // Validating if MySQL JDBC Driver is registered in the classpath
-				driver = (Driver) jdbcDriverClass.newInstance();
-				DriverManager.registerDriver(driver);
-			}
-
-			conn = java.sql.DriverManager.getConnection(dbConfigParams.getUri(), dbConfigParams.getUserName(), dbConfigParams.getPassword());
-
-		} catch (ClassNotFoundException cnfex) {
-			String errMsg = "JDBC Driver Class not found >> " + cnfex.getMessage();
-			logger.log(Level.SEVERE, errMsg);
-			throw new Exception(errMsg);
-		} catch (InstantiationException iex) {
-			String errMsg = iex.getMessage();
-			logger.log(Level.SEVERE, errMsg);
-			throw new Exception(errMsg);
-		} catch (IllegalAccessException iaex) {
-			String errMsg = iaex.getMessage();
-			logger.log(Level.SEVERE, errMsg);
-			throw new Exception(errMsg);
+			checkJdbcDriver(dbConfigParams.getJdbcDriver());
+			conn = DriverManager.getConnection(dbConfigParams.getUri(), dbConfigParams.getUserName(), dbConfigParams.getPassword());
 		} catch (SQLException sqlex) {
 			String errMsg = sqlex.getMessage();
 			logger.log(Level.SEVERE, errMsg);
